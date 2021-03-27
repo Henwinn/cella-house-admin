@@ -1,9 +1,9 @@
 <template>
   <footer class="footer">
     <div class="container-fluid">
-      <ul class="nav">
+      <!-- <ul class="nav">
         <li class="nav-item">
-          <a class="nav-link" href="http://www.creative-tim.com">
+          <a class="nav-link">
             CELLA HOUSE
           </a>
         </li>
@@ -17,10 +17,10 @@
             Licenses
           </a>
         </li>
-      </ul>
+      </ul> -->
       <div class="copyright">
-        © {{year}} made with <i class="tim-icons icon-heart-2"></i> by
-        <a href="https://www.binarcode.com" target="_blank" rel="noopener">Cella-House</a>&nbsp;
+        © {{year}}
+        <a target="_blank" rel="noopener">IT Cella House</a>&nbsp;
       </div>
     </div>
   </footer>

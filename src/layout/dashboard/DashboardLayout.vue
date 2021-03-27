@@ -5,9 +5,9 @@
         <sidebar-link to="/dashboard" :name="$t('sidebar.dashboard')" />
         <sidebar-link to="/dropships" :name="$t('dropship')"/>
         <sidebar-link to="/history" :name="$t('history')" />
-        <sidebar-link to="/notifications" :name="$t('sidebar.notifications')"/>
+        <!-- <sidebar-link to="/notifications" :name="$t('sidebar.notifications')"/> -->
         <sidebar-link to="/profile" :name="$t('Profile')" />
-        <sidebar-link to="/typography" :name="$t('sidebar.typography')"/>
+        <!-- <sidebar-link to="/typography" :name="$t('sidebar.typography')"/> -->
       </template>
     </side-bar>
     <div class="main-panel">
