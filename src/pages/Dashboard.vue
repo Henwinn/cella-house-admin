@@ -41,7 +41,7 @@ const tableColumns = ["Barang","Qty","Name", "Address", "City","Berat", "Resi","
 const tableData = [
   {
     id: 1,
-    barang: "Baju",
+    barang: "Bajuu",
     qty: "10",
     name: "Dakota Rice",
     resi: "$36.738",
