@@ -1,6 +1,9 @@
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 // GeneralViews
 import NotFound from "@/pages/NotFoundPage.vue";
+import Login from "@/pages/Login.vue";
+import Register from "@/pages/Register.vue";
+
 
 // Admin pages
 const Dashboard = () => import(/* webpackChunkName: "dashboard" */"@/pages/Dashboard.vue");
@@ -45,9 +48,28 @@ const routes = [
         path: "history",
         name: "history",
         component: History
+      },
+      {
+        path: "login",
+        name: "login",
+        component: Login
+      },
+      {
+        path: "register",
+        name: "register",
+        component: Register
       }
     ]
   },
+  // {
+  //   path: "/login",
+  //   name: "login",
+  //   components: {
+  //     header: AppHeader,
+  //     default: Login,
+  //     footer: AppFooter
+  //   }
+  // },
   { path: "*", component: NotFound },
 ];
 
