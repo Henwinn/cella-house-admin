@@ -14,7 +14,7 @@
       
           
             <i class="tim-icons icon-pencil"></i>
-            <i class="tim-icons icon-simple-remove"></i>
+            <i class="tim-icons icon-simple-remove">icon delteee</i>
             
             <p>gw bingung ini masukin icon nya itu di table gimana ya?</p>
 
