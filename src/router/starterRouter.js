@@ -17,6 +17,10 @@ export default new Router({
           path: 'dashboard',
           name: 'dashboard',
           components: { default: Starter }
+
+          // path: 'login',
+          // name: 'login',
+          // component: { default: Starter }
         }
       ]
     }

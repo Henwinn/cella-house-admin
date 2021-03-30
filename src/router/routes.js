@@ -17,7 +17,7 @@ const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: "/login",
     children: [
       {
         path: "dashboard",
@@ -59,7 +59,9 @@ const routes = [
         name: "register",
         component: Register
       }
-    ]
+    ],
+    
+   
   },
   // {
   //   path: "/login",
