@@ -64,7 +64,7 @@
                                     </span>
                                 </base-checkbox>
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">Create account</base-button>
+                                    <base-button type="primary" class="my-4">Create new account</base-button>
                                 </div>
                             </form>
                         </template>
