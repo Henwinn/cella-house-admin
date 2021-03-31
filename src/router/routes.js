@@ -49,29 +49,18 @@ const routes = [
         name: "history",
         component: History
       },
-      {
-        path: "login",
-        name: "login",
-        component: Login
-      },
-      {
-        path: "register",
-        name: "register",
-        component: Register
-      }
     ],
     
    
   },
-  // {
-  //   path: "/login",
-  //   name: "login",
-  //   components: {
-  //     header: AppHeader,
-  //     default: Login,
-  //     footer: AppFooter
-  //   }
-  // },
+  {
+    path: "/login",
+    component: Login
+  },
+  {
+    path: "/register",
+    component: Register
+  },
   { path: "*", component: NotFound },
 ];
 
