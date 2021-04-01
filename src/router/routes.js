@@ -3,6 +3,9 @@ import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
 import NotFound from "@/pages/NotFoundPage.vue";
 import Login from "@/pages/Login.vue";
 import Register from "@/pages/Register.vue";
+import Dropship from "@/pages/Dropship.vue";
+import AddFormDashboard from "@/pages/AddFormDashboard.vue";
+import UpdateFormDashboard from "@/pages/UpdateFormDashboard.vue";
 
 
 // Admin pages
@@ -50,28 +53,32 @@ const routes = [
         component: History
       },
       {
-        path: "login",
-        name: "login",
-        component: Login
+        path: "dropship",
+        name: "dropship",
+        component: Dropship
       },
       {
-        path: "register",
-        name: "register",
-        component: Register
+        path: "formAddItem",
+        name: "formDashboard",
+        component: AddFormDashboard
+      },
+      {
+        path: "formUpdateItem",
+        name: "formDashboard",
+        component: UpdateFormDashboard
       }
     ],
     
    
   },
-  // {
-  //   path: "/login",
-  //   name: "login",
-  //   components: {
-  //     header: AppHeader,
-  //     default: Login,
-  //     footer: AppFooter
-  //   }
-  // },
+  {
+    path: "/login",
+    component: Login
+  },
+  {
+    path: "/register",
+    component: Register
+  },
   { path: "*", component: NotFound },
 ];
 

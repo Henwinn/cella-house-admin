@@ -19,23 +19,12 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Sign in with</small>
-                            </div>
-                            <div class="btn-wrapper text-center">
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/github.svg">
-                                    Github
-                                </base-button>
-
-                                <base-button type="neutral">
-                                    <img slot="icon" src="img/icons/common/google.svg">
-                                    Google
-                                </base-button>
+                                Dropship
                             </div>
                         </template>
                         <template>
                             <div class="text-center text-muted mb-4">
-                                <small>Or sign up with credentials</small>
+                                <small>Input Your Dropship</small>
                             </div>
                             <form role="form">
                                 <base-input alternative
@@ -45,26 +34,36 @@
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
-                                            placeholder="Email"
+                                            placeholder="Quantity"
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
                                 <base-input alternative
-                                            type="password"
-                                            placeholder="Password"
-                                            addon-left-icon="ni ni-lock-circle-open">
+                                            class="mb-3"
+                                            placeholder="Category"
+                                            addon-left-icon="ni ni-email-83">
                                 </base-input>
-                                <div class="text-muted font-italic">
-                                    <small>password strength:
-                                        <span class="text-success font-weight-700">strong</span>
-                                    </small>
-                                </div>
-                                <base-checkbox>
-                                    <span>I agree with the
-                                        <a href="#">Privacy Policy</a>
-                                    </span>
-                                </base-checkbox>
+                                <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Price"
+                                            addon-left-icon="ni ni-email-83">
+                                </base-input>
+                                <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Weight"
+                                            addon-left-icon="ni ni-email-83">
+                                </base-input>
+                                 <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Size"
+                                            addon-left-icon="ni ni-email-83">
+                                </base-input>
+                                  <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Input Image"
+                                            addon-left-icon="ni ni-email-83">
+                                </base-input>
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">Create new account</base-button>
+                                    <base-button type="primary" class="my-4">Add Dropship</base-button>
                                 </div>
                             </form>
                         </template>
