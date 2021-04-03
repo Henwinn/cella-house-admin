@@ -1,4 +1,5 @@
 import DashboardLayout from "@/layout/dashboard/DashboardLayout.vue";
+import AdminDashboardLayout from "@/layout/dashboard/AdminDashboardLayout.vue";
 // GeneralViews
 import NotFound from "@/pages/NotFoundPage.vue";
 import Login from "@/pages/Login.vue";
@@ -8,13 +9,13 @@ import AddFormDashboard from "@/pages/AddFormDashboard.vue";
 import UpdateFormDashboard from "@/pages/UpdateFormDashboard.vue";
 
 
-// Admin pages
-const Dashboard = () => import(/* webpackChunkName: "dashboard" */"@/pages/Dashboard.vue");
-const Profile = () => import(/* webpackChunkName: "common" */ "@/pages/Profile.vue");
-const Notifications = () => import(/* webpackChunkName: "common" */"@/pages/Notifications.vue");
-const Dropships = () => import(/* webpackChunkName: "common" */ "@/pages/Dropships.vue");
-const Typography = () => import(/* webpackChunkName: "common" */ "@/pages/Typography.vue");
-const History = () => import(/* webpackChunkName: "common" */ "@/pages/History.vue");
+const Dashboard = () => import("@/pages/Dashboard.vue");
+const AdminDashboard = () => import("@/pages/AdminDashboard.vue");
+const Profile = () => import("@/pages/Profile.vue");
+const Notifications = () => import("@/pages/Notifications.vue");
+const Dropships = () => import("@/pages/Dropships.vue");
+const Typography = () => import("@/pages/Typography.vue");
+const History = () => import("@/pages/History.vue");
 
 const routes = [
   {
@@ -78,6 +79,18 @@ const routes = [
   {
     path: "/register",
     component: Register
+  },
+  {
+    path: "/admin",
+    component: AdminDashboardLayout,
+    redirect: "/login",
+    children: [
+      {
+        path: "dashboard",
+        name: "dashboard",
+        component: AdminDashboard
+      },
+    ]
   },
   { path: "*", component: NotFound },
 ];
