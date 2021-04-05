@@ -37,7 +37,7 @@
 </template>
 <script>
 import { BaseTable } from "@/components";
-const tableColumns = ["Barang","Qty","Name", "Address", "City","Berat", "Resi","Status",] ;
+const tableColumns = ["Barang","Qty","Name", "Address", "City","Berat",] ;
 const tableData = [
   {
     id: 1,
@@ -48,7 +48,7 @@ const tableData = [
     address: "Niger",
     city: "Oud-Turnhout",
     berat: "10 kg",
-    status: "Sedang pengiriman",
+  
   },
   {
     id: 2,
