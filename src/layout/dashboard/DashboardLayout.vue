@@ -3,7 +3,7 @@
     <side-bar>
       <template slot="links">
         <sidebar-link to="/dashboard" :name="$t('sidebar.dashboard')" />
-        <sidebar-link to="/dropships" :name="$t('dropship')"/>
+        <sidebar-link to="/dropship" :name="$t('dropship')"/>
         <sidebar-link to="/history" :name="$t('history')" />
         <!-- <sidebar-link to="/notifications" :name="$t('sidebar.notifications')"/> -->
         <sidebar-link to="/profile" :name="$t('Profile')" />

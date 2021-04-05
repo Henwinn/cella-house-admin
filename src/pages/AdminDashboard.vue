@@ -10,18 +10,6 @@
           </div>
         </card>
       </div>
-
-      
-          
-            <i class="tim-icons icon-pencil"></i>
-            <i class="tim-icons icon-simple-remove">icon delteee</i>
-            
-            <p>gw bingung ini masukin icon nya itu di table gimana ya?</p>
-
-         
-
-        
-
       <!-- <div class="col-12">
         <card class="card-plain">
           <div class="table-full-width table-responsive">
@@ -37,78 +25,48 @@
 </template>
 <script>
 import { BaseTable } from "@/components";
-const tableColumns = ["Barang","Qty","Name", "Address", "City","Berat",] ;
+const tableColumns = ["Merchant"] ;
 const tableData = [
   {
     id: 1,
-    barang: "Bajuu",
-    qty: "10",
-    name: "Dakota Rice",
-    address: "Niger",
-    city: "Oud-Turnhout",
-    berat: "10 kg",
-    
+    merchant: "Toko Henwin",
+
   },
   {
     id: 2,
-    name: "Minerva Hooper",
-    address: "Curaçao",
-    city: "Sinaai-Waas"
+    merchant: "Toko Sejahtera",
   },
   {
     id: 3,
-    name: "Sage Rodriguez",
-    address: "Netherlands",
-    city: "Baileux"
+    merchant: "Toko Makmur",
   },
   {
     id: 4,
-    name: "Philip Chaney",
-    resi: "$38,735",
-    address: "Korea, South",
-    city: "Overland Park"
+    merchant: "Toko Sentosa",
   },
   {
     id: 5,
-    name: "Doris Greene",
-    resi: "$63,542",
-    address: "Malawi",
-    city: "Feldkirchen in Kärnten"
+    merchant: "Toko Jakarta",
   },
   {
     id: 6,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    merchant: "Toko Jaya",
   },
   {
     id: 7,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    merchant: "Toko Cahaya",
   },
   {
     id: 8,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    merchant: "Toko Surya",
   },
   {
     id: 9,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    merchant: "Toko Nusantara",
   },
   {
     id: 10,
-    name: 'Jon Porter',
-    resi: '$78,615',
-    address: 'Portugal',
-    city: 'Gloucester'
+    merchant: "Toko Senja",
   }
 ];
 
@@ -119,7 +77,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "Toko Henwin contohnya",
+        title: "LIST MERCHANT",
         columns: [...tableColumns],
         data: [...tableData]
       },
