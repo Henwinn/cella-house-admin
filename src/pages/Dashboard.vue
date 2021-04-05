@@ -3,6 +3,10 @@
       <div class="col-12">
         <card :title="table1.title">
           <div class="table-responsive">
+             <base-button tag="a" href="#/formAddItem"
+             class="mb-3 mb-sm-0">
+             Add
+             </base-button>
             <base-table :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
@@ -10,14 +14,6 @@
           </div>
         </card>
       </div>
-
-      
-          
-            <i class="tim-icons icon-pencil"></i>
-            <i class="tim-icons icon-simple-remove">icon delteee</i>
-            
-            <p>gw bingung ini masukin icon nya itu di table gimana ya?</p>
-
          
 
         
@@ -37,7 +33,7 @@
 </template>
 <script>
 import { BaseTable } from "@/components";
-const tableColumns = ["Barang","Qty","Name", "Address", "City","Berat",] ;
+const tableColumns = ["Barang","Qty","Name", "Address", "City","weight","Action"] ;
 const tableData = [
   {
     id: 1,
@@ -47,7 +43,7 @@ const tableData = [
     resi: "$36.738",
     address: "Niger",
     city: "Oud-Turnhout",
-    berat: "10 kg",
+    weight: "10 kg",
   
   },
   {
