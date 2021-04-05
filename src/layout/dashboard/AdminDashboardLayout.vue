@@ -2,11 +2,11 @@
   <div class="wrapper">
     <side-bar>
       <template slot="links">
-        <sidebar-link to="/dashboard" :name="$t('sidebar.dashboard')" />
-        <sidebar-link to="/dropships" :name="$t('dropship')"/>
-        <sidebar-link to="/history" :name="$t('history')" />
+        <sidebar-link to="/admin/dashboard" :name="$t('sidebar.dashboard')" />
+        <sidebar-link to="/admin/dropship" :name="$t('dropship')"/>
+        <!-- <sidebar-link to="/history" :name="$t('history')" /> -->
         <!-- <sidebar-link to="/notifications" :name="$t('sidebar.notifications')"/> -->
-        <sidebar-link to="/profile" :name="$t('Profile')" />
+        <sidebar-link to="/admin/profile" :name="$t('Profile')" />
         <!-- <sidebar-link to="/typography" :name="$t('sidebar.typography')"/> -->
       </template>
     </side-bar>
