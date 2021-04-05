@@ -39,11 +39,11 @@ const routes = [
         name: "notifications",
         component: Notifications
       },
-      {
-        path: "dropships",
-        name: "dropships",
-        component: Dropship
-      },
+      // {
+      //   path: "dropships",
+      //   name: "dropships",
+      //   component: Dropships
+      // },
       {
         path: "typography",
         name: "typography",
@@ -57,7 +57,7 @@ const routes = [
       {
         path: "dropship",
         name: "dropship",
-        component: Dropships
+        component: Dropship
       },
       {
         path: "formAddItem",
