@@ -3,6 +3,16 @@
       <div class="col-12">
         <card :title="table1.title">
           <div class="table-responsive">
+            <div class="search">
+               <base-input alternative class="mb-3"
+                placeholder="Search"
+                addon-left-icon="ni ni-hat-3">
+                </base-input>
+               <base-button tag="a" href="#/formAddItem"
+             class="mb-3 mb-sm-0">
+             Search
+             </base-button>
+            </div>
             <base-table :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
