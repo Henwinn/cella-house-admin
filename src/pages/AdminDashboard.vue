@@ -8,11 +8,15 @@
                 placeholder="Search"
                 addon-left-icon="ni ni-hat-3">
                 </base-input>
-               <base-button tag="a" href="#/formAddItem"
+               <base-button tag="a" 
              class="mb-3 mb-sm-0">
              Search
              </base-button>
             </div>
+            <base-button tag="a" 
+             class="mb-3 mb-sm-0">
+             Add
+             </base-button>
             <base-table :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
