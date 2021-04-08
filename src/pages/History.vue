@@ -3,6 +3,16 @@
       <div class="col-12">
         <card :title="table1.title">
           <div class="table-responsive">
+            <div class="search">
+               <base-input alternative class="mb-3"
+                placeholder="Search"
+                addon-left-icon="ni ni-hat-3">
+                </base-input>
+               <base-button tag="a"
+             class="mb-3 mb-sm-0">
+             Search
+             </base-button>
+            </div>
             <base-table :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
@@ -10,7 +20,26 @@
           </div>
         </card>
       </div>
-
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+              <span class="sr-only">Previous</span>
+            </a>
+          </li>
+          <li class="page-item"><a class="page-link" href="#">1</a></li>
+          <li class="page-item"><a class="page-link" href="#">2</a></li>
+          <li class="page-item"><a class="page-link" href="#">3</a></li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+              <span class="sr-only">Next</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+<!-- 
       <div class="col-12">
         <card class="card-plain">
           <div class="table-full-width table-responsive">
@@ -20,7 +49,7 @@
             </base-table>
           </div>
         </card>
-      </div>
+      </div> -->
 
     </div>
 </template>
