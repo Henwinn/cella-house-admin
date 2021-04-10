@@ -9,6 +9,7 @@ import AddFormDashboard from "@/pages/AddFormDashboard.vue";
 import UpdateFormDashboard from "@/pages/UpdateFormDashboard.vue";
 import AdminDropship from "@/pages/AdminDropship.vue";
 import AdminProfile from "@/pages/AdminProfile.vue";
+import AdminAddFormMerchant from "@/pages/AdminAddFormMerchant.vue";
 
 const Dashboard = () => import("@/pages/Dashboard.vue");
 const AdminDashboard = () => import("@/pages/AdminDashboard.vue");
@@ -101,6 +102,11 @@ const routes = [
         name: "profile",
         component: AdminProfile
       },
+      {
+        path: "formAddMerchant",
+        name: "formAddMerchant",
+        component: AdminAddFormMerchant
+      }
     ]
   },
   { path: "*", component: NotFound },
