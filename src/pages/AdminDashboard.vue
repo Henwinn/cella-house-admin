@@ -13,7 +13,7 @@
              Search
              </base-button>
             </div>
-            <base-button tag="a" 
+            <base-button tag="a" href="#/admin/formAddMerchant"
              class="mb-3 mb-sm-0">
              Add
              </base-button>
