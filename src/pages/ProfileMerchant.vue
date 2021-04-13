@@ -1,36 +1,60 @@
 <template>
-    <div class="row">
-      <div class="col-12">
-        <card :title="table1.title">
-          <div class="table-responsive">
-            <div class="search">
+<div class="profile">
+  <card type="user">
+    <p class="card-text">
+    </p>
+    <div class="author">
+      <div class="block block-one"></div>
+      <div class="block block-two"></div>
+      <div class="block block-three"></div>
+      <div class="block block-four"></div>
+      <a href="#">
+        <img class="avatar" src="img/anime6.png" alt="...">
+        <h5 class="title">*Store Name</h5>
+        <h5 class="title">*Store Owner</h5>
+        <h5 class="title">*Store Address</h5>
+        <h5 class="title">*Store Number</h5>
+      </a>
+      <p class="description">
+        *Store Description
+      </p>
+    </div>
+    <p></p>
+    <p class="card-description">
+      {{user.description}}
+    </p>
+    <div slot="footer" class="button-container">
+      <base-button icon round class="btn-facebook">
+        <i class="fab fa-facebook"></i>
+      </base-button>
+      <base-button icon round class="btn-twitter">
+        <i class="fab fa-twitter"></i>
+      </base-button>
+      <base-button icon round class="btn-google">
+        <i class="fab fa-google-plus"></i>
+      </base-button>
+    </div>
+    
+  </card>
+  <div class="search">
                <base-input alternative class="mb-3"
                 placeholder="Search"
                 addon-left-icon="ni ni-hat-3">
                 </base-input>
-               <base-button tag="a"
+               <base-button tag="a" 
              class="mb-3 mb-sm-0">
              Search
              </base-button>
-            </div>
-             <base-button tag="a" href="#/formAddItem"
+  </div>
+    <base-button tag="a" href="#/admin/"
              class="mb-3 mb-sm-0">
              Add
-             </base-button>
-             <base-button tag="a" href="#/formAddItem"
-             class="mb-3 mb-sm-0">
-             Export Data
-             </base-button>
-            <base-table :data="table1.data"
+    </base-button>
+  <base-table :data="table1.data"
                         :columns="table1.columns"
-                        thead-classes="text-primary"
-                        >
+                        thead-classes="text-primary">
             </base-table>
-          </div>
-        </card>
-      </div>
-      
-      <nav aria-label="Page navigation example">
+            <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
             <a class="page-link" href="#" aria-label="Previous">
@@ -49,8 +73,7 @@
           </li>
         </ul>
       </nav>
-    </div>
-    
+</div>
 </template>
 <script>
 import { BaseTable } from "@/components";
@@ -65,7 +88,6 @@ const tableData = [
     address: "Niger",
     city: "Oud-Turnhout",
     weight: "10 kg",
-    action: ""
   
   },
   {
@@ -132,28 +154,28 @@ const tableData = [
     city: 'Gloucester'
   }
 ];
-
-export default {
-  components: {
+  export default {
+    props: {
+      user: {
+        type: Object,
+        default: () => {
+          return {};
+        }
+      }
+    },
+    components: {
     BaseTable
   },
   data() {
     return {
       table1: {
-        title: "Toko Henwin contohnya",
+        title: "LIST Dropship",
         columns: [...tableColumns],
         data: [...tableData]
       },
-      table2: {
-        title: "Table on Plain Background",
-        columns: [...tableColumns],
-        data: [...tableData]
-      }
     };
   }
-};
+  }
 </script>
 <style>
-  
-
 </style>
