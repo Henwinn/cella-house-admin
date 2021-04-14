@@ -25,7 +25,18 @@
                         :columns="table1.columns"
                         thead-classes="text-primary"
                         >
+                        <template slot="table-row" slot-scope="props">
+                        <span v-if="props.column.field == 'details'">
+                          <button type="button" class="btn btn-primary">
+                          View Details
+                          </button>
+                        </span>
+                        <span v-else>
+                            {{props.formattedRow[props.column.field]}}
+                        </span>
+                      </template>
             </base-table>
+            
           </div>
         </card>
       </div>
@@ -54,7 +65,7 @@
 </template>
 <script>
 import { BaseTable } from "@/components";
-const tableColumns = ["Barang","Qty","Name", "Address", "City","weight","Action"] ;
+const tableColumns = ["Barang","Qty","Name", "Address", "City","weight"] ;
 const tableData = [
   {
     id: 1,
@@ -65,7 +76,6 @@ const tableData = [
     address: "Niger",
     city: "Oud-Turnhout",
     weight: "10 kg",
-    action: ""
   
   },
   {
@@ -141,11 +151,6 @@ export default {
     return {
       table1: {
         title: "Toko Henwin contohnya",
-        columns: [...tableColumns],
-        data: [...tableData]
-      },
-      table2: {
-        title: "Table on Plain Background",
         columns: [...tableColumns],
         data: [...tableData]
       }
