@@ -14,9 +14,22 @@
             :key="index"
             v-if="hasValue(item, column)">
           {{itemValue(item, column)}}
+          
+          
         </td>
+        <td>
+          <button type="primary" @click=""> Edit</button>
+       <button type="primary" @click=""> Delete</button>
+        </td>
+       
       </slot>
+      
+
+
+      
     </tr>
+
+    
     </tbody>
   </table>
 </template>
