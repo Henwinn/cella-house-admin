@@ -17,10 +17,10 @@
              class="mb-3 mb-sm-0">
              Add
              </base-button>
-            <base-table :data="table1.data"
+            <base-table-merchant :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
-            </base-table>
+            </base-table-merchant>
           </div>
         </card>
       </div>
@@ -46,7 +46,7 @@
     </div>
 </template>
 <script>
-import { BaseTable } from "@/components";
+import BaseTableMerchant from '../components/BaseTableMerchant.vue';
 const tableColumns = ["Merchant"] ;
 const tableData = [
   {
@@ -94,7 +94,7 @@ const tableData = [
 
 export default {
   components: {
-    BaseTable
+    BaseTableMerchant
   },
   data() {
     return {
@@ -103,11 +103,6 @@ export default {
         columns: [...tableColumns],
         data: [...tableData]
       },
-      table2: {
-        title: "Table on Plain Background",
-        columns: [...tableColumns],
-        data: [...tableData]
-      }
     };
   }
 };
