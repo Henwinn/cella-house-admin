@@ -13,10 +13,10 @@
              Search
              </base-button>
             </div>
-            <base-table :data="table1.data"
+            <base-table-history :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
-            </base-table>
+            </base-table-history>
           </div>
         </card>
       </div>
@@ -39,22 +39,11 @@
           </li>
         </ul>
       </nav>
-<!-- 
-      <div class="col-12">
-        <card class="card-plain">
-          <div class="table-full-width table-responsive">
-            <base-table :title="table2.title" :sub-title="table2.subTitle" :data="table2.data"
-                         :columns="table2.columns">
-
-            </base-table>
-          </div>
-        </card>
-      </div> -->
 
     </div>
 </template>
 <script>
-import { BaseTable } from "@/components";
+import BaseTableHistory from '../components/BaseTableHistory.vue';
 const tableColumns = ["Name", "Country", "City", "Salary"];
 const tableData = [
   {
@@ -110,17 +99,12 @@ const tableData = [
 
 export default {
   components: {
-    BaseTable
+    BaseTableHistory
   },
   data() {
     return {
       table1: {
         title: "Simple Table",
-        columns: [...tableColumns],
-        data: [...tableData]
-      },
-      table2: {
-        title: "Table on Plain Background",
         columns: [...tableColumns],
         data: [...tableData]
       }
