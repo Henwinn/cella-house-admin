@@ -10,23 +10,17 @@
     <tbody :class="tbodyClasses">
     <tr v-for="(item, index) in data" :key="index">
       <slot :row="item">
-        <td v-for="(column, index) in columns"
-            :key="index"
-            v-if="hasValue(item, column)">
+        <td v-for="(column, index) in columns" :key="index" v-if="hasValue(item, column)">
           {{itemValue(item, column)}}
           
           
         </td>
         <td>
-          <button type="primary" @click=""> Edit</button>
-       <button type="primary" @click=""> Delete</button>
+          <base-button @click="s"> Edit</base-button>
+          <base-button @click="s"> Delete</base-button>
         </td>
        
       </slot>
-      
-
-
-      
     </tr>
 
     
