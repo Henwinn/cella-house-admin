@@ -17,11 +17,11 @@
              class="mb-3 mb-sm-0">
              Add
              </base-button>
-             <base-button tag="a" href="#/formAddItem"
+             <base-button tag="a" 
              class="mb-3 mb-sm-0">
              Export Data
              </base-button>
-            <base-table :data="table1.data"
+            <base-table-dashboard :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary"
                         >
@@ -35,7 +35,7 @@
                             {{props.formattedRow[props.column.field]}}
                         </span>
                       </template>
-            </base-table>
+            </base-table-dashboard>
             
           </div>
         </card>
@@ -64,7 +64,7 @@
     
 </template>
 <script>
-import { BaseTable } from "@/components";
+import BaseTableDashboard from '../components/BaseTableDashboard.vue';
 const tableColumns = ["Barang","Qty","Name", "Address", "City","weight"] ;
 const tableData = [
   {
@@ -145,7 +145,7 @@ const tableData = [
 
 export default {
   components: {
-    BaseTable
+    BaseTableDashboard
   },
   data() {
     return {
