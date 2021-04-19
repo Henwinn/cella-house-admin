@@ -23,6 +23,12 @@
     <p class="card-description">
       {{user.description}}
     </p>
+    <center>
+    <base-button tag="a" href="#/admin/formUpdateMerchant"
+             class="mb-3 mb-sm-0">
+             Update Profile Merchant
+             </base-button>
+    </center>
     <div slot="footer" class="button-container">
       <base-button icon round class="btn-facebook">
         <i class="fab fa-facebook"></i>
@@ -33,6 +39,7 @@
       <base-button icon round class="btn-google">
         <i class="fab fa-google-plus"></i>
       </base-button>
+      
     </div>
     
   </card>
@@ -46,14 +53,14 @@
              Search
              </base-button>
   </div>
-    <base-button tag="a" href="#/admin/"
+    <base-button tag="a" href="#/formAddItem"
              class="mb-3 mb-sm-0">
              Add
     </base-button>
-  <base-table :data="table1.data"
+  <base-table-profile-merchant :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
-            </base-table>
+  </base-table-profile-merchant>
             <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
@@ -76,82 +83,62 @@
 </div>
 </template>
 <script>
-import { BaseTable } from "@/components";
-const tableColumns = ["Barang","Qty","Name", "Address", "City","weight","Action"] ;
+import BaseTableProfileMerchant from '../components/BaseTableProfileMerchant.vue';
+const tableColumns = ["Item","Name","Qty","Category", "Price", "Weight","Size","City","image"] ;
 const tableData = [
   {
     id: 1,
-    barang: "Bajuu",
+    item: "T-shirts",
+    name: "Jose Carillo",
     qty: "10",
-    name: "Dakota Rice",
-    resi: "$36.738",
-    address: "Niger",
-    city: "Oud-Turnhout",
-    weight: "10 kg",
+    category: "Clothes",
+    price: "20.000",
+    weight: "10kg",
+    size: "",
+    image: ""
   
   },
   {
     id: 2,
-    name: "Minerva Hooper",
-    resi: "$23,789",
-    address: "Curaçao",
-    city: "Sinaai-Waas"
+    name: "Miguel Gallardo",
   },
   {
     id: 3,
-    name: "Sage Rodriguez",
-    resi: "$56,142",
-    address: "Netherlands",
-    city: "Baileux"
+    name: "Antonio Escobar",
+   
   },
   {
     id: 4,
-    name: "Philip Chaney",
-    resi: "$38,735",
-    address: "Korea, South",
-    city: "Overland Park"
+    name: "Dakota Rice",
+  
   },
   {
     id: 5,
-    name: "Doris Greene",
-    resi: "$63,542",
-    address: "Malawi",
-    city: "Feldkirchen in Kärnten"
+    name: "Mason Porter",
   },
   {
     id: 6,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    name: "Doris Greene",
+ 
   },
   {
     id: 7,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    name: "Philip Chaney",
+    
   },
   {
     id: 8,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    name: "Minerva Hooper",
+    
   },
   {
     id: 9,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+     name: "Jon Porter",
+ 
   },
   {
     id: 10,
-    name: 'Jon Porter',
-    resi: '$78,615',
-    address: 'Portugal',
-    city: 'Gloucester'
+    name: "Andres Smith",
   }
 ];
   export default {
@@ -164,7 +151,7 @@ const tableData = [
       }
     },
     components: {
-    BaseTable
+    BaseTableProfileMerchant
   },
   data() {
     return {
