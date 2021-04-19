@@ -11,6 +11,7 @@ import AdminDropship from "@/pages/AdminDropship.vue";
 import AdminProfile from "@/pages/AdminProfile.vue";
 import AdminAddFormMerchant from "@/pages/AdminAddFormMerchant.vue";
 import ProfileMerchant from "@/pages/ProfileMerchant.vue";
+import AdminUpdateFormMerchant from "@/pages/AdminUpdateFormMerchant.vue";
 
 const Dashboard = () => import("@/pages/Dashboard.vue");
 const AdminDashboard = () => import("@/pages/AdminDashboard.vue");
@@ -107,6 +108,11 @@ const routes = [
         path: "formAddMerchant",
         name: "formAddMerchant",
         component: AdminAddFormMerchant
+      },
+      {
+        path: "formUpdateMerchant",
+        name: "formUpdateMerchant",
+        component: AdminUpdateFormMerchant
       },
       {
         path: "profileMerchant",
