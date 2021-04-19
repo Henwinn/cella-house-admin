@@ -34,12 +34,22 @@
                                 </base-input>
                                  <base-input alternative
                                             class="mb-3"
+                                            placeholder="Owner"
+                                            addon-left-icon="ni ni-hat-3">
+                                </base-input>
+                                 <base-input alternative
+                                            class="mb-3"
                                             placeholder="Address"
                                             addon-left-icon="ni ni-hat-3">
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Number"
+                                            addon-left-icon="ni ni-hat-3">
+                                </base-input>
+                                 <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Description"
                                             addon-left-icon="ni ni-hat-3">
                                 </base-input>
                                 <div class="text-center">
