@@ -26,6 +26,11 @@
                             <form role="form">
                                 <base-input alternative
                                             class="mb-3"
+                                            placeholder="Item"
+                                            addon-left-icon="ni ni-hat-3">
+                                </base-input>
+                                <base-input alternative
+                                            class="mb-3"
                                             placeholder="Name"
                                             addon-left-icon="ni ni-hat-3">
                                 </base-input>
@@ -53,6 +58,11 @@
                                             class="mb-3"
                                             placeholder="Size"
                                             addon-left-icon="ni ni-email-83">
+                                </base-input>
+                                <base-input alternative
+                                            class="mb-3"
+                                            placeholder="City"
+                                            addon-left-icon="ni ni-hat-3">
                                 </base-input>
                                   <base-input alternative
                                             class="mb-3"
