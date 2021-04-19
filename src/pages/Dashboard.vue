@@ -65,81 +65,61 @@
 </template>
 <script>
 import BaseTableDashboard from '../components/BaseTableDashboard.vue';
-const tableColumns = ["Barang","Qty","Name", "Address", "City","weight"] ;
+const tableColumns = ["Item","Name","Qty","Category", "Price", "Weight","Size","City","image"] ;
 const tableData = [
   {
     id: 1,
-    barang: "Bajuu",
+    item: "T-Shirts",
+    name: "Jose Carillo",
     qty: "10",
-    name: "Dakota Rice",
-    resi: "$36.738",
-    address: "Niger",
-    city: "Oud-Turnhout",
-    weight: "10 kg",
+    category: "Clothes",
+    price: "20.000",
+    weight: "10kg",
+    size: "",
+    image: ""
   
   },
   {
     id: 2,
-    name: "Minerva Hooper",
-    resi: "$23,789",
-    address: "Curaçao",
-    city: "Sinaai-Waas"
+    name: "Miguel Gallardo",
   },
   {
     id: 3,
-    name: "Sage Rodriguez",
-    resi: "$56,142",
-    address: "Netherlands",
-    city: "Baileux"
+    name: "Antonio Escobar",
+   
   },
   {
     id: 4,
-    name: "Philip Chaney",
-    resi: "$38,735",
-    address: "Korea, South",
-    city: "Overland Park"
+    name: "Dakota Rice",
+  
   },
   {
     id: 5,
-    name: "Doris Greene",
-    resi: "$63,542",
-    address: "Malawi",
-    city: "Feldkirchen in Kärnten"
+    name: "Mason Porter",
   },
   {
     id: 6,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    name: "Doris Greene",
+ 
   },
   {
     id: 7,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    name: "Philip Chaney",
+    
   },
   {
     id: 8,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+    name: "Minerva Hooper",
+    
   },
   {
     id: 9,
-    name: 'Mason Porter',
-    resi: '$98,615',
-    address: 'Chile',
-    city: 'Gloucester'
+     name: "Jon Porter",
+ 
   },
   {
     id: 10,
-    name: 'Jon Porter',
-    resi: '$78,615',
-    address: 'Portugal',
-    city: 'Gloucester'
+    name: "Andres Smith",
   }
 ];
 
