@@ -48,4 +48,39 @@ router.post('/login', (req,res)=>{
   })  
 })
 
+router.get('/profile', (req, res) => {
+  users.findOne({
+    attributes:{
+      exclude: ['password']
+    },
+    where: {
+      username: req.query.username
+    }
+  })
+  .then(user => {
+    return res.json({user})
+  })
+  .catch(err => {
+    next(err)
+  })
+})
+
+router.post('/profile', (req,res) => {
+  users.update({
+    full_name: req.body.full_name,
+    email: req.body.email,
+    dob: req.body.dob,
+    phone: req.body.phone,
+    address: req.body.address,
+    username: req.body.username
+  }, {
+    where: {
+      username: req.query.username
+    }
+  })
+  .then( () => {
+    return res.send("update success")
+  })
+})
+
 module.exports = router;
