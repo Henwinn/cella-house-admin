@@ -44,35 +44,39 @@
 </template>
 <script>
 import BaseTableHistory from '../components/BaseTableHistory.vue';
-const tableColumns = ["Name", "Country", "City", "Salary"];
+const tableColumns = ["Name", "Item", "Send", "Resi", "Status"];
 const tableData = [
   {
     id: 1,
     name: "Dakota Rice",
-    salary: "$36.738",
-    country: "Niger",
-    city: "Oud-Turnhout",
+    item: "T-Shirts",
+    send: "Jakarta",
+    resi: "1244434",
+    status: "On Progress",
   },
   {
     id: 2,
     name: "Minerva Hooper",
-    salary: "$23,789",
-    country: "Curaçao",
-    city: "Sinaai-Waas"
+    item: "T-Shirts",
+    send: "Jakarta",
+    resi: "1222434",
+    status: "On Progress",
   },
   {
     id: 3,
     name: "Sage Rodriguez",
-    salary: "$56,142",
-    country: "Netherlands",
-    city: "Baileux"
+    item: "T-Shirts",
+    send: "Jakarta",
+    resi: "1235434",
+    status: "On Progress",
   },
   {
     id: 4,
     name: "Philip Chaney",
-    salary: "$38,735",
-    country: "Korea, South",
-    city: "Overland Park"
+   item: "T-Shirts",
+    send: "Bandung",
+    resi: "1244432",
+    status: "On Progress",
   },
   {
     id: 5,
