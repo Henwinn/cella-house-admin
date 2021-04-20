@@ -44,26 +44,39 @@
 </template>
 <script>
 import { BaseTable } from "@/components";
-const tableColumns = ["Merchant", "Name", "Resi", "Status"] ;
+const tableColumns = ["Merchant", "Item", "Name", "Resi", "Status"] ;
 const tableData = [
   {
     id: 1,
     merchant: "Toko Henwin",
-    name: "Laptop",
-    resi: "12123333",
+    item: "T-shirts",
+    name: "Dakota Rice",
+    resi: "1244434",
     status: "on progress"
   },
   {
     id: 2,
     merchant: "Toko Henwin",
+    item: "T-shirts",
+    name: "Minerva Hooper",
+    resi: "1222434",
+    status: "on progress"
   },
   {
     id: 3,
     merchant: "Toko Henwin",
+    item: "T-shirts",
+    name: "Sage Rodriguez",
+    resi: "1235434",
+    status: "on progress"
   },
   {
     id: 4,
     merchant: "Toko Henwin",
+    item: "T-shirts",
+    name: "Philip Chaney",
+    resi: "1244432",
+    status: "on progress"
   },
   {
     id: 5,
