@@ -24,6 +24,10 @@
                         </template>
                         <template>
                             <form role="form">
+                                <base-dropdown title-classes="btn" title="role" >
+                                        <a class="dropdown-item" href="#/login">User</a>
+                                        <a class="dropdown-item" href="#/login">Admin</a>
+                                 </base-dropdown>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Email"
