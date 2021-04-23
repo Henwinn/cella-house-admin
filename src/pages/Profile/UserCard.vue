@@ -9,15 +9,18 @@
       <div class="block block-four"></div>
       <a href="#">
         <img class="avatar" src="img/anime6.png" alt="...">
-        <h5 class="title">{{user.fullName}}</h5>
+        <h5 class="title">*Admin Name</h5>
       </a>
       <p class="description">
-        {{user.title}}
+        *Admin Position
       </p>
     </div>
     <p></p>
     <p class="card-description">
-      {{user.description}}
+      Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
+      Impedit odio aut eaque quas, doloremque sed maxime deleniti 
+      tempora ea id aliquid laborum ratione temporibus, ullam similique 
+      beatae accusantium, ipsum ducimus?
     </p>
     <div slot="footer" class="button-container">
       <base-button icon round class="btn-facebook">
@@ -36,7 +39,6 @@
   export default {
     props: {
       user: {
-        type: Object,
         default: () => {
           return {};
         }
