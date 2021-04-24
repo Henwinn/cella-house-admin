@@ -11,11 +11,20 @@ module.exports = {
       full_name: {
         type: Sequelize.STRING
       },
-      email: {
+      store_name: {
+        type: Sequelize.STRING
+      },
+      username: {
         type: Sequelize.STRING
       },
       dob: {
         type: Sequelize.DATE
+      },
+      gender: {
+        type: Sequelize.ENUM("Male", "Female", "Other")
+      },
+      email: {
+        type: Sequelize.STRING
       },
       phone: {
         type: Sequelize.STRING
@@ -23,11 +32,15 @@ module.exports = {
       address: {
         type: Sequelize.STRING
       },
-      username: {
-        type: Sequelize.STRING
-      },
       password: {
         type: Sequelize.STRING
+      },
+      role_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "roles",
+          key: "id"
+        }
       },
       createdAt: {
         allowNull: false,
