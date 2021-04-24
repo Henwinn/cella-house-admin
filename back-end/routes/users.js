@@ -11,19 +11,27 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
-router.post('/register', (req,res)=>{
+router.post('/register', (req,res, next)=>{
   bcrypt.hash(req.body.password, 12, (err, result)=>{
     users.create({
-      fullname: req.body.fullname,
-      email: req.body.email,
+      full_name: req.body.full_name,
+      store_name: req.body.store_name,
+      username: req.body.username,
       dob: req.body.dob,
+      gender: req.body.gender,
+      email: req.body.email,
       phone: req.body.phone,
       address: req.body.address,
-      username: req.body.username,
-      password: result
+      password: result,
+      role_id: 2
     })
-  }).then(()=>{
-    res.send("Account created") //INI MAU NGIRIM DATA APA?
+    .then(() => {
+      res.send("success")
+    })
+    .catch(err => {
+      res.send("register failed")
+      next(err)
+    })
   })
 })
 
@@ -39,6 +47,8 @@ router.post('/login', (req,res)=>{
     } else {
       bcrypt.compare(req.body.password, user.password, (err,result)=>{
         if(result){
+          req.session.username = user.username
+          req.session.password = user.password
           return res.send("Logged in")
         } else {
           return res.redirect("back")
@@ -48,38 +58,46 @@ router.post('/login', (req,res)=>{
   })  
 })
 
+//GET PROFILE
 router.get('/profile', (req, res) => {
-  users.findOne({
-    attributes:{
-      exclude: ['password']
-    },
-    where: {
-      username: req.query.username
-    }
-  })
-  .then(user => {
-    return res.json({user})
-  })
-  .catch(err => {
-    next(err)
-  })
+  if(req.session.username == req.query.username){
+    return res.json({
+      username: req.session.username
+    })
+  } else {
+    return res.redirect("/")
+  }
 })
 
+//UPDATE PROFILE
 router.post('/profile', (req,res) => {
   users.update({
     full_name: req.body.full_name,
-    email: req.body.email,
+    store_name: req.body.store_name,
+    username: req.body.username,
     dob: req.body.dob,
+    gender: req.body.gender,
+    email: req.body.email,
     phone: req.body.phone,
     address: req.body.address,
-    username: req.body.username
   }, {
     where: {
       username: req.query.username
     }
   })
-  .then( () => {
+  .then((user) => {
+    req.session.username = user.username
     return res.send("update success")
+  })
+})
+
+router.get('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if(err) {
+      console.log(err)
+    } else {
+      res.redirect('/')
+    }
   })
 })
 

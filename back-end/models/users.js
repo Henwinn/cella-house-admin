@@ -10,20 +10,30 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      users.hasOne(models.roles)
     }
   };
   users.init({
     full_name: DataTypes.STRING,
-    email: DataTypes.STRING,
+    store_name: DataTypes.STRING,
+    username: DataTypes.STRING,
     dob: DataTypes.DATE,
+    gender: DataTypes.ENUM("Male", "Female", "Other"),
+    email: DataTypes.STRING,
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
-    username: DataTypes.STRING,
-    password: DataTypes.STRING
+    password: DataTypes.STRING,
+    role_id: {
+      type: DataTypes.STRING,
+      references: {
+        model: "roles",
+        key: "id"
+      }
+    },
   }, {
     sequelize,
     modelName: 'users',
+    underscored: true
   });
   return users;
 };
