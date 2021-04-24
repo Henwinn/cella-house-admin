@@ -60,7 +60,7 @@ router.post('/login', (req,res)=>{
 
 //GET PROFILE
 router.get('/profile', (req, res) => {
-  if(req.session.username){
+  if(req.session.username == req.query.username){
     return res.json({
       username: req.session.username
     })
