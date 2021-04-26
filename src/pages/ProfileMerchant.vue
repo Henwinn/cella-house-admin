@@ -53,7 +53,7 @@
              Search
              </base-button>
   </div>
-    <base-button tag="a" href="#/formAddItem"
+    <base-button tag="a" href="#/admin/formAddItem"
              class="mb-3 mb-sm-0">
              Add
     </base-button>
