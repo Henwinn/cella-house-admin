@@ -118,6 +118,16 @@ const routes = [
         path: "profileMerchant",
         name: "profileMerchant",
         component: ProfileMerchant
+      },
+      {
+        path: "formAddItem",
+        name: "formDashboard",
+        component: AddFormDashboard
+      },
+      {
+        path: "formUpdateItem",
+        name: "formDashboard",
+        component: UpdateFormDashboard
       }
     ]
   },
