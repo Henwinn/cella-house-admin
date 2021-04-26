@@ -16,7 +16,7 @@
           
         </td>
         <td>
-          <base-button tag="a" href="#/formUpdateItem"> Edit</base-button>
+          <base-button tag="a" href="#/admin/formUpdateItem"> Edit</base-button>
           <base-button @click="s"> Delete</base-button>
         </td>
        
