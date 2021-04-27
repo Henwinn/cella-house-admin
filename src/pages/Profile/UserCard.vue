@@ -22,6 +22,12 @@
       tempora ea id aliquid laborum ratione temporibus, ullam similique 
       beatae accusantium, ipsum ducimus?
     </p>
+    <center>
+    <base-button tag="a"
+             class="mb-3 mb-sm-0" href="#/admin/editProfileAdmin">
+             Edit Profile
+    </base-button>
+    </center>
     <div slot="footer" class="button-container">
       <base-button icon round class="btn-facebook">
         <i class="fab fa-facebook"></i>
