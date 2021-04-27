@@ -12,6 +12,9 @@ import AdminProfile from "@/pages/AdminProfile.vue";
 import AdminAddFormMerchant from "@/pages/AdminAddFormMerchant.vue";
 import ProfileMerchant from "@/pages/ProfileMerchant.vue";
 import AdminUpdateFormMerchant from "@/pages/AdminUpdateFormMerchant.vue";
+import EditProfileForm from "@/pages/Profile/EditProfileForm.vue";
+import EditProfileAdminForm from "@/pages/Profile/EditProfileAdminForm.vue";
+
 
 const Dashboard = () => import("@/pages/Dashboard.vue");
 const AdminDashboard = () => import("@/pages/AdminDashboard.vue");
@@ -71,6 +74,11 @@ const routes = [
         path: "formUpdateItem",
         name: "formDashboard",
         component: UpdateFormDashboard
+      },
+      {
+        path: "editProfile",
+        name: "editProfile",
+        component: EditProfileForm
       }
     ],
     
@@ -128,6 +136,11 @@ const routes = [
         path: "formUpdateItem",
         name: "formDashboard",
         component: UpdateFormDashboard
+      },
+      {
+        path: "editProfileAdmin",
+        name: "editProfileAdmin",
+        component: EditProfileAdminForm
       }
     ]
   },
