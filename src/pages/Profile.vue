@@ -11,7 +11,9 @@
       <a href="#">
         <img class="avatar" src="img/anime6.png" alt="...">
         <h5 class="title">*Store Name</h5>
-        <h5 class="title">*Store Owner</h5>
+        <h5 class="title">*Owner</h5>
+        <h5 class="title">*Username</h5>
+        <h5 class="title">*Store Email</h5>
         <h5 class="title">*Store Address</h5>
         <h5 class="title">*Store Number</h5>
       </a>
@@ -25,8 +27,8 @@
     </p>
     <center>
     <base-button tag="a"
-             class="mb-3 mb-sm-0">
-             Update Profile
+             class="mb-3 mb-sm-0" href="#/editProfile">
+             Edit Profile
              </base-button>
     </center>
     <div slot="footer" class="button-container">
