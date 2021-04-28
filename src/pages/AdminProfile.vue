@@ -10,18 +10,92 @@
       <form>     
         <div class="information">
           <div class="contact-info">
-                <div class="coninformation">
-                  <label> Email</label>
-              
-                </div>
-                <div class="coninformation">
-                  <label> Phone Number</label>
-  
-                </div>
-                <div class="coninformation">
-                  <label> Address</label>
-
-                </div>
+            <table>
+              <tr>
+                <td>
+                  <div class="coninformation">
+                    <label> Date of Birth</label>
+                  </div>
+                </td>
+                <td>
+                   <div class="coninformation col-md-10">
+                    <label> *14 July 1997</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coninformation">
+                    <label> Email</label>
+                  </div>
+                </td>
+                <td>
+                   <div class="coninformation col-md-10">
+                    <label> *henwin@gmail.com</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coninformation">
+                    <label> Phone Number</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="coninformation col-md-10">
+                    <label> *08124456538192</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coninformation">
+                    <label> Address</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="coninformation col-md-10">
+                    <label> *Jl. Nusantara No. 5, Palmerah, Jakarta Barat, DKI Jakarta</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coninformation">
+                    <label> City</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="coninformation col-md-10">
+                    <label> *Jakarta</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coninformation">
+                    <label> Country</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="coninformation col-md-10">
+                    <label>*Indonesia</label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coninformation">
+                    <label> ZIP Code</label>
+                  </div>
+                </td>
+                <td>
+                  <div class="coninformation col-md-10">
+                    <label> *76126</label>
+                  </div>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </form>
