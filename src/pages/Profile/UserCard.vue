@@ -9,10 +9,11 @@
       <div class="block block-four"></div>
       <a href="#">
         <img class="avatar" src="img/anime6.png" alt="...">
-        <h5 class="title">*Admin Name</h5>
+        <h5 class="title">*Henwin</h5>
+        <h5 class="title">*hen_win</h5>
       </a>
-      <p class="description">
-        *Admin Position
+      <p class="position">
+        Admin
       </p>
     </div>
     <p></p>
