@@ -27,48 +27,53 @@
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Item"
-                                            addon-left-icon="ni ni-hat-3">
+                                            >
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Name"
-                                            addon-left-icon="ni ni-hat-3">
+                                            >
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Quantity"
-                                            addon-left-icon="ni ni-email-83">
+                                           >
                                 </base-input>
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Category"
-                                            addon-left-icon="ni ni-email-83">
-                                </base-input>
+                               <div class="category">
+                                    <base-dropdown title-classes="btn btn-secondary" title="Category" >
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                    </base-dropdown>
+                                </div>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Price"
-                                            addon-left-icon="ni ni-email-83">
+                                            >
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Weight"
-                                            addon-left-icon="ni ni-email-83">
+                                            >
                                 </base-input>
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Size"
-                                            addon-left-icon="ni ni-email-83">
+                                            >
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="City"
-                                            addon-left-icon="ni ni-hat-3">
+                                            >
                                 </base-input>
-                                  <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Input Image"
-                                            addon-left-icon="ni ni-email-83">
-                                </base-input>
+                               <div class="uploadimage">
+                                    <base-input alternative
+                                                class="mb-3"
+                                                placeholder="Choose Image" >
+                                            
+                                    </base-input>
+                                    <button>Upload</button>
+                               </div>
                                 <div class="text-center">
                                     <base-button type="primary" class="my-4">Update Item</base-button>
                                 </div>
@@ -84,4 +89,22 @@
 export default {};
 </script>
 <style>
+.uploadimage{
+ display: flex;
+ flex-direction: row;
+}
+
+.uploadimage > button{
+ margin-left: 10px;
+ padding-right: 10px;
+ padding-left: 10px;
+ height: 35px;
+ margin-top: 2px;
+}
+
+button {
+    background-color: #344675;
+    color: white;
+    border: none;
+}
 </style>
