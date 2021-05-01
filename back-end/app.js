@@ -25,6 +25,9 @@ redisClient.on("connect", err => {
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var productsRouter = require('./routes/products')
+var categoriesRouter = require('./routes/categories')
+var adminRouter = require('./routes/admin')
 
 var app = express();
 
@@ -39,6 +42,14 @@ app.use(session({
   }
 }))
 
+function checkSession(req, res, next){
+  if(!req.session.username  && req.originalUrl != '/users/register' && req.originalUrl != '/users/login'){
+    return res.redirect(301, '/')       //PERLU PERBAIKAN REDIRECT
+  } else {
+    return next()
+  }
+}
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
@@ -50,7 +61,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/users', checkSession, usersRouter);
+app.use('/products', checkSession, productsRouter);
+app.use('/categories', checkSession, categoriesRouter);
+app.use('/admin', checkSession, adminRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

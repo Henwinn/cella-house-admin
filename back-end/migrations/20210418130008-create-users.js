@@ -8,10 +8,10 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      full_name: {
+      fullName: {
         type: Sequelize.STRING
       },
-      store_name: {
+      storeName: {
         type: Sequelize.STRING
       },
       username: {
@@ -35,7 +35,10 @@ module.exports = {
       password: {
         type: Sequelize.STRING
       },
-      role_id: {
+      profilePic: {
+        type: Sequelize.STRING
+      },
+      roleId: {
         type: Sequelize.INTEGER,
         references: {
           model: "roles",
