@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   users.init({
-    full_name: DataTypes.STRING,
-    store_name: DataTypes.STRING,
+    fullName: DataTypes.STRING,
+    storeName: DataTypes.STRING,
     username: DataTypes.STRING,
     dob: DataTypes.DATE,
     gender: DataTypes.ENUM("Male", "Female", "Other"),
@@ -23,7 +23,8 @@ module.exports = (sequelize, DataTypes) => {
     phone: DataTypes.STRING,
     address: DataTypes.STRING,
     password: DataTypes.STRING,
-    role_id: {
+    profilePic: DataTypes.STRING,
+    roleId: {
       type: DataTypes.STRING,
       references: {
         model: "roles",
@@ -32,8 +33,7 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'users',
-    underscored: true
+    modelName: 'users'
   });
   return users;
 };

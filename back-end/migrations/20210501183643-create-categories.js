@@ -1,15 +1,11 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('roles', {
-      id: {
+    await queryInterface.createTable('categories', {
+      name: {
+        type: Sequelize.STRING,
         allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
-        type: Sequelize.INTEGER
-      },
-      role: {
-        type: Sequelize.STRING
+        primaryKey: true
       },
       createdAt: {
         allowNull: false,
@@ -19,11 +15,9 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    }, {
-      underscored: true
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('roles');
+    await queryInterface.dropTable('categories');
   }
 };

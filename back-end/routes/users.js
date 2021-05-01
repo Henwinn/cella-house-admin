@@ -65,7 +65,7 @@ router.get('/profile', (req, res) => {
       username: req.session.username
     })
   } else {
-    return res.redirect("/")
+    return res.redirect("/login")
   }
 })
 
