@@ -2,7 +2,10 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 const sequelize = require('../models')
+
 const users = sequelize.users
+const dropships = sequelize.dropships
+const products = sequelize.products
 
 require('dotenv').config();
 
@@ -88,6 +91,86 @@ router.post('/profile', (req,res) => {
   .then((user) => {
     req.session.username = user.username
     return res.send("update success")
+  })
+})
+
+//USER CREATE DROPSHIP REQUEST
+router.post('/dropship/submission', (req, res) => {
+  products.findOne({
+    where: {
+      id: req.body.productId
+    }
+  })
+  .then(product => {
+    if(product.qty < req.body.qty){
+      return res.json({message: `qty exceeds product qty: ${product.qty}`})
+    } else {
+      dropships.create({
+        userId: req.session.userId,
+        productId: req.body.productId,
+        qty: req.body.qty,
+        customer: req.body.customer,
+        city: req.body.city,
+        kecamatan: req.body.kecamatan,
+        kelurahan: req.body.kelurahan,
+        postalCode: req.body.postalCode,
+        address: req.body.address,
+        status: 'ON PROCESS'
+      })
+      .then(dropship => {
+          return res.json({dropship})
+      })
+    }
+  })
+  .catch(err => {
+    next(err)
+  })
+})
+
+//GET DROPSHIP MADE BY THIS USER
+router.get('/dropship', (req, res) => {
+  dropships.findAll({
+    where: {
+      userId: req.session.userId
+    }
+  })
+  .then(dropship => {
+    return res.json({dropship})
+  })
+  .catch(err => {
+    next(err)
+  })
+})
+
+//DROPSHIP COMPLETION
+router.post('/dropship', (req, res) => {
+  dropships.update({
+    status: 'COMPLETE'
+  }, {
+    where: {
+      id: req.body.id
+    }
+  })
+  .then(() => {
+    res.json({message: 'dropship complete'})
+  })
+  .catch(err => {
+    next(err)
+  })
+})
+
+//CANCEL DROPSHIP REQUEST
+router.post('/dropship/cancel', (req, res) => {
+  dropships.update({
+    status: 'CANCELED'
+  }, {
+    where: {
+      productId: req.body.productId,
+      status: 'ON PROCESS'
+    }
+  })
+  .then(() => {
+    return res.json({message: 'dropship canceled'})
   })
 })
 

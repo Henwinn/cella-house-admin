@@ -6,14 +6,22 @@ const {
     dropships
 } = sequelize
 
+//GET PRODUCTS NEEDED TO BE APPROVED
 router.get('/approve', (req, res) => {
     products.findAll({
         where: {
             status: 'N'
         }
     })
+    .then(product => {
+        return res.json({product})
+    })
+    .catch(err => {
+        next(err)
+    })
 })
 
+//ADMIN APPROVE PRODUCTS
 router.post('/approve', (req, res) => {
     products.update({
         status: 'A'
@@ -22,11 +30,45 @@ router.post('/approve', (req, res) => {
             id: req.body.id
         }
     })
+    .then(() => {
+        return res.json({message: 'approve success'})
+    })
+    .catch(err => {
+        next(err)
+    })
 })
 
-router.get('/dropship', (req, res) => {
+
+//GET DROPSHIP REQUEST NEEDED TO BE APPROVED
+router.get('/dropship/approve', (req, res) => {
     dropship.findAll({
-        //GET ALL PRODUCT NEEDED TO BE DROPSHIPPED
+        where: {
+            status: 'ON PROCESS'
+        }
+    })
+    .then(dropship => {
+        return res.json({dropship})
+    })
+    .catch(err => {
+        next(err)
+    })
+})
+
+
+//ADMIN APPROVE OR REJECT DROPSHIPS
+router.post('/dropship/approve', (req, res) => {
+    dropships.update({
+        status: req.body.status
+    }, {
+        where: {
+            productId: req.body.productId
+        }
+    })
+    .then(() => {
+        return res.json({message: 'approve success'})
+    })
+    .catch(err => {
+        next(err)
     })
 })
 
