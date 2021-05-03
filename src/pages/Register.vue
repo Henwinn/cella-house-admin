@@ -39,16 +39,25 @@
                                             placeholder="Username"
                                             addon-left-icon="ni ni-hat-3">
                                 </base-input>
+                                 <div class="uploadimage">
+                                    <base-input alternative
+                                                class="mb-3"
+                                                placeholder="Choose Profile Image" >
+                                            
+                                    </base-input>
+                                    <button>Upload</button>
+                               </div>
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Owner's Date of Birth"
                                             addon-left-icon="ni ni-email-83">
                                 </base-input>
-                                 <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Owner's Gender"
-                                            addon-left-icon="ni ni-email-83">
-                                </base-input>
+                                 <div class="gender">
+                                     <input type="radio" id="male" name="gender" value="male">
+                                     <label class ="male" for="male">Male</label> 
+                                     <input type="radio" id="female" name="gender" value="female">
+                                     <label class ="female" for="female">Female</label> 
+                                 </div>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Store Email"
@@ -99,4 +108,36 @@
 export default {};
 </script>
 <style>
+.uploadimage{
+ display: flex;
+ flex-direction: row;
+}
+
+.uploadimage > button{
+ margin-left: 10px;
+ padding-right: 10px;
+ padding-left: 10px;
+ height: 35px;
+ margin-top: 2px;
+}
+
+button {
+    background-color: #344675;
+    color: white;
+    border: none;
+}
+
+.gender {
+    margin-bottom: 10px;
+}
+.gender > .male{
+    margin-left: 10px;
+    margin-right: 20px;
+    
+}
+
+.gender > .female{
+    margin-left: 10px;
+    margin-right: 20px;
+}
 </style>
