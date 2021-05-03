@@ -2,6 +2,13 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 const sequelize = require('../models')
+const multer = require('multer')
+const path = require('path')
+const fs = require('fs')
+
+const upload = multer({
+  dest: "../public/images"
+})
 
 const users = sequelize.users
 const dropships = sequelize.dropships
@@ -14,6 +21,7 @@ router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
 
+/* USER REGISTER */
 router.post('/register', (req,res, next)=>{
   bcrypt.hash(req.body.password, 12, (err, result)=>{
     users.create({
@@ -38,6 +46,7 @@ router.post('/register', (req,res, next)=>{
   })
 })
 
+/* USER LOGIN */
 router.post('/login', (req,res)=>{
   users.findOne({
     where:{
@@ -51,7 +60,8 @@ router.post('/login', (req,res)=>{
       bcrypt.compare(req.body.password, user.password, (err,result)=>{
         if(result){
           req.session.username = user.username
-          req.session.password = user.password
+          req.session.storeName = user.storeName
+          req.session.profilePic = user.profilePic
           return res.send("Logged in")
         } else {
           return res.redirect("back")
@@ -61,7 +71,7 @@ router.post('/login', (req,res)=>{
   })  
 })
 
-//GET PROFILE
+/* GET USER PROFILE */
 router.get('/profile', (req, res) => {
   if(req.session.username == req.query.username){
     return res.json({
@@ -72,29 +82,62 @@ router.get('/profile', (req, res) => {
   }
 })
 
-//UPDATE PROFILE
-router.post('/profile', (req,res) => {
+/* UPDATE USER PROFILE */
+router.post('/profile', upload.single("flProfilePic"), (req,res) => {
+  const target = ''
+  const temp = ''
+  if(!req.file){
+    temp = req.file.path
+    const mimetype = path.extname(req.file.originalname)
+    if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
+      target = path.join(__dirname, `../public/images/${req.session.storeName-Date.now()}${mimetype}`) //rename profilePic file
+    } else {
+      return res.json({message: `file must be picture`})
+    }
+  }
+
   users.update({
-    full_name: req.body.full_name,
-    store_name: req.body.store_name,
+    fullName: req.body.fullName,
+    storeName: req.body.storeName,
     username: req.body.username,
     dob: req.body.dob,
     gender: req.body.gender,
     email: req.body.email,
     phone: req.body.phone,
     address: req.body.address,
+    profilePic: target
   }, {
     where: {
       username: req.query.username
     }
   })
-  .then((user) => {
-    req.session.username = user.username
-    return res.send("update success")
+  .then(async (user) => {
+    if(!req.session.profilePic && target != ''){
+      fs.rename(temp, target, err => {
+        if(err) return res.send(err)
+      })
+      req.session.profilePic = user.profilePic
+    } else if(req.session.profilePic != '' && target != '') {
+      
+      await fs.unlink(req.session.profilePic, err => {
+        if(err) {
+          return res.json({message:err})
+        }
+      })
+
+      fs.rename(temp, target, err => {
+        if(err) return res.send(err)
+      })
+      req.session.profilePic = user.profilePic
+    }
+    return res.json({message: `update success`})
+  })
+  .catch(err => {
+    next(err)
   })
 })
 
-//USER CREATE DROPSHIP REQUEST
+/* USER CREATE DROPSHIP REQUEST */
 router.post('/dropship/submission', (req, res) => {
   products.findOne({
     where: {
@@ -109,13 +152,15 @@ router.post('/dropship/submission', (req, res) => {
         userId: req.session.userId,
         productId: req.body.productId,
         qty: req.body.qty,
-        customer: req.body.customer,
+        customerName: req.body.customerName,
+        customerPhone: req.body.customerPhone,
         city: req.body.city,
         kecamatan: req.body.kecamatan,
         kelurahan: req.body.kelurahan,
         postalCode: req.body.postalCode,
         address: req.body.address,
-        status: 'ON PROCESS'
+        shipmentPrice: req.body.shipmentPrice,
+        status: 'PENDING PAYMENT'
       })
       .then(dropship => {
           return res.json({dropship})
@@ -125,6 +170,11 @@ router.post('/dropship/submission', (req, res) => {
   .catch(err => {
     next(err)
   })
+})
+
+//USER UPLOAD PAYMENT RECEIPT
+router.post('/dropship/upload-payment', (req, res) => {
+
 })
 
 //GET DROPSHIP MADE BY THIS USER
