@@ -9,6 +9,9 @@
       <div class="block block-four"></div>
       <a href="#">
         <img class="avatar" src="img/anime6.png" alt="...">
+         <center>                     
+          <button>Update</button>
+        </center>
         <h5 class="title">*Henwin</h5>
         <h5 class="title">*hen_win</h5>
       </a>
@@ -54,4 +57,9 @@
   }
 </script>
 <style>
+button {
+    background-color: #344675;
+    color: white;
+    border: none;
+}
 </style>
