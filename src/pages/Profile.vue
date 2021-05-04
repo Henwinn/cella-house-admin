@@ -10,6 +10,11 @@
       <div class="block block-four"></div>
       <a href="#">
         <img class="avatar" src="img/anime6.png" alt="...">
+          
+        <center>                     
+          <button>Update</button>
+        </center>
+
         <h5 class="title">*Store Name</h5>
         <h5 class="title">*Owner</h5>
         <h5 class="title">*Username</h5>
@@ -63,4 +68,10 @@
   }
 </script>
 <style>
+button {
+    background-color: #344675;
+    color: white;
+    border: none;
+    margin-bottom: 20px;
+}
 </style>
