@@ -5,8 +5,8 @@
           <div class="table-responsive">
             <div class="search">
                <base-input alternative class="mb-3"
-                placeholder="Search"
-                addon-left-icon="ni ni-hat-3">
+                placeholder="Search Item & Name"
+               >
                 </base-input>
                <base-button tag="a" href="#/formAddItem"
              class="mb-3 mb-sm-0">
@@ -44,7 +44,7 @@
 </template>
 <script>
 import { BaseTable } from "@/components";
-const tableColumns = ["Merchant", "Item", "Name", "Resi", "Status"] ;
+const tableColumns = ["Merchant", "Item", "Name", "Resi", "Send", "Status"] ;
 const tableData = [
   {
     id: 1,
@@ -52,6 +52,7 @@ const tableData = [
     item: "T-shirts",
     name: "Dakota Rice",
     resi: "1244434",
+    send: "Jakarta",
     status: "on progress"
   },
   {
@@ -60,6 +61,7 @@ const tableData = [
     item: "T-shirts",
     name: "Minerva Hooper",
     resi: "1222434",
+    send: "Jakarta",
     status: "on progress"
   },
   {
@@ -68,6 +70,7 @@ const tableData = [
     item: "T-shirts",
     name: "Sage Rodriguez",
     resi: "1235434",
+    send: "Jakarta",
     status: "on progress"
   },
   {
@@ -76,6 +79,7 @@ const tableData = [
     item: "T-shirts",
     name: "Philip Chaney",
     resi: "1244432",
+    send: "Jakarta",
     status: "on progress"
   },
   {
@@ -111,12 +115,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "LIST Dropship",
-        columns: [...tableColumns],
-        data: [...tableData]
-      },
-      table2: {
-        title: "Table on Plain Background",
+        title: "List Dropship",
         columns: [...tableColumns],
         data: [...tableData]
       }
