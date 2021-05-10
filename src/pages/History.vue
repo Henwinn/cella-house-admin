@@ -5,8 +5,8 @@
           <div class="table-responsive">
             <div class="search">
                <base-input alternative class="mb-3"
-                placeholder="Search"
-                addon-left-icon="ni ni-hat-3">
+                placeholder="Search by Name & Item"
+               >
                 </base-input>
                <base-button tag="a"
              class="mb-3 mb-sm-0">
@@ -81,23 +81,14 @@ const tableData = [
   {
     id: 5,
     name: "Doris Greene",
-    salary: "$63,542",
-    country: "Malawi",
-    city: "Feldkirchen in Kärnten"
   },
   {
     id: 6,
     name: 'Mason Porter',
-    salary: '$98,615',
-    country: 'Chile',
-    city: 'Gloucester'
   },
   {
     id: 7,
     name: 'Jon Porter',
-    salary: '$78,615',
-    country: 'Portugal',
-    city: 'Gloucester'
   }
 ];
 
@@ -108,7 +99,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "Simple Table",
+        title: "History Dropship",
         columns: [...tableColumns],
         data: [...tableData]
       }
