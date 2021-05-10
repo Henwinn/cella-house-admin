@@ -5,8 +5,8 @@
           <div class="table-responsive">
             <div class="search">
                <base-input alternative class="mb-3"
-                placeholder="Search by Item & Name"
-                >
+                placeholder="Search"
+                addon-left-icon="ni ni-hat-3">
                 </base-input>
                <base-button tag="a"
              class="mb-3 mb-sm-0">
@@ -75,22 +75,13 @@ const tableData = [
     category: "Clothes",
     price: "20.000",
     weight: "10kg",
-    size: "Small",
-    city: "Guadalajara",
+    size: "",
     image: ""
   
   },
   {
     id: 2,
-    item: "T-Shirts",
     name: "Miguel Gallardo",
-    qty: "10",
-    category: "Clothes",
-    price: "20.000",
-    weight: "10kg",
-    size: "Small",
-    city: "Barcelona",
-    image: ""
   },
   {
     id: 3,
@@ -139,7 +130,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "Toko *Henwin",
+        title: "Toko Henwin contohnya",
         columns: [...tableColumns],
         data: [...tableData]
       }
