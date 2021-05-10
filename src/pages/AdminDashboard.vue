@@ -5,8 +5,8 @@
           <div class="table-responsive">
             <div class="search">
                <base-input alternative class="mb-3"
-                placeholder="Search"
-                addon-left-icon="ni ni-hat-3">
+                placeholder="Search by Item"
+              >
                 </base-input>
                <base-button tag="a" 
              class="mb-3 mb-sm-0">
@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "LIST MERCHANT",
+        title: "List Merchant",
         columns: [...tableColumns],
         data: [...tableData]
       },
