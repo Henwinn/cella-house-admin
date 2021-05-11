@@ -53,10 +53,6 @@
              Search
              </base-button>
   </div>
-    <base-button tag="a" href="#/admin/formAddItem"
-             class="mb-3 mb-sm-0">
-             Add
-    </base-button>
   <base-table-profile-merchant :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
