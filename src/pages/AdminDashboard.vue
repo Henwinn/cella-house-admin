@@ -176,7 +176,7 @@ export default {
         data: [...tableData]
       },
       table2: {
-        title : "blablabla",
+        title : "TEST",
         columns: [...tableColumnsDashboard],
         data: [...tableDataDashboard]
       }
