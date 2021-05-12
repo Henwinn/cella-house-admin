@@ -3,11 +3,11 @@
       <div class="col-12">
         <card :title="table1.title">
           <div class="table-responsive">
-            <base-table-dashboard :data="table2.data"
+            <base-table-approve :data="table2.data"
                         :columns="table2.columns"
                         thead-classes="text-primary"
                         >
-            </base-table-dashboard>
+            </base-table-approve>
 
             <div class="search">
                <base-input alternative class="mb-3"
@@ -49,7 +49,7 @@
 </template>
 <script>
 import BaseTableMerchant from '../components/BaseTableMerchant.vue';
-import BaseTableDashboard from '../components/BaseTableDashboard.vue';
+import BaseTableApprove from '../components/BaseTableApprove.vue';
 
 const tableColumns = ["Merchant"] ;
 const tableData = [
@@ -95,83 +95,36 @@ const tableData = [
     merchant: "Toko Senja",
   }
 ];
-const tableColumnsDashboard = ["Item","Name","Qty","Category", "Price", "Weight","Size","City","image"] ;
+const tableColumnsDashboard = ["image","Name","Item","Qty","Category", "Price", "Weight","Size","City"] ;
 const tableDataDashboard = [
   {
     id: 1,
+    image: "",
+    name: "Toko Henwin misalnya",
     item: "T-Shirts",
-    name: "Jose Carillo",
     qty: "10",
     category: "Clothes",
     price: "20.000",
     weight: "10kg",
     size: "Medium",
-    city: "Barcelona",
-    image: ""
-  
-  },
-  {
-    id: 2,
-    item: "T-Shirts",
-    name: "Miguel Gallardo",
-    qty: "3",
-    category: "Clothes",
-    price: "20.000",
-    weight: "10kg",
-    size: "Small",
-    city: "Guadalajara",
-    image: ""
-  },
-  {
-    id: 3,
-    name: "Antonio Escobar",
-   
-  },
-  {
-    id: 4,
-    name: "Dakota Rice",
-  
-  },
-  {
-    id: 5,
-    name: "Mason Porter",
-  },
-  {
-    id: 6,
-    name: "Doris Greene",
- 
-  },
-  {
-    id: 7,
-    name: "Philip Chaney",
+    city: "Barcelona"
     
-  },
-  {
-    id: 8,
-    name: "Minerva Hooper",
-    
-  },
-  {
-    id: 9,
-     name: "Jon Porter",
- 
-  },
-  {
-    id: 10,
-    name: "Andres Smith",
+  
   }
+ 
+ 
 ];
 
 export default {
   components: {
     BaseTableMerchant,
-    BaseTableDashboard
+    BaseTableApprove
   
   },
   data() {
     return {
       table1: {
-        title: "List Merchant",
+        title: "Approve",
         columns: [...tableColumns],
         data: [...tableData]
       },
