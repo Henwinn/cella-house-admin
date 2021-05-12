@@ -2,13 +2,12 @@
     <div class="row">
       <div class="col-12">
         <card :title="table1.title">
-          <base-table-dashboard :data="table2.data"
+          <div class="table-responsive">
+            <base-table-dashboard :data="table2.data"
                         :columns="table2.columns"
                         thead-classes="text-primary"
                         >
             </base-table-dashboard>
-          <div class="table-responsive">
-            
 
             <div class="search">
                <base-input alternative class="mb-3"
