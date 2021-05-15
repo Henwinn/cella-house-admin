@@ -23,15 +23,25 @@ router.get('/approve', (req, res) => {
 
 //ADMIN APPROVE PRODUCTS
 router.post('/approve', (req, res) => {
+    var status
+    if(req.body.status == 'Approve') {
+        status = 'A'
+    } else {
+        status = 'N'
+    }
     products.update({
-        status: 'A'
+        status: status
     }, {
         where: {
             id: req.body.id
         }
     })
     .then(() => {
-        return res.json({message: 'approve success'})
+        if(status == 'A') {
+            return res.json({message: 'approved'})
+        } else {
+            return res.json({message: 'rejected'})
+        }
     })
     .catch(err => {
         next(err)
@@ -41,9 +51,9 @@ router.post('/approve', (req, res) => {
 
 //GET DROPSHIP REQUEST NEEDED TO BE APPROVED
 router.get('/dropship/approve', (req, res) => {
-    dropship.findAll({
+    dropships.findAll({
         where: {
-            status: 'ON PROCESS'
+            status: 'PENDING APPROVAL'
         }
     })
     .then(dropship => {
@@ -57,15 +67,27 @@ router.get('/dropship/approve', (req, res) => {
 
 //ADMIN APPROVE OR REJECT DROPSHIPS
 router.post('/dropship/approve', (req, res) => {
+    var status
+    if(req.body.status = 'Approve'){
+        status = 'ON PACKAGING'
+    } else {
+        status = 'REJECTED'
+    }
+
     dropships.update({
-        status: req.body.status
+        status: status,
+        note: req.body.note
     }, {
         where: {
             productId: req.body.productId
         }
     })
     .then(() => {
-        return res.json({message: 'approve success'})
+        if(status == 'ON PACKAGING') {
+            return res.json({message: 'approved'})
+        } else {
+            return res.json({message: 'rejected'})
+        }
     })
     .catch(err => {
         next(err)
