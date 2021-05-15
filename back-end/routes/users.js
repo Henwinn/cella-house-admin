@@ -10,6 +10,10 @@ const upload = multer({
   dest: "../public/images"
 })
 
+const pay = multer({
+  dest: "../public/images/invoice"
+})
+
 const users = sequelize.users
 const dropships = sequelize.dropships
 const products = sequelize.products
@@ -130,7 +134,7 @@ router.post('/profile', upload.single("flProfilePic"), (req,res) => {
       })
       req.session.profilePic = user.profilePic
     }
-    return res.json({message: `update success`})
+    return res.json({message: `success`})
   })
   .catch(err => {
     next(err)
@@ -149,13 +153,13 @@ router.post('/dropship/submission', (req, res) => {
       return res.json({message: `qty exceeds product qty: ${product.qty}`})
     } else {
       dropships.create({
-        userId: req.session.userId,
+        storeId: req.session.storeId,
         productId: req.body.productId,
         qty: req.body.qty,
         customerName: req.body.customerName,
         customerPhone: req.body.customerPhone,
-        city: req.body.city,
-        kecamatan: req.body.kecamatan,
+        province: req.body.city,
+        city: req.body.kecamatan,
         kelurahan: req.body.kelurahan,
         postalCode: req.body.postalCode,
         address: req.body.address,
@@ -173,23 +177,66 @@ router.post('/dropship/submission', (req, res) => {
 })
 
 //USER UPLOAD PAYMENT RECEIPT
-router.post('/dropship/upload-payment', (req, res) => {
+router.post('/dropship/upload-payment', pay.single('flPayment') , (req, res) => {
+  var temp = ''
+  var target = ''
 
+  if(req.file){
+    temp = req.file.path
+    const mimetype = path.extname(req.file.originalname)
+    if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
+      target = path.join(__dirname, `../public/images/invoice/${req.session.storeName-Date.now()}_invoice${mimetype}`) //rename profilePic file
+    } else {
+      return res.json({message: `file must be picture`})
+    }
+  } else {
+    return res.json({message: "no file"})
+  }
+
+  dropships.update({
+    paymentInvoice: target,
+    status: 'PENDING APPROVAL'
+  }, {
+    where: {
+      id: req.query.dropshipId
+    }
+  })
+  .then(() => {
+    fs.rename(temp, target, err => {
+      if(err) return res.send(err)
+    })
+  })
+  .catch(err => console.log(err))
 })
 
 //GET DROPSHIP MADE BY THIS USER
 router.get('/dropship', (req, res) => {
-  dropships.findAll({
-    where: {
-      userId: req.session.userId
-    }
-  })
-  .then(dropship => {
-    return res.json({dropship})
-  })
-  .catch(err => {
-    next(err)
-  })
+  if(!req.query.dropshipId){
+    dropships.findAll({
+      where: {
+        storeId: req.session.storeId
+      }
+    })
+    .then(dropship => {
+      return res.json({dropship})
+    })
+    .catch(err => {
+      next(err)
+    })
+  } else {
+    dropships.findOne({
+      where: {
+        storeId: req.session.storeId,
+        id: req.query.dropshipId
+      }
+    })
+    .then(dropship => {
+      return res.json({dropship})
+    })
+    .catch(err => {
+      next(err)
+    })
+  }
 })
 
 //DROPSHIP COMPLETION
@@ -198,11 +245,11 @@ router.post('/dropship', (req, res) => {
     status: 'COMPLETE'
   }, {
     where: {
-      id: req.body.id
+      id: req.query.dropshipId
     }
   })
   .then(() => {
-    res.json({message: 'dropship complete'})
+    res.json({message: 'complete'})
   })
   .catch(err => {
     next(err)
@@ -220,7 +267,7 @@ router.post('/dropship/cancel', (req, res) => {
     }
   })
   .then(() => {
-    return res.json({message: 'dropship canceled'})
+    return res.json({message: 'canceled'})
   })
 })
 

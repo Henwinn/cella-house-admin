@@ -11,6 +11,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       users.hasOne(models.roles)
+      users.belongsToMany(models.customers, {through: models.customers_users})
     }
   };
   users.init({
@@ -24,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
     address: DataTypes.STRING,
     password: DataTypes.STRING,
     profilePic: DataTypes.STRING,
+    status: {
+      type: DataTypes.STRING(1),
+      defaultValue: 'A'
+    },
     roleId: {
       type: DataTypes.STRING,
       references: {
@@ -33,7 +38,8 @@ module.exports = (sequelize, DataTypes) => {
     },
   }, {
     sequelize,
-    modelName: 'users'
+    modelName: 'users',
+    underscored: false
   });
   return users;
 };

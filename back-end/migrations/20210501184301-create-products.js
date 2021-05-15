@@ -6,10 +6,10 @@ module.exports = {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER(5)
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(40)
       },
       qty: {
         type: Sequelize.INTEGER
@@ -18,20 +18,20 @@ module.exports = {
         type: Sequelize.FLOAT
       },
       categoryName: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(20),
         references: {
           model: 'categories',
           key: 'name'
         }
       },
       variant: {
-        type: Sequelize.STRING,
+        type: Sequelize.STRING(20),
       },
       note: {
         type: Sequelize.TEXT
       },
       storeId: {
-        type: Sequelize.INTEGER,
+        type: Sequelize.INTEGER(5),
         references: {
           model: 'users',
           key: 'id'
@@ -49,6 +49,8 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
+    }, {
+      underscored: false
     });
   },
   down: async (queryInterface, Sequelize) => {

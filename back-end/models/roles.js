@@ -17,7 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     role: DataTypes.STRING
   }, {
     sequelize,
-    modelName: 'roles'
+    modelName: 'roles',
+    underscored: false
   });
   return roles;
 };
