@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 const sequelize = require('../models')
+const {op} = require('sequelize')
 const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
@@ -24,6 +25,27 @@ require('dotenv').config();
 router.get('/', function(req, res, next) {
   res.send('respond with a resource');
 });
+
+router.get('/check-username-storename', (req, res, next) => {
+  users.findOne({
+    attributes: ['username', 'storeName'],
+    where: {
+      [op.or]: [
+        { username: req.query.username },
+        { storeName: req.query.storeName }
+      ]
+    }
+  })
+  .then(user => {
+    if(user.username){
+      return res.json({message: 'Username already exists'})
+    } else if(user.storeName) {
+      return res.json({message: 'Store name already exists'})
+    } else {
+      return
+    }
+  })
+})
 
 /* USER REGISTER */
 router.post('/register', (req,res, next)=>{
