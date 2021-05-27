@@ -17,6 +17,7 @@
         </td>
         <td>
           <base-button @click="s"> Withdraw Item</base-button>
+          <base-button @click="s"> Tracking</base-button>
         </td>
        
       </slot>
