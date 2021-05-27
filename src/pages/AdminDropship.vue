@@ -13,10 +13,10 @@
              Search
              </base-button>
             </div>
-            <base-table :data="table1.data"
+            <base-table-dropship :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary">
-            </base-table>
+            </base-table-dropship>
           </div>
         </card>
       </div>
@@ -43,7 +43,7 @@
     </div>
 </template>
 <script>
-import { BaseTable } from "@/components";
+import BaseTableDropship from '../components/BaseTableDropship.vue';
 const tableColumns = ["Merchant", "Item", "Name", "Resi", "Send", "Status"] ;
 const tableData = [
   {
@@ -110,7 +110,7 @@ const tableData = [
 
 export default {
   components: {
-    BaseTable
+    BaseTableDropship
   },
   data() {
     return {
