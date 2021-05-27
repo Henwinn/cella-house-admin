@@ -16,7 +16,7 @@
           
         </td>
         <td>
-          <base-button @click="s"> Delete</base-button>
+          <base-button @click="s"> Withdraw Item</base-button>
         </td>
        
       </slot>
