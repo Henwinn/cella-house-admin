@@ -14,6 +14,7 @@ import ProfileMerchant from "@/pages/ProfileMerchant.vue";
 import AdminUpdateFormMerchant from "@/pages/AdminUpdateFormMerchant.vue";
 import EditProfileForm from "@/pages/Profile/EditProfileForm.vue";
 import EditProfileAdminForm from "@/pages/Profile/EditProfileAdminForm.vue";
+import ListApproval from "@/pages/ListApproval.vue";
 
 
 const Dashboard = () => import("@/pages/Dashboard.vue");
@@ -141,7 +142,12 @@ const routes = [
         path: "editProfileAdmin",
         name: "editProfileAdmin",
         component: EditProfileAdminForm
-      }
+      },
+      {
+        path: "listApproval",
+        name: "listApproval",
+        component: ListApproval
+      }      
     ]
   },
   { path: "*", component: NotFound },
