@@ -3,12 +3,6 @@
       <div class="col-12">
         <card :title="table1.title">
           <div class="table-responsive">
-            <base-table-approve :data="table2.data"
-                        :columns="table2.columns"
-                        thead-classes="text-primary"
-                        >
-            </base-table-approve>
-
             <div class="search">
                <base-input alternative class="mb-3"
                 placeholder="Search by Item"
@@ -49,7 +43,6 @@
 </template>
 <script>
 import BaseTableMerchant from '../components/BaseTableMerchant.vue';
-import BaseTableApprove from '../components/BaseTableApprove.vue';
 
 const tableColumns = ["Merchant"] ;
 const tableData = [
@@ -95,43 +88,19 @@ const tableData = [
     merchant: "Toko Senja",
   }
 ];
-const tableColumnsDashboard = ["image","Name","Item","Qty","Category", "Price", "Weight","Size","City"] ;
-const tableDataDashboard = [
-  {
-    id: 1,
-    image: "",
-    name: "Toko Henwin misalnya",
-    item: "T-Shirts",
-    qty: "10",
-    category: "Clothes",
-    price: "20.000",
-    weight: "10kg",
-    size: "Medium",
-    city: "Barcelona"
-    
-  
-  }
  
- 
-];
 
 export default {
   components: {
     BaseTableMerchant,
-    BaseTableApprove
   
   },
   data() {
     return {
       table1: {
-        title: "Approve",
+        title: "List Merchant",
         columns: [...tableColumns],
         data: [...tableData]
-      },
-      table2: {
-        title : "TEST Lagi",
-        columns: [...tableColumnsDashboard],
-        data: [...tableDataDashboard]
       }
     };
   }
