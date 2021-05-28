@@ -23,12 +23,7 @@
     <p class="card-description">
       {{user.description}}
     </p>
-    <center>
-    <base-button tag="a" href="#/admin/formUpdateMerchant"
-             class="mb-3 mb-sm-0">
-             Update Profile Merchant
-             </base-button>
-    </center>
+  
     <div slot="footer" class="button-container">
       <base-button icon round class="btn-facebook">
         <i class="fab fa-facebook"></i>
