@@ -84,27 +84,27 @@ const tableData = [
   },
   {
     id: 5,
-    merchant: "Toko Henwin",
+    merchant: "Toko Sejahtera",
   },
   {
     id: 6,
-    merchant: "Toko Henwin",
+    merchant: "Toko Sejahtera",
   },
   {
     id: 7,
-    merchant: "Toko Henwin",
+    merchant: "Toko Makmur",
   },
   {
     id: 8,
-    merchant: "Toko Henwin",
+    merchant: "Toko Makmur",
   },
   {
     id: 9,
-    merchant: "Toko Henwin",
+    merchant: "Toko Jaya",
   },
   {
     id: 10,
-    merchant: "Toko Henwin",
+    merchant: "Toko Sentosa",
   }
 ];
 
