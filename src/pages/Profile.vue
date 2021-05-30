@@ -15,12 +15,12 @@
           <button>Update</button>
         </center>
 
-        <h5 class="title">*Store Name</h5>
-        <h5 class="title">*Owner</h5>
-        <h5 class="title">*Username</h5>
-        <h5 class="title">*Store Email</h5>
-        <h5 class="title">*Store Address</h5>
-        <h5 class="title">*Store Number</h5>
+        <h5 class="title">*Toko Henwin*(Store Name)</h5>
+        <h5 class="title">*Henwin*(Owner)</h5>
+        <h5 class="title">*Henwin91*(Username)</h5>
+        <h5 class="title">*henwin@gmail.com*(Store Email)</h5>
+        <h5 class="title">*Jl A No 21*(Store Address)</h5>
+        <h5 class="title">*081615555222*(Store Number)</h5>
       </a>
       <p class="description">
         *Store Description
