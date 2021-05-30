@@ -139,7 +139,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "Toko *Henwin",
+        title: "DASHBOARD *TOKO HENWIN*",
         columns: [...tableColumns],
         data: [...tableData]
       }
