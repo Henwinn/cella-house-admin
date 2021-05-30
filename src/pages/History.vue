@@ -99,7 +99,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "History Dropship",
+        title: "DROPSHIPS HISTORY *TOKO HENWIN*",
         columns: [...tableColumns],
         data: [...tableData]
       }
