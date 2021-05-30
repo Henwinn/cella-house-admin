@@ -40,7 +40,19 @@ const tableData= [
   {
     id: 1,
     image: "",
-    name: "Toko Henwin misalnya",
+    name: "Toko Henwin",
+    item: "T-Shirts",
+    qty: "10",
+    category: "Clothes",
+    price: "20.000",
+    weight: "10kg",
+    size: "Medium",
+    city: "Barcelona",
+  },
+  {
+    id: 2,
+    image: "",
+    name: "Toko Sejahtera",
     item: "T-Shirts",
     qty: "10",
     category: "Clothes",
@@ -48,8 +60,6 @@ const tableData= [
     weight: "10kg",
     size: "Medium",
     city: "Barcelona"
-    
-  
   }
  
  
