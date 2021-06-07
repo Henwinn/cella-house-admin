@@ -15,6 +15,7 @@ import AdminUpdateFormMerchant from "@/pages/AdminUpdateFormMerchant.vue";
 import EditProfileForm from "@/pages/Profile/EditProfileForm.vue";
 import EditProfileAdminForm from "@/pages/Profile/EditProfileAdminForm.vue";
 import ListApproval from "@/pages/ListApproval.vue";
+import Tracking from "@/pages/Tracking.vue";
 
 
 const Dashboard = () => import("@/pages/Dashboard.vue");
@@ -80,6 +81,11 @@ const routes = [
         path: "editProfile",
         name: "editProfile",
         component: EditProfileForm
+      },
+      {
+        path: "tracking",
+        name: "tracking",
+        component: Tracking
       }
     ],
     
@@ -147,7 +153,12 @@ const routes = [
         path: "listApproval",
         name: "listApproval",
         component: ListApproval
-      }      
+      },
+      {
+        path: "tracking",
+        name: "tracking",
+        component: Tracking
+      }    
     ]
   },
   { path: "*", component: NotFound },
