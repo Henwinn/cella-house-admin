@@ -17,7 +17,7 @@
         </td>
         <td>
           <base-button @click="s" > Update </base-button>
-          <base-button @click="s"> Tracking</base-button>
+          <base-button tag="a" href="#/admin/tracking"> Tracking</base-button>
         </td>
        
       </slot>
