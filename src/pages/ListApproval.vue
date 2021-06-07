@@ -73,7 +73,7 @@ export default {
   data() {
     return {
       table1: {
-        title: "List Approval",
+        title: "List Approvals",
         columns: [...tableColumns],
         data: [...tableData]
       }
