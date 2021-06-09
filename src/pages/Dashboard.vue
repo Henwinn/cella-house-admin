@@ -1,8 +1,9 @@
 <template>
     <div class="row">
       <div class="col-12">
-        <card :title="table1.title">
+        <card>
           <div class="table-responsive">
+            <h1>Dashboard</h1>
             <div class="search">
                <base-input alternative class="mb-3"
                 placeholder="Search by Item & Name"
@@ -21,7 +22,45 @@
              class="mb-3 mb-sm-0">
              Export Data
              </base-button>
-            <base-table-dashboard :data="table1.data"
+             <table class="table is-striped is-bordered mt-2 is-fullwidth">
+               <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Category Name</th>
+                    <th>Variant</th>
+                    <th>Note</th>
+                    <th>Status</th>
+                    <th class="has-text-centered">Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+                   
+                    <tr v-for="product in products" :key="product.id">
+                      <td>{{ product.name }}</td>
+                      <td>{{ product.qty }}</td>
+                      <td>{{ product.price }}</td>
+                      <td>{{ product.categoryName }}</td>
+                      <td>{{ product.variant }}</td>
+                      <td>{{ product.note }}</td>
+                      <td>{{ product.status }}</td>
+                      <td class="has-text-centered">
+                        <router-link
+                          :to="{ name: 'Edit', params: { id: product.id } }"
+                          class="button is-info is-small"
+                          >Edit</router-link
+                        >
+                        <a
+                          class="button is-danger is-small"
+                          @click="deleteProduct(product.id)"
+                          >Delete</a
+                        >
+                      </td>
+                    </tr>
+                </tbody>
+             </table>
+            <!-- <base-table-dashboard :data="table1.data"
                         :columns="table1.columns"
                         thead-classes="text-primary"
                         >
@@ -35,7 +74,7 @@
                             {{props.formattedRow[props.column.field]}}
                         </span>
                       </template>
-            </base-table-dashboard>
+            </base-table-dashboard> -->
             
           </div>
         </card>
@@ -64,87 +103,110 @@
     
 </template>
 <script>
+// import BaseTableDashboard from '../components/BaseTableDashboard.vue';
+import axios from "axios";
 import BaseTableDashboard from '../components/BaseTableDashboard.vue';
-const tableColumns = ["Item","Name","Qty","Category", "Price", "Weight","Size","City","image"] ;
-const tableData = [
-  {
-    id: 1,
-    item: "T-Shirts",
-    name: "Jose Carillo",
-    qty: "10",
-    category: "Clothes",
-    price: "20.000",
-    weight: "10kg",
-    size: "Medium",
-    city: "Barcelona",
-    image: ""
+// const tableColumns = ["Item","Name","Qty","Category", "Price", "Weight","Size","City","image"] ;
+// const tableData = [
+//   {
+//     id: 1,
+//     item: "T-Shirts",
+//     name: "Jose Carillo",
+//     qty: "10",
+//     category: "Clothes",
+//     price: "20.000",
+//     weight: "10kg",
+//     size: "Medium",
+//     city: "Barcelona",
+//     image: ""
   
-  },
-  {
-    id: 2,
-    item: "T-Shirts",
-    name: "Miguel Gallardo",
-    qty: "3",
-    category: "Clothes",
-    price: "20.000",
-    weight: "10kg",
-    size: "Small",
-    city: "Guadalajara",
-    image: ""
-  },
-  {
-    id: 3,
-    name: "Antonio Escobar",
+//   },
+//   {
+//     id: 2,
+//     item: "T-Shirts",
+//     name: "Miguel Gallardo",
+//     qty: "3",
+//     category: "Clothes",
+//     price: "20.000",
+//     weight: "10kg",
+//     size: "Small",
+//     city: "Guadalajara",
+//     image: ""
+//   },
+//   {
+//     id: 3,
+//     name: "Antonio Escobar",
    
-  },
-  {
-    id: 4,
-    name: "Dakota Rice",
+//   },
+//   {
+//     id: 4,
+//     name: "Dakota Rice",
   
-  },
-  {
-    id: 5,
-    name: "Mason Porter",
-  },
-  {
-    id: 6,
-    name: "Doris Greene",
+//   },
+//   {
+//     id: 5,
+//     name: "Mason Porter",
+//   },
+//   {
+//     id: 6,
+//     name: "Doris Greene",
  
-  },
-  {
-    id: 7,
-    name: "Philip Chaney",
+//   },
+//   {
+//     id: 7,
+//     name: "Philip Chaney",
     
-  },
-  {
-    id: 8,
-    name: "Minerva Hooper",
+//   },
+//   {
+//     id: 8,
+//     name: "Minerva Hooper",
     
-  },
-  {
-    id: 9,
-     name: "Jon Porter",
+//   },
+//   {
+//     id: 9,
+//      name: "Jon Porter",
  
-  },
-  {
-    id: 10,
-    name: "Andres Smith",
-  }
-];
+//   },
+//   {
+//     id: 10,
+//     name: "Andres Smith",
+//   }
+// ];
 
+// export default {
+//   components: {
+//     BaseTableDashboard
+//   },
+//   data() {
+//     return {
+//       table1: {
+//         title: "DASHBOARD *TOKO HENWIN*",
+//         columns: [...tableColumns],
+//         data: [...tableData]
+//       }
+//     };
+//   }
+// };
 export default {
-  components: {
-    BaseTableDashboard
-  },
-  data() {
-    return {
-      table1: {
-        title: "DASHBOARD *TOKO HENWIN*",
-        columns: [...tableColumns],
-        data: [...tableData]
-      }
-    };
-  }
+    name:"productsList",
+    data() {
+      return {
+        products: [],
+      };
+    },
+    created() {
+      this.getProducts();
+    },
+    methods: {
+      async getProducts() {
+        try {
+          const response = await axios.get("http://localhost:5000/products");
+          this.products = response.data;
+        } catch (err) {
+          console.log(err);
+        }
+      },
+    }
 };
 </script>
 <style>
