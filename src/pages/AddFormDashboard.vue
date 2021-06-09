@@ -1,14 +1,6 @@
 <template>
     <section class="section section-shaped section-lg my-0">
         <div class="shape shape-style-1 bg-gradient-default">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
         </div>
         <div class="container pt-lg-md">
             <div class="row justify-content-center">
@@ -19,66 +11,69 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                Dropship
+                               Add Item
                             </div>
                         </template>
                         <template>
                             <div class="text-center text-muted mb-4">
-                                <small>Input Your Dropship</small>
+                                <small>Input Your Item</small>
                             </div>
                             <form role="form">
-                                 <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Item"
-                                            >
-                                </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Name"
+                                            v-model="itemName"
                                            >
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Quantity"
+                                            v-model="qty"
                                           >
                                 </base-input>
-                                <div class="category">
+                                 <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Price"
+                                            v-model="price"
+                                      >
+                                </base-input>
+                                <!-- <div class="category">
                                     <base-dropdown title-classes="btn btn-secondary" title="Category" >
                                             <a class="dropdown-item" href="#">Action</a>
                                             <a class="dropdown-item" href="#">Another action</a>
                                             <a class="dropdown-item" href="#">Something else here</a>
                                     </base-dropdown>
-                                </div>
-                                <base-input alternative
+                                </div> -->
+                                 <base-input alternative
                                             class="mb-3"
-                                            placeholder="Price"
+                                            placeholder="Category"
+                                            v-model="category"
                                       >
                                 </base-input>
+                               
                                 <base-input alternative
                                             class="mb-3"
-                                            placeholder="Weight"
+                                            placeholder="Variant"
+                                            v-model="variant"
                                           >
                                 </base-input>
                                  <base-input alternative
                                             class="mb-3"
-                                            placeholder="Size"
+                                            placeholder="Note"
+                                            v-model="note"
                                            >
                                 </base-input>
-                                 <base-input alternative
-                                            class="mb-3"
-                                            placeholder="City"
-                                            >
-                                </base-input>
-                               <div class="uploadimage">
+                               <!-- <div class="uploadimage">
                                     <base-input alternative
                                                 class="mb-3"
                                                 placeholder="Choose Image" >
                                             
                                     </base-input>
                                     <button>Upload</button>
-                               </div>
+                               </div> -->
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">Add Dropship</base-button>
+                                    <!-- <base-button type="primary" class="my-4" @click="saveItem">Add Item</base-button> -->
+                                    <button class="button is success" @click="saveItem">    Add </button>
                                 </div>
                             </form>
                         </template>
@@ -89,7 +84,43 @@
     </section>
 </template>
 <script>
-export default {};
+import axios from "axios";
+export default {
+    name: "AddItem",
+    data() {
+        return {
+            itemName: "",
+            qty: "",
+            price: "",
+            category: "",
+            variant: "",
+            note: "",
+        };
+    },
+    methods: {
+        async saveItem(){
+            try {
+                await axios.post("http://localhost:5000/products", {
+                    name: this.itemName,
+                    qty: this.qty,
+                    price: this.price,
+                    categoryName: this.category,
+                    variant: this.variant,
+                    note: this.note
+                });
+                this.itemName = "";
+                this.qty = "";
+                this.price = "";
+                this.category = "";
+                this.variant = "";
+                this.note = "";
+                this.$router.push("dashboard");
+            }catch (err) {
+                console.log(err);
+            }
+        },
+    },
+};
 </script>
 <style>
 .uploadimage{
