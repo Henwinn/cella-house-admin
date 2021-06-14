@@ -18,7 +18,7 @@
              class="mb-3 mb-sm-0">
              Add
              </base-button>
-             <base-button tag="a" 
+             <base-button tag="a"
              class="mb-3 mb-sm-0">
              Export Data
              </base-button>
@@ -36,7 +36,7 @@
                   </tr>
                </thead>
                <tbody>
-                   
+
                     <tr v-for="product in products" :key="product.id">
                       <td>{{ product.name }}</td>
                       <td>{{ product.qty }}</td>
@@ -75,11 +75,11 @@
                         </span>
                       </template>
             </base-table-dashboard> -->
-            
+
           </div>
         </card>
       </div>
-      
+
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
@@ -100,12 +100,13 @@
         </ul>
       </nav>
     </div>
-    
+
 </template>
 <script>
 // import BaseTableDashboard from '../components/BaseTableDashboard.vue';
 import axios from "axios";
 import BaseTableDashboard from '../components/BaseTableDashboard.vue';
+import BaseButton from '../components/BaseButton.vue';
 // const tableColumns = ["Item","Name","Qty","Category", "Price", "Weight","Size","City","image"] ;
 // const tableData = [
 //   {
@@ -119,7 +120,7 @@ import BaseTableDashboard from '../components/BaseTableDashboard.vue';
 //     size: "Medium",
 //     city: "Barcelona",
 //     image: ""
-  
+
 //   },
 //   {
 //     id: 2,
@@ -136,12 +137,12 @@ import BaseTableDashboard from '../components/BaseTableDashboard.vue';
 //   {
 //     id: 3,
 //     name: "Antonio Escobar",
-   
+
 //   },
 //   {
 //     id: 4,
 //     name: "Dakota Rice",
-  
+
 //   },
 //   {
 //     id: 5,
@@ -150,22 +151,22 @@ import BaseTableDashboard from '../components/BaseTableDashboard.vue';
 //   {
 //     id: 6,
 //     name: "Doris Greene",
- 
+
 //   },
 //   {
 //     id: 7,
 //     name: "Philip Chaney",
-    
+
 //   },
 //   {
 //     id: 8,
 //     name: "Minerva Hooper",
-    
+
 //   },
 //   {
 //     id: 9,
 //      name: "Jon Porter",
- 
+
 //   },
 //   {
 //     id: 10,
@@ -188,10 +189,11 @@ import BaseTableDashboard from '../components/BaseTableDashboard.vue';
 //   }
 // };
 export default {
+  components: { BaseButton },
     name:"productsList",
     data() {
       return {
-        products: [],
+        products: []
       };
     },
     created() {
@@ -200,16 +202,17 @@ export default {
     methods: {
       async getProducts() {
         try {
-          const response = await axios.get("http://localhost:3000/products");
+          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.products = response.data;
         } catch (err) {
           console.log(err);
+          alert('err: ' + err)
         }
-      },
+      }
     }
 };
 </script>
 <style>
-  
+
 
 </style>
