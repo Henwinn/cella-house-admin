@@ -23,7 +23,26 @@ require('dotenv').config();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('respond with a resource');
+  // res.send('respond with a resource');
+  products.findAll({
+        where: {
+            storeId: 7,
+            status: 'A'
+        },
+        include: {
+            model: sequelize.categories,
+            attributes: ['name']
+        },
+        attributes: {
+            excldue: ['storeName', 'variant', 'note']
+        }
+    })
+    .then(product => {
+      res.json(product)
+    })
+    .catch(err => {
+      res.send(err)
+  })
 });
 
 router.get('/check-username-storename', (req, res, next) => {
@@ -51,8 +70,8 @@ router.get('/check-username-storename', (req, res, next) => {
 router.post('/register', (req,res, next)=>{
   bcrypt.hash(req.body.password, 12, (err, result)=>{
     users.create({
-      full_name: req.body.full_name,
-      store_name: req.body.store_name,
+      fullName: req.body.full_name,
+      storeName: req.body.store_name,
       username: req.body.username,
       dob: req.body.dob,
       gender: req.body.gender,
@@ -85,6 +104,7 @@ router.post('/login', (req,res)=>{
     } else {
       bcrypt.compare(req.body.password, user.password, (err,result)=>{
         if(result){
+          req.session.storeId = user.id
           req.session.username = user.username
           req.session.storeName = user.storeName
           req.session.profilePic = user.profilePic
