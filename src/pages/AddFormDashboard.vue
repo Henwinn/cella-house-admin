@@ -100,7 +100,7 @@ export default {
     methods: {
         async saveItem(){
             try {
-                await axios.post("http://localhost:5000/products", {
+                await axios.post("http://localhost:3000/products", {
                     name: this.itemName,
                     qty: this.qty,
                     price: this.price,
