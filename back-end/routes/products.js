@@ -6,7 +6,7 @@ const products = sequelize.products
 router.get('/', (req,res) => {
     products.findAll({
         where: {
-            storeName: req.session.storeName,
+            storeId: req.session.storeId,
             status: 'A'
         },
         include: {
@@ -16,6 +16,12 @@ router.get('/', (req,res) => {
         attributes: {
             excldue: ['storeName', 'variant', 'note']
         }
+    })
+    .then(product => {
+        res.json(product)
+    })
+    .catch(err => {
+        console.log(err)
     })
 })
 
