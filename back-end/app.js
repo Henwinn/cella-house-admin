@@ -7,6 +7,7 @@ const redis = require('redis')
 const session = require('express-session')
 const connectRedis = require('connect-redis')
 const redisStore = connectRedis(session)
+const cors = require('cors')
 
 require('dotenv').config();
 
@@ -30,6 +31,8 @@ var categoriesRouter = require('./routes/categories')
 var adminRouter = require('./routes/admin')
 
 var app = express();
+
+app.use(cors())
 
 app.use(session({
   store: new redisStore({client: redisClient}),
@@ -61,10 +64,10 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', checkSession, usersRouter);
-app.use('/products', checkSession, productsRouter);
-app.use('/categories', checkSession, categoriesRouter);
-app.use('/admin', checkSession, adminRouter)
+app.use('/users', usersRouter); //checkSession
+app.use('/products', productsRouter); //checkSession
+app.use('/categories', categoriesRouter); //checkSession
+app.use('/admin', adminRouter) //checkSession
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
