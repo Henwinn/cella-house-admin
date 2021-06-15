@@ -26,7 +26,7 @@
                                 <base-input alternative
                                             type="password"
                                             placeholder="Password"
-                                            v-model="pasword"
+                                            v-model="password"
                                          >
                                 </base-input>
                                 <base-checkbox>
