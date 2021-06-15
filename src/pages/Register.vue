@@ -1,14 +1,6 @@
 <template>
     <section class="section section-shaped section-lg my-0">
         <div class="shape shape-style-1 bg-gradient-default">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
         </div>
         <div class="container pt-lg-md">
             <div class="row justify-content-center">
@@ -19,38 +11,45 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Register</small>
+                               REGISTER
                             </div>
                         </template>
                         <template>
+                            <div class="text-center text-muted mb-4">
+                                <small>Create Account</small>
+                            </div>
                             <form role="form">
                                 <base-input alternative
                                             class="mb-3"
-                                            placeholder="Owner's Full Name"
-                                            addon-left-icon="ni ni-hat-3">
+                                            placeholder="Full Name"
+                                            v-model="fullName"
+                                           >
                                 </base-input>
-                                 <base-input alternative
+                              <base-input alternative
                                             class="mb-3"
                                             placeholder="Store Name"
-                                            addon-left-icon="ni ni-hat-3">
+                                            v-model="storeName"
+                                           >
                                 </base-input>
                                   <base-input alternative
                                             class="mb-3"
                                             placeholder="Username"
-                                            addon-left-icon="ni ni-hat-3">
+                                            v-model="userName"
+                                           >
                                 </base-input>
-                                 <div class="uploadimage">
+                                 <!-- <div class="uploadimage">
                                     <base-input alternative
                                                 class="mb-3"
                                                 placeholder="Choose Profile Image" >
                                             
                                     </base-input>
                                     <button>Upload</button>
-                               </div>
+                               </div> -->
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Owner's Date of Birth"
-                                            addon-left-icon="ni ni-email-83">
+                                            v-model="dob"
+                                            >
                                 </base-input>
                                  <div class="gender">
                                      <input type="radio" id="male" name="gender" value="male">
@@ -61,27 +60,33 @@
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Store Email"
-                                            addon-left-icon="ni ni-email-83">
+                                            v-model="storeEmail"
+                                            >
+                                            
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Store Phone Number"
-                                            addon-left-icon="ni ni-email-83">
+                                            v-model="storePhoneNum"
+                                            >
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Store Address"
-                                            addon-left-icon="ni ni-email-83">
+                                            v-model="storeAddress"
+                                            >
                                 </base-input>
                                 <base-input alternative
                                             type="password"
                                             placeholder="Password"
-                                            addon-left-icon="ni ni-lock-circle-open">
+                                            v-model="password"
+                                            >
                                 </base-input>
                                  <base-input alternative
                                             type="password"
                                             placeholder="Confirm Password"
-                                            addon-left-icon="ni ni-lock-circle-open">
+                                            v-model="confpassword"
+                                           >
                                 </base-input>
                                 <div class="text-muted font-italic">
                                     <small>password strength:
@@ -105,7 +110,25 @@
     </section>
 </template>
 <script>
-export default {};
+import axios from "axios";
+export default {
+    data() {
+        return {
+            fullName: "",
+            storeName: "",
+            userName:"",
+           dob: "",
+           storeEmail: "",
+         storePhoneNum: "",
+          storeAddress: "",
+           password: "",
+          confpassword: "",
+           
+        };
+    },
+    methods: {
+    },
+};
 </script>
 <style>
 .uploadimage{
@@ -127,17 +150,4 @@ button {
     border: none;
 }
 
-.gender {
-    margin-bottom: 10px;
-}
-.gender > .male{
-    margin-left: 10px;
-    margin-right: 20px;
-    
-}
-
-.gender > .female{
-    margin-left: 10px;
-    margin-right: 20px;
-}
 </style>
