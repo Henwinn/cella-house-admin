@@ -63,6 +63,12 @@
                                             v-model="note"
                                            >
                                 </base-input>
+                                <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Status"
+                                            v-model="status"
+                                           >
+                                </base-input>
                                <!-- <div class="uploadimage">
                                     <base-input alternative
                                                 class="mb-3"
@@ -95,18 +101,20 @@ export default {
             category: "",
             variant: "",
             note: "",
+            status: "",
         };
     },
     methods: {
         async saveItem(){
             try {
-                await axios.post("http://localhost:3000/products", {
+                await axios.post("http://localhost:3000/users", {
                     name: this.itemName,
                     qty: this.qty,
                     price: this.price,
                     categoryName: this.category,
                     variant: this.variant,
-                    note: this.note
+                    note: this.note,
+                    status: this.status
                 });
                 this.itemName = "";
                 this.qty = "";
@@ -114,7 +122,8 @@ export default {
                 this.category = "";
                 this.variant = "";
                 this.note = "";
-                this.$router.push("dashboard");
+                this.status = "";
+                this.$router.push("/dashboard");
             }catch (err) {
                 console.log(err);
             }
