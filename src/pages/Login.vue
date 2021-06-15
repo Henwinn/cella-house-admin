@@ -20,12 +20,14 @@
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Email"
-                                            addon-left-icon="ni ni-email-83">
+                                            v-model="email"
+                                       >
                                 </base-input>
                                 <base-input alternative
                                             type="password"
                                             placeholder="Password"
-                                            addon-left-icon="ni ni-lock-circle-open">
+                                            v-model="pasword"
+                                         >
                                 </base-input>
                                 <base-checkbox>
                                     Remember me
@@ -57,7 +59,12 @@
 import axios from "axios";
 
 export default {
-    
+    data(){
+        return{
+            email: "",
+            password: "",
+        }
+    }
 };
 </script>
 <style>
