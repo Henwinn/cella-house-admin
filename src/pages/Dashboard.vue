@@ -25,6 +25,7 @@
              <table class="table is-striped is-bordered mt-2 is-fullwidth">
                <thead>
                   <tr>
+                    <th>Id</th>
                     <th>Product Name</th>
                     <th>Quantity</th>
                     <th>Price</th>
@@ -38,6 +39,7 @@
                <tbody>
 
                     <tr v-for="product in products" :key="product.id">
+                      <td>{{ product.id }}</td>
                       <td>{{ product.name }}</td>
                       <td>{{ product.qty }}</td>
                       <td>{{ product.price }}</td>
@@ -51,11 +53,12 @@
                           class="button is-info is-small"
                           >Edit</router-link
                         >
-                        <a
+                        <!-- <a
                           class="button is-danger is-small"
                           @click="deleteProduct(product.id)"
-                          >Delete</a
-                        >
+                          >Delete</a> -->
+                            <button class="button is-success" @click="deleteProduct(product.id)">Delete</button>
+                        
                       </td>
                     </tr>
                 </tbody>
@@ -207,6 +210,14 @@ export default {
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
+        }
+      },
+      async deleteProduct(id) {
+        try {
+          await axios.delete("http://localhost:3000/users/${id}");
+          this.getProducts();
+        }catch (err) {
+          console.log(err);
         }
       }
     }
