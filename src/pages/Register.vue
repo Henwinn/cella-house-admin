@@ -111,19 +111,21 @@
 </template>
 <script>
 import axios from "axios";
+import DatePicker from 'vue2-datepicker';
+import 'vue2-datepicker/index.css';
 export default {
+    components: { DatePicker },
     data() {
         return {
             fullName: "",
             storeName: "",
             userName:"",
-           dob: "",
+           dob: null,
            storeEmail: "",
          storePhoneNum: "",
           storeAddress: "",
            password: "",
-          confpassword: "",
-           
+          confpassword: "",  
         };
     },
     methods: {
