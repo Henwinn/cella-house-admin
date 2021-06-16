@@ -79,13 +79,13 @@ router.post('/register', (req,res, next)=>{
       phone: req.body.phone,
       address: req.body.address,
       password: result,
-      role_id: 2
+      roleId: 2
     })
     .then(() => {
       res.send("success")
     })
     .catch(err => {
-      res.send("register failed")
+      res.send("failed")
       next(err)
     })
   })
@@ -100,7 +100,7 @@ router.post('/login', (req,res)=>{
   })
   .then((user)=>{
     if(!user){
-      return res.status(401).send("user doesn't exists")
+      return res.send('fail')
     } else {
       bcrypt.compare(req.body.password, user.password, (err,result)=>{
         if(result){
@@ -108,9 +108,10 @@ router.post('/login', (req,res)=>{
           req.session.username = user.username
           req.session.storeName = user.storeName
           req.session.profilePic = user.profilePic
-          return res.send("Logged in")
+          // return res.redirect('http://localhost:8081/#/dashboard')
+          return res.send('success')
         } else {
-          return res.redirect("back")
+          return res.send('fail')
         }
       })
     }
@@ -310,6 +311,18 @@ router.post('/dropship/cancel', (req, res) => {
   })
   .then(() => {
     return res.json({message: 'canceled'})
+  })
+})
+
+router.post('/forgot-password', (req, res) => {
+  bcrypt.hash(req.body.password, 12, (err, result) => {
+    users.update({
+      password: result
+    }, {
+      where: {
+        id: req.query.userid
+      }
+    })
   })
 })
 
