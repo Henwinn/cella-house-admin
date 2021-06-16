@@ -52,18 +52,26 @@
                                             >
                                 </base-input> -->
 
-                                <div>
+                                <div class="dob">
                                     <date-picker v-model="dob" valueType="format" placeholder="Birth of date"></date-picker>
                                     <br><br>
                                      
                                 </div>
 
                                  <div class="gender">
-                                     Gender<br>
-                                     <input type="radio" id="male" name="gender" value="male">
-                                     <label class ="male" for="male">Male</label> 
-                                     <input type="radio" id="female" name="gender" value="female">
-                                     <label class ="female" for="female">Female</label> 
+                                     <div>
+                                        <label class = "lbl-gender">Gender</label>
+                                     </div>
+                                     <div class="radio-btn">
+                                         <span class="male-radio-btn">
+                                            <input type="radio" id="male" name="gender" value="male">
+                                            <label class ="male" for="male">Male</label> 
+                                         </span>
+                                         <span class="female-radio-btn">
+                                            <input type="radio" id="female" name="gender" value="female">
+                                            <label class ="female" for="female">Female</label> 
+                                         </span>
+                                     </div>
                                  </div>
                                 <base-input alternative
                                             class="mb-3"
@@ -150,6 +158,32 @@ button {
     background-color: #344675;
     color: white;
     border: none;
+}
+.mx-input {
+    background-color: #26293D;
+    border: 1px solid #273553;
+    font-size: 12px;
+    padding-left: 18px;
+}
+.dob {
+   margin-bottom: -10px;
+}
+
+.gender {
+
+    padding-left: 5px;
+}
+
+.gender > .radio-btn > .male-radio-btn {
+   margin-right: 10px;
+}
+
+.gender > .radio-btn > .male-radio-btn > .male {
+    margin-left: 5px;
+}
+
+.gender > .radio-btn > .female-radio-btn > .female {
+    margin-left: 5px;
 }
 
 </style>
