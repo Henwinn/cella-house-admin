@@ -1,26 +1,43 @@
 <template>
     <div class="row">
       <div class="col-12">
-        <card :title="table1.title">
+        <card>
           <div class="table-responsive">
+            <h1>List Merchants</h1>
             <div class="search">
                <base-input alternative class="mb-3"
-                placeholder="Search by Item"
-              >
+                placeholder="Search by Merchant's Name"
+       >
                 </base-input>
-               <base-button tag="a" 
+               <base-button tag="a"
              class="mb-3 mb-sm-0">
              Search
              </base-button>
             </div>
-            <base-table-merchant :data="table1.data"
-                        :columns="table1.columns"
-                        thead-classes="text-primary">
-            </base-table-merchant>
+             <table class="table is-striped is-bordered mt-2 is-fullwidth">
+               <thead>
+                  <tr>
+                    <th>Merchant</th>
+                    <th class="has-text-centered">Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+
+                    <tr v-for="user in users" :key="user.id">
+                      <td>{{ user.storeName }}</td>
+                      <td class="has-text-centered">
+                        <button class="button is-success">Profile</button >
+                        <button class="button is-success">Delete</button>
+                        
+                      </td>
+                    </tr>
+                </tbody>
+             </table>
           </div>
         </card>
       </div>
-  <nav aria-label="Page navigation example">
+
+      <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
             <a class="page-link" href="#" aria-label="Previous">
@@ -40,71 +57,44 @@
         </ul>
       </nav>
     </div>
+
 </template>
 <script>
-import BaseTableMerchant from '../components/BaseTableMerchant.vue';
-
-const tableColumns = ["Merchant"] ;
-const tableData = [
-  {
-    id: 1,
-    merchant: "Toko Henwin",
-
-  },
-  {
-    id: 2,
-    merchant: "Toko Sejahtera",
-  },
-  {
-    id: 3,
-    merchant: "Toko Makmur",
-  },
-  {
-    id: 4,
-    merchant: "Toko Sentosa",
-  },
-  {
-    id: 5,
-    merchant: "Toko Jakarta",
-  },
-  {
-    id: 6,
-    merchant: "Toko Jaya",
-  },
-  {
-    id: 7,
-    merchant: "Toko Cahaya",
-  },
-  {
-    id: 8,
-    merchant: "Toko Surya",
-  },
-  {
-    id: 9,
-    merchant: "Toko Nusantara",
-  },
-  {
-    id: 10,
-    merchant: "Toko Senja",
-  }
-];
- 
-
+import axios from "axios";
+import BaseButton from '../components/BaseButton.vue';
 export default {
-  components: {
-    BaseTableMerchant,
-  
-  },
-  data() {
-    return {
-      table1: {
-        title: "List Merchant",
-        columns: [...tableColumns],
-        data: [...tableData]
+  components: { BaseButton },
+    name:"merchantsList",
+    data() {
+      return {
+        users: []
+      };
+    },
+    created() {
+      this.getMerchants();
+    },
+    methods: {
+      async getMerchants() {
+        try {
+          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          this.users = response.data;
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
+        }
+      },
+      async deleteProduct(id) {
+        try {
+          await axios.delete("http://localhost:3000/users/${id}");
+          this.getMerchants();
+        }catch (err) {
+          console.log(err);
+        }
       }
-    };
-  }
+    }
 };
 </script>
 <style>
+
+
 </style>
