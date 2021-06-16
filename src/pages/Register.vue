@@ -140,12 +140,10 @@
                                             placeholder="Confirm Password"
                                             v-model="confpassword"
                                            >
-                                </base-input>
+                                </base-input> -->
                                 
                                 
-                                <div class="text-center">
-                                    <base-button type="primary" class="my-4">Create new account</base-button>
-                                </div>
+                               
                             </form>
                         </template>
                     </card>
@@ -159,6 +157,7 @@ import axios from "axios";
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 export default {
+    name:'Register',
     components: { DatePicker },
     data() {
         return {
