@@ -36,7 +36,7 @@
                                 </div>
 
                                  <div class="dob">
-                                    <date-picker v-model="dob" valueType="format" placeholder="Birth of date"></date-picker>
+                                    <date-picker v-model="dob" valueType="format" placeholder="Date of Birth"></date-picker>
                                     <br><br>
                                      
                                 </div>
