@@ -45,13 +45,21 @@
                                     </base-input>
                                     <button>Upload</button>
                                </div> -->
-                                 <base-input alternative
+                                 <!-- <base-input alternative
                                             class="mb-3"
                                             placeholder="Owner's Date of Birth"
                                             v-model="dob"
                                             >
-                                </base-input>
+                                </base-input> -->
+
+                                <div>
+                                    <date-picker v-model="dob" valueType="format" placeholder="Birth of date"></date-picker>
+                                    <br><br>
+                                     
+                                </div>
+
                                  <div class="gender">
+                                     Gender<br>
                                      <input type="radio" id="male" name="gender" value="male">
                                      <label class ="male" for="male">Male</label> 
                                      <input type="radio" id="female" name="gender" value="female">
