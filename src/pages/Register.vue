@@ -20,8 +20,15 @@
                             </div>
 
 
-                            <form @submit.prevent="handleSubmit">
+                            <form id="app" @submit.prevent="handleSubmit" method="post">
 
+                                 <p v-if="errors.length">
+                                    <b>Please correct the following error(s):</b>
+                                    <ul>
+                                    <li v-for="error in errors">{{ error }}</li> <!-- yang ini emang cacing merah ya, jangan di apa apain  -->
+                                    </ul>
+                                </p>
+<!--  -->
 
                                 <div class="form-group" >
                                     <input type="text" placeholder="Fullname" v-model="fullName" class="form-control"  />
@@ -164,8 +171,10 @@
 import axios from "axios";
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
+
 export default {
     name:'Register',
+    el: '#app',
     components: { DatePicker },
     data() {
         return {
@@ -175,30 +184,92 @@ export default {
            dob: null,
            gender: "",
            storeEmail: "",
-          storePhoneNum: "",
+          storePhoneNum: 0,
           storeAddress: "",
            password: "",
-          confpassword: "",  
+          confpassword: "", 
+          errors: [],
         };
     },
     methods: {
-        async handleSubmit(){
-           const response = await axios.post('users',  { //gak bisa di post
-                fullName: this.fullName,
-                storeName: this.storeName,
-                userName: this.userName,
-                dob: this.dob,
-                gender: this.gender,
-                storeEmail: this.storeEmail,
-                storePhoneNum: this.storePhoneNum,
-                storeAddress: this.storeAddress,
-                password: this.password,
-                confpassword: this.confpassword
+        handleSubmit: function(e){
+            this.errors = [];
 
-            });
+            if (!this.fullName) {
+                this.errors.push("Name required");
+            }
+            if (!this.storeName) {
+                this.errors.push("Store Name required");
+            }
+            if (!this.userName) {
+                this.errors.push("username required");
+            }
+            if (!this.dob) {
+                this.errors.push("Date of birth required");
+            }
+            if (!this.gender) {
+                this.errors.push("Select the gender");
+            }
+            if (!this.storeEmail) {
+                this.errors.push("Email required");
+            }else if(!this.validEmail(this.storeEmail)){
+                this.errors.push("Valid email required.");
+            }
 
-            console.log(response)
-        }
+            if (!this.storePhoneNum) {
+                this.errors.push("Phone Number required");
+            }else if (this.storePhoneNum != 10) {
+                this.errors.push("Phone number kurang dari 10");
+            }
+
+            if (!this.storeAddress) {
+                this.errors.push("Address required");
+            }
+            if (!this.password) {
+                this.errors.push("password required");
+            }else if (this.password != 6) {
+                this.errors.push("password must more than 6");
+            }
+            if (!this.confpassword) {
+                this.errors.push("confirm password required");
+            }else if(this.confpassword != password){
+                this.errors.push("Confirm password and password must be same");
+            }
+
+
+
+
+
+
+            if (!this.errors.length) {
+                return true;
+            }
+            
+            e.preventDefault();
+        },
+
+            validEmail: function(storeEmail){
+                var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                return re.test(email);
+            }
+
+        // async handleSubmit(){
+        //    const response = await axios.post('users',  { //gak bisa di post, cara di gabungin nya gimana? setelah udah validasi, biar data keinput terus di post?
+        //         fullName: this.fullName,
+        //         storeName: this.storeName,
+        //         userName: this.userName,
+        //         dob: this.dob,
+        //         gender: this.gender,
+        //         storeEmail: this.storeEmail,
+        //         storePhoneNum: this.storePhoneNum,
+        //         storeAddress: this.storeAddress,
+        //         password: this.password,
+        //         confpassword: this.confpassword
+
+        //     });
+
+        //     console.log(response)
+        // }
     }
 };
 </script>
