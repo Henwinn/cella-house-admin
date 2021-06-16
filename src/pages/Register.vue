@@ -165,15 +165,33 @@ export default {
             storeName: "",
             userName:"",
            dob: null,
+           gender: "",
            storeEmail: "",
-         storePhoneNum: "",
+          storePhoneNum: "",
           storeAddress: "",
            password: "",
           confpassword: "",  
         };
     },
     methods: {
-    },
+        async handleSubmit(){
+           const response = await axios.post('users',  { //gak bisa di post
+                fullName: this.fullName,
+                storeName: this.storeName,
+                userName: this.userName,
+                dob: this.dob,
+                gender: this.gender,
+                storeEmail: this.storeEmail,
+                storePhoneNum: this.storePhoneNum,
+                storeAddress: this.storeAddress,
+                password: this.password,
+                confpassword: this.confpassword
+
+            });
+
+            console.log(response)
+        }
+    }
 };
 </script>
 <style>
