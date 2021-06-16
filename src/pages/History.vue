@@ -1,25 +1,66 @@
 <template>
     <div class="row">
       <div class="col-12">
-        <card :title="table1.title">
+        <card>
           <div class="table-responsive">
+            <h1>Dropships History</h1>
             <div class="search">
                <base-input alternative class="mb-3"
-                placeholder="Search by Name & Item"
-               >
+                placeholder="Search by Item & Name"
+       >
                 </base-input>
                <base-button tag="a"
              class="mb-3 mb-sm-0">
              Search
              </base-button>
             </div>
-            <base-table-history :data="table1.data"
-                        :columns="table1.columns"
-                        thead-classes="text-primary">
-            </base-table-history>
+             <table class="table is-striped is-bordered mt-2 is-fullwidth">
+               <thead>
+                  <tr>
+                    <th>Customer Name</th>
+                    <th>Customer Phone</th>
+                    <th>Province</th>
+                    <th>City</th>
+                    <th>Postal Code</th>
+                    <th>Address</th>
+                    <th>Shipment Price</th>
+                    <th>Payment Invoice</th>
+                    <th>Note</th>
+                    <th>Status</th>
+                    <th class="has-text-centered">Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+
+                    <tr v-for="dropship in dropships" :key="dropship.id">
+                      <td>{{ dropship.customerName }}</td>
+                      <td>{{ dropship.customerPhone }}</td>
+                      <td>{{ product.province }}</td>
+                      <td>{{ product.city }}</td>
+                      <td>{{ product.postalCode }}</td>
+                      <td>{{ product.address }}</td>
+                      <td>{{ product.shipmentPrice }}</td>
+                      <td>{{ product.paymentInvoice }}</td>
+                      <td>{{ product.note }}</td>
+                      <td>{{ product.status }}</td>
+                      <td class="has-text-centered">
+                        <button class="button is-success"
+                        
+                          >Withdraw item</button >
+                        <!-- <a
+                          class="button is-danger is-small"
+                          @click="deleteProduct(product.id)"
+                          >Delete</a> -->
+                            <button class="button is-success">Tracking</button>
+                        
+                      </td>
+                    </tr>
+                </tbody>
+             </table>
           </div>
         </card>
       </div>
+
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
@@ -39,73 +80,37 @@
           </li>
         </ul>
       </nav>
-
     </div>
+
 </template>
 <script>
-import BaseTableHistory from '../components/BaseTableHistory.vue';
-const tableColumns = ["Name", "Item", "Send", "Resi", "Status"];
-const tableData = [
-  {
-    id: 1,
-    name: "Dakota Rice",
-    item: "T-Shirts",
-    send: "Jakarta",
-    resi: "1244434",
-    status: "On Progress",
-  },
-  {
-    id: 2,
-    name: "Minerva Hooper",
-    item: "T-Shirts",
-    send: "Jakarta",
-    resi: "1222434",
-    status: "On Progress",
-  },
-  {
-    id: 3,
-    name: "Sage Rodriguez",
-    item: "T-Shirts",
-    send: "Jakarta",
-    resi: "1235434",
-    status: "On Progress",
-  },
-  {
-    id: 4,
-    name: "Philip Chaney",
-   item: "T-Shirts",
-    send: "Bandung",
-    resi: "1244432",
-    status: "On Progress",
-  },
-  {
-    id: 5,
-    name: "Doris Greene",
-  },
-  {
-    id: 6,
-    name: 'Mason Porter',
-  },
-  {
-    id: 7,
-    name: 'Jon Porter',
-  }
-];
-
+import axios from "axios";
+import BaseButton from '../components/BaseButton.vue';
 export default {
-  components: {
-    BaseTableHistory
-  },
-  data() {
-    return {
-      table1: {
-        title: "DROPSHIPS HISTORY *TOKO HENWIN*",
-        columns: [...tableColumns],
-        data: [...tableData]
-      }
-    };
-  }
+  components: { BaseButton },
+    name:"dropshipsList",
+    data() {
+      return {
+        dropships: []
+      };
+    },
+    created() {
+      this.getDropships();
+    },
+    methods: {
+      async getDropships() {
+        try {
+          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          this.dropships = response.data;
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
+        }
+      },
+    }
 };
 </script>
 <style>
+
+
 </style>
