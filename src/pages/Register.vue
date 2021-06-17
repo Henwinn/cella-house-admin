@@ -43,7 +43,8 @@
                                 </div>
 
                                  <div class="dob">
-                                    <date-picker v-model="dob" valueType="format" name="dob" placeholder="Date of Birth"></date-picker>
+                                    <date-picker v-model="dob"  valueType="format"  name="dob" placeholder="Date of Birth"></date-picker>
+                                    <!-- <input type="date" v-model="birthdate" value="date" name="dob" placeholder="Date Of Birth"/> -->
                                     <br><br>
                                      
                                 </div>
@@ -181,7 +182,7 @@ export default {
             fullName: "",
             storeName: "",
             userName:"",
-            dob: null,
+            dob: "",
             gender: "",
             storeEmail: "",
             storePhoneNum: 0,
@@ -194,69 +195,73 @@ export default {
     methods: {
         handleSubmit: function(e){
             this.errors = [];
-
-            if (!this.fullName) {
-                this.errors.push("Name required");
-            }
-
-            if (!this.storeName) {
-                this.errors.push("Store Name required");
-            }
-
-            if (!this.userName) {
-                this.errors.push("username required");
-            }
             
-            if (!this.dob) {
-                this.errors.push("Date of birth required");
-            }
+            // if (!this.fullName) {
+            //     this.errors.push("Name required");
+            // }
 
-            if (!this.gender) {
-                this.errors.push("Select the gender");
-            }
+            // if (!this.storeName) {
+            //     this.errors.push("Store Name required");
+            // }
 
-            if (!this.storeEmail) {
-                this.errors.push("Email required");
-            }else if(!this.validEmail(this.storeEmail)){
-                this.errors.push("Valid email required.");
-            }
+            // if (!this.userName) {
+            //     this.errors.push("username required");
+            // }
+            
+            // if (!this.dob) {
+            //     this.errors.push("Date of birth required");
+            // }
 
-            if (!this.storePhoneNum) {
-                this.errors.push("Phone Number required");
-            }else if (this.storePhoneNum != 10) {
-                this.errors.push("Phone number kurang dari 10");
-            }
+            // if (!this.gender) {
+            //     this.errors.push("Select the gender");
+            // }
 
-            if (!this.storeAddress) {
-                this.errors.push("Address required");
-            }
+            // if (!this.storeEmail) {
+            //     this.errors.push("Email required");
+            // }else if(!this.validEmail(this.storeEmail)){
+            //     this.errors.push("Valid email required.");
+            // }
 
-            if (!this.password) {
-                this.errors.push("password required");
-            }else if (this.password != 6) {
-                this.errors.push("password must more than 6");
-            }
+            // if (!this.storePhoneNum) {
+            //     this.errors.push("Phone Number required");
+            // }else if (this.storePhoneNum != 10) {
+            //     this.errors.push("Phone number kurang dari 10");
+            // }
 
-            if (!this.confpassword) {
-                this.errors.push("confirm password required");
-            }else if(this.confpassword != password){
-                this.errors.push("Confirm password and password must be same");
-            }
+            // if (!this.storeAddress) {
+            //     this.errors.push("Address required");
+            // }
+
+            // if (!this.password) {
+            //     this.errors.push("password required");
+            // }else if (this.password != 6) {
+            //     this.errors.push("password must more than 6");
+            // }
+
+            // if (!this.confpassword) {
+            //     this.errors.push("confirm password required");
+            // }else if(this.confpassword != password){
+            //     this.errors.push("Confirm password and password must be same");
+            // }
+
+
+
             //kayaknya validasi diatas ada yang error karena harus gua comment dulu validasinya baru POST-nya jalan
+
+           
 
             if (!this.errors.length) {
                 let data = {
                     full_name: e.target.elements.full_name.value,
                     store_name: e.target.elements.store_name.value,
                     username: e.target.elements.username.value,
-                    dob: e.target.elements.dob.value, // penyebab gagal karena dob ga bisa kebaca valuenya
+                    dob: this.dob, // penyebab gagal karena dob ga bisa kebaca valuenya
                     gender: e.target.elements.gender.value,
                     email: e.target.elements.email.value,
                     phone: e.target.elements.phone.value,
                     address: e.target.elements.address.value,
                     password: e.target.elements.password.value
                 }
-
                 axios.post('http://localhost:3000/users/register', data)
                 .then(respond => {
                     if(respond.data == 'success'){
@@ -266,7 +271,6 @@ export default {
                     }
                 })
             }
-            
             e.preventDefault();
         },
 
@@ -274,24 +278,6 @@ export default {
                 var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
                 return re.test(email);
             }
-
-        // async handleSubmit(){
-        //    const response = await axios.post('users',  { //gak bisa di post, cara di gabungin nya gimana? setelah udah validasi, biar data keinput terus di post?
-        //         fullName: this.fullName,
-        //         storeName: this.storeName,
-        //         userName: this.userName,
-        //         dob: this.dob,
-        //         gender: this.gender,
-        //         storeEmail: this.storeEmail,
-        //         storePhoneNum: this.storePhoneNum,
-        //         storeAddress: this.storeAddress,
-        //         password: this.password,
-        //         confpassword: this.confpassword
-
-        //     });
-
-        //     console.log(response)
-        // }
     }
 };
 </script>
