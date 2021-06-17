@@ -46,7 +46,7 @@
                       <td>{{ product.note }}</td>
                       <td>{{ product.status }}</td>
                       <td class="has-text-centered">
-                        <button class="button is-success"
+                        <button class="btn"
                           :to="{ name: 'Edit', params: { id: product.id } }"
                           
                           >Edit</button >
@@ -54,7 +54,7 @@
                           class="button is-danger is-small"
                           @click="deleteProduct(product.id)"
                           >Delete</a> -->
-                            <button class="button is-success" type="submit" @click="deleteProduct(product.id)">Delete</button>
+                            <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
                         
                       </td>
                     </tr>
