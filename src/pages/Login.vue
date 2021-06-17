@@ -25,7 +25,7 @@
                                             name="username"
                                        >
                                 </base-input> -->
-                                <input type="text" v-model="username" name="username" class="mb-3" placeholder="Username">
+                                <input type="text" class="form-control" v-model="username" name="username"  placeholder="Username">
                                 <!-- <base-input alternative
                                             type="password"
                                             placeholder="Password"
@@ -33,13 +33,13 @@
                                             name="password"
                                          >
                                 </base-input> -->
-                                <input type="password" v-model="password" name="password" class="mb-3" placeholder="Password">
+                                <input type="password" class="form-control" v-model="password" name="password"  placeholder="Password">
                                 <base-checkbox>
                                     Remember me
                                 </base-checkbox>
                                 <div class="text-center">
-                                    <button type="submit" value="Login">submit</button>
-                                    <base-button type="primary" class="my-4">Sign In</base-button>
+                                    <button type="submit" class="btn" value="Login">submit</button>
+                                    
                                 </div>
                             </form>
                         </template>
