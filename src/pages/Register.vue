@@ -31,19 +31,19 @@
 <!--  -->
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Fullname" v-model="fullName" class="form-control"  />
+                                    <input type="text" placeholder="Fullname" v-model="fullName" name="full_name" class="form-control"  />
                                 </div>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Store name" v-model="storeName" class="form-control"  />
+                                    <input type="text" placeholder="Store name" v-model="storeName" name="store_name" class="form-control"  />
                                 </div>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Username" v-model="userName" class="form-control"  />
+                                    <input type="text" placeholder="Username" v-model="userName" name="username" class="form-control"  />
                                 </div>
 
                                  <div class="dob">
-                                    <date-picker v-model="dob" valueType="format" placeholder="Date of Birth"></date-picker>
+                                    <date-picker v-model="dob" valueType="format" name="dob" placeholder="Date of Birth"></date-picker>
                                     <br><br>
                                      
                                 </div>
@@ -65,19 +65,19 @@
                                  </div>
 
                                    <div class="form-group" >
-                                    <input type="email" placeholder="Store Email" v-model="storeEmail" class="form-control"  />
+                                    <input type="email" placeholder="Store Email" v-model="storeEmail" name="email" class="form-control"  />
                                 </div>
 
                                  <div class="form-group" >
-                                    <input type="number" placeholder="Phone Number" v-model="storePhoneNum" class="form-control"  />
+                                    <input type="number" placeholder="Phone Number" v-model="storePhoneNum" name="phone" class="form-control"  />
                                 </div>
 
                                  <div class="form-group" >
-                                    <input type="text" placeholder="Store Address" v-model="storeAddress" class="form-control"  />
+                                    <input type="text" placeholder="Store Address" v-model="storeAddress" name="address" class="form-control"  />
                                 </div>
 
                                   <div class="form-group" >
-                                    <input type="password" placeholder="Password" v-model="password" class="form-control"  />
+                                    <input type="password" placeholder="Password" v-model="password" name="password" class="form-control"  />
                                 </div>
 
                                 <div class="form-group" >
@@ -85,7 +85,7 @@
                                 </div>
 
                                  <div class="text-center">
-                                    <button class="btn">Create new account</button>
+                                    <button class="btn" type="submit">Create new account</button>
                                 </div>
 
 
@@ -181,14 +181,14 @@ export default {
             fullName: "",
             storeName: "",
             userName:"",
-           dob: null,
-           gender: "",
-           storeEmail: "",
-          storePhoneNum: 0,
-          storeAddress: "",
-           password: "",
-          confpassword: "", 
-          errors: [],
+            dob: null,
+            gender: "",
+            storeEmail: "",
+            storePhoneNum: 0,
+            storeAddress: "",
+            password: "",
+            confpassword: "", 
+            errors: [],
         };
     },
     methods: {
@@ -198,18 +198,23 @@ export default {
             if (!this.fullName) {
                 this.errors.push("Name required");
             }
+
             if (!this.storeName) {
                 this.errors.push("Store Name required");
             }
+
             if (!this.userName) {
                 this.errors.push("username required");
             }
+            
             if (!this.dob) {
                 this.errors.push("Date of birth required");
             }
+
             if (!this.gender) {
                 this.errors.push("Select the gender");
             }
+
             if (!this.storeEmail) {
                 this.errors.push("Email required");
             }else if(!this.validEmail(this.storeEmail)){
@@ -225,24 +230,41 @@ export default {
             if (!this.storeAddress) {
                 this.errors.push("Address required");
             }
+
             if (!this.password) {
                 this.errors.push("password required");
             }else if (this.password != 6) {
                 this.errors.push("password must more than 6");
             }
+
             if (!this.confpassword) {
                 this.errors.push("confirm password required");
             }else if(this.confpassword != password){
                 this.errors.push("Confirm password and password must be same");
             }
-
-
-
-
-
+            //kayaknya validasi diatas ada yang error karena harus gua comment dulu validasinya baru POST-nya jalan
 
             if (!this.errors.length) {
-                return true;
+                let data = {
+                    full_name: e.target.elements.full_name.value,
+                    store_name: e.target.elements.store_name.value,
+                    username: e.target.elements.username.value,
+                    dob: e.target.elements.dob.value, // penyebab gagal karena dob ga bisa kebaca valuenya
+                    gender: e.target.elements.gender.value,
+                    email: e.target.elements.email.value,
+                    phone: e.target.elements.phone.value,
+                    address: e.target.elements.address.value,
+                    password: e.target.elements.password.value
+                }
+
+                axios.post('http://localhost:3000/users/register', data)
+                .then(respond => {
+                    if(respond.data == 'success'){
+                        alert('success') //harusnya redirect ke login page
+                    } else {
+                        alert('fail')
+                    }
+                })
             }
             
             e.preventDefault();

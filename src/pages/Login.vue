@@ -16,23 +16,29 @@
                             </div>
                         </template>
                         <template>
-                            <form role="form">
-                                <base-input alternative
+                            <!-- <form action="http://localhost:3000/users/login" method="POST"> -->
+                            <form @submit="login">
+                                <!-- <base-input alternative
                                             class="mb-3"
                                             placeholder="Email"
-                                            v-model="email"
+                                            v-model="username"
+                                            name="username"
                                        >
-                                </base-input>
-                                <base-input alternative
+                                </base-input> -->
+                                <input type="text" v-model="username" name="username" class="mb-3" placeholder="Username">
+                                <!-- <base-input alternative
                                             type="password"
                                             placeholder="Password"
                                             v-model="password"
+                                            name="password"
                                          >
-                                </base-input>
+                                </base-input> -->
+                                <input type="password" v-model="password" name="password" class="mb-3" placeholder="Password">
                                 <base-checkbox>
                                     Remember me
                                 </base-checkbox>
                                 <div class="text-center">
+                                    <button type="submit" value="Login">submit</button>
                                     <base-button type="primary" class="my-4">Sign In</base-button>
                                 </div>
                             </form>
@@ -59,10 +65,28 @@
 import axios from "axios";
 
 export default {
-    data(){
-        return{
-            email: "",
-            password: "",
+    name: "Login",
+    methods: {
+        login: (e) => {
+            e.preventDefault()
+            let login = () => {
+                let data = {
+                    username: e.target.elements.username.value,
+                    password: e.target.elements.password.value
+                }
+                axios.post("http://localhost:3000/users/login", data)
+                .then((response) => {
+                    if(response.data == 'success'){
+                        console.log("logged")
+                        alert('success') //redirect ke dashboard
+                    } else {
+                        console.log("fail")
+                        alert('username or password incorrect!')
+                    }
+                })
+                .catch(err => console.log(err))
+            }
+            login()
         }
     }
 };
