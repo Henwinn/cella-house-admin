@@ -8,7 +8,7 @@
     <!-- -->
     <div class="sidebar-wrapper" id="style-3">
       <div class="logo">
-        <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        <a href="/dashboard" class="simple-text logo-normal">
           Cella House
         </a>
       </div>
