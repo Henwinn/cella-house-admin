@@ -55,11 +55,11 @@
                                      </div>
                                      <div class="radio-btn">
                                          <span class="male-radio-btn">
-                                            <input type="radio" id="male" name="gender" value="male">
+                                            <input type="radio" id="male" v-model="gender" name="gender" value="male">
                                             <label class ="male" for="male">Male</label> 
                                          </span>
                                          <span class="female-radio-btn">
-                                            <input type="radio" id="female" name="gender" value="female">
+                                            <input type="radio" id="female" v-model="gender" name="gender" value="female">
                                             <label class ="female" for="female">Female</label> 
                                          </span>
                                      </div>
@@ -185,7 +185,7 @@ export default {
             dob: "",
             gender: "",
             storeEmail: "",
-            storePhoneNum: 0,
+            storePhoneNum: "",
             storeAddress: "",
             password: "",
             confpassword: "", 
@@ -196,46 +196,45 @@ export default {
         handleSubmit: function(e){
             this.errors = [];
             
-            // if (!this.fullName) {
-            //     this.errors.push("Name required");
-            // }
+            if (!this.fullName) {
+                this.errors.push("Name required");
+            }
 
-            // if (!this.storeName) {
-            //     this.errors.push("Store Name required");
-            // }
+            if (!this.storeName) {
+                this.errors.push("Store Name required");
+            }
 
-            // if (!this.userName) {
-            //     this.errors.push("username required");
-            // }
+            if (!this.userName) {
+                this.errors.push("username required");
+            }
             
-            // if (!this.dob) {
-            //     this.errors.push("Date of birth required");
-            // }
+            if (!this.dob) {
+                this.errors.push("Date of birth required");
+            }
 
-            // if (!this.gender) {
-            //     this.errors.push("Select the gender");
-            // }
+            if (!this.gender) {
+                this.errors.push("Select the gender");
+            }
 
-            // if (!this.storeEmail) {
-            //     this.errors.push("Email required");
-            // }else if(!this.validEmail(this.storeEmail)){
-            //     this.errors.push("Valid email required.");
-            // }
+            if (!this.storeEmail || !this.validEmail(this.storeEmail)) {
+                this.errors.push("Email required");
 
-            // if (!this.storePhoneNum) {
-            //     this.errors.push("Phone Number required");
-            // }else if (this.storePhoneNum != 10) {
-            //     this.errors.push("Phone number kurang dari 10");
-            // }
+            }
 
-            // if (!this.storeAddress) {
-            //     this.errors.push("Address required");
-            // }
+            if (!this.storePhoneNum) {
+                this.errors.push("Phone Number required");
+               
+            }
+            if (!this.storeAddress) {
+                this.errors.push("Address required");
+            }
 
-            // if (!this.password) {
+            // if (!this.password ) {
+
+            //     if (this.password > 6) {
+            //         this.errors.push("password min 6 characters");
+            //     }
             //     this.errors.push("password required");
-            // }else if (this.password != 6) {
-            //     this.errors.push("password must more than 6");
             // }
 
             // if (!this.confpassword) {
@@ -243,10 +242,10 @@ export default {
             // }else if(this.confpassword != password){
             //     this.errors.push("Confirm password and password must be same");
             // }
+            
 
 
-
-            //kayaknya validasi diatas ada yang error karena harus gua comment dulu validasinya baru POST-nya jalan
+            //yang password ini gimana ya bkin nya? sama username nya itu cek di database biar gak name is choosen gmna?
 
            
 
@@ -255,7 +254,7 @@ export default {
                     full_name: e.target.elements.full_name.value,
                     store_name: e.target.elements.store_name.value,
                     username: e.target.elements.username.value,
-                    dob: this.dob, // penyebab gagal karena dob ga bisa kebaca valuenya
+                    dob: this.dob, 
                     gender: e.target.elements.gender.value,
                     email: e.target.elements.email.value,
                     phone: e.target.elements.phone.value,
@@ -265,7 +264,8 @@ export default {
                 axios.post('http://localhost:3000/users/register', data)
                 .then(respond => {
                     if(respond.data == 'success'){
-                        alert('success') //harusnya redirect ke login page
+                        alert('success')//harusnya redirect ke login page
+                       
                     } else {
                         alert('fail')
                     }
@@ -276,7 +276,7 @@ export default {
 
             validEmail: function(storeEmail){
                 var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(email);
+                return re.test(storeEmail);
             }
     }
 };
