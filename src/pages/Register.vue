@@ -190,6 +190,7 @@ export default {
             password: "",
             confpassword: "", 
             errors: [],
+            success: []
         };
     },
     methods: {
@@ -264,7 +265,8 @@ export default {
                 axios.post('http://localhost:3000/users/register', data)
                 .then(respond => {
                     if(respond.data == 'success'){
-                        alert('success')//harusnya redirect ke login page
+                        alert('success')
+                        this.$router.push('login')
                        
                     } else {
                         alert('fail')

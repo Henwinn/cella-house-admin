@@ -54,7 +54,7 @@
                           class="button is-danger is-small"
                           @click="deleteProduct(product.id)"
                           >Delete</a> -->
-                            <button class="button is-success" @click="deleteProduct(product.id)">Delete</button>
+                            <button class="button is-success" type="submit" @click="deleteProduct(product.id)">Delete</button>
                         
                       </td>
                     </tr>
