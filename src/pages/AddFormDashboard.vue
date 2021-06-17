@@ -18,13 +18,20 @@
                             <div class="text-center text-muted mb-4">
                                 <small>Input Your Item</small>
                             </div>
-                            <form role="form">
+                            <form id="app" @submit.prevent="saveItem" method="post">
+                                <p v-if="errors.length">
+                                    <b>Please correct the following error(s):</b>
+                                    <ul>
+                                    <li v-for="error in errors">{{ error }}</li> <!-- yang ini emang cacing merah ya, jangan di apa apain  -->
+                                    </ul>
+                                </p>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Name"
                                             v-model="itemName"
                                            >
                                 </base-input>
+                               
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Quantity"
@@ -44,12 +51,26 @@
                                             <a class="dropdown-item" href="#">Something else here</a>
                                     </base-dropdown>
                                 </div> -->
-                                 <base-input alternative
+                                 <!-- <base-input alternative
                                             class="mb-3"
                                             placeholder="Category"
                                             v-model="category"
                                       >
-                                </base-input>
+                                </base-input> -->
+                                <div class="radio-btn">
+                                         <span class="male-radio-btn">
+                                            <input type="radio" id="clothing" v-model="category" name="category" value="clothing">
+                                            <label class ="clothing" for="clothing">Clothing</label> 
+                                         </span>
+                                         <span class="female-radio-btn">
+                                            <input type="radio" id="jeans" v-model="category" name="category" value="jeans">
+                                            <label class ="jeans" for="jeans">Jeans</label> 
+                                         </span>
+                                         <span class="female-radio-btn">
+                                            <input type="radio" id="tshirts" v-model="category" name="category" value="thsirts">
+                                            <label class ="tshirts" for="tshirts">T Shirts</label> 
+                                         </span>
+                                     </div>
                                
                                 <base-input alternative
                                             class="mb-3"
@@ -63,12 +84,6 @@
                                             v-model="note"
                                            >
                                 </base-input>
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Status"
-                                            v-model="status"
-                                           >
-                                </base-input>
                                <!-- <div class="uploadimage">
                                     <base-input alternative
                                                 class="mb-3"
@@ -79,7 +94,7 @@
                                </div> -->
                                 <div class="text-center">
                                     <!-- <base-button type="primary" class="my-4" @click="saveItem">Add Item</base-button> -->
-                                    <button class="button is success" @click="saveItem">    Add </button>
+                                    <button class="btn" type="submit" >    Add </button>
                                 </div>
                             </form>
                         </template>
@@ -93,6 +108,7 @@
 import axios from "axios";
 export default {
     name: "AddItem",
+    el: '#app',
     data() {
         return {
             itemName: "",
@@ -102,32 +118,64 @@ export default {
             variant: "",
             note: "",
             status: "",
+            errors: [],
         };
     },
     methods: {
-        async saveItem(){
-            try {
-                await axios.post("http://localhost:3000/users", {
-                    name: this.itemName,
-                    qty: this.qty,
-                    price: this.price,
-                    categoryName: this.category,
-                    variant: this.variant,
-                    note: this.note,
-                    status: this.status
-                });
-                this.itemName = "";
-                this.qty = "";
-                this.price = "";
-                this.category = "";
-                this.variant = "";
-                this.note = "";
-                this.status = "";
-                this.$router.push("/dashboard");
-            }catch (err) {
-                console.log(err);
+         saveItem: function(e){
+            this.errors = [];
+            
+            if (!this.itemName) {
+                this.errors.push("Name required");
             }
-        },
+
+            if (!this.qty) {
+                this.errors.push("Quantity required");
+            }
+
+            if (!this.price) {
+                this.errors.push("Price required");
+            }
+            
+            if (!this.category) {
+                this.errors.push("Select the Category required");
+            }
+
+            if (!this.variant) {
+                this.errors.push("Variant required");
+               
+            }
+            if (!this.errors.length) {
+                return true;
+            }
+            
+            e.preventDefault();
+        }
+         
+
+        // async saveItem(){
+        //     try {
+        //         await axios.post("http://localhost:3000/users", {
+        //             name: this.itemName,
+        //             qty: this.qty,
+        //             price: this.price,
+        //             categoryName: this.category,
+        //             variant: this.variant,
+        //             note: this.note,
+        //             status: this.status
+        //         });
+        //         this.itemName = "";
+        //         this.qty = "";
+        //         this.price = "";
+        //         this.category = "";
+        //         this.variant = "";
+        //         this.note = "";
+        //         this.status = "";
+        //         this.$router.push('dashboard');
+        //     }catch (err) {
+        //         console.log(err);
+        //     }
+        // },
     },
 };
 </script>
