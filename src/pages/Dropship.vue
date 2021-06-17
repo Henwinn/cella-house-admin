@@ -27,33 +27,47 @@
                                 <small>Input Your Dropship</small>
                             </div>
                             <form role="form">
-                                 <base-dropdown title-classes="btn btn-secondary" title="Item Name">
+                                 <!-- <base-dropdown title-classes="btn btn-secondary" title="Item Name">
                                        
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a>
-                                 </base-dropdown>
+                                 </base-dropdown> -->
+                                 <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Item Name"
+                                            v-model="itemName"
+                                           >
+                                </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Customer Name"
-                                            addon-left-icon="ni ni-hat-3">
+                                            v-model="custName"
+                                           >
                                 </base-input>
                                 <base-input alternative
                                             class="mb-3"
                                             placeholder="Customer Address"
-                                            addon-left-icon="ni ni-email-83">
+                                            v-model="custAddress"
+                                           >
                                 </base-input>
-                                  <base-dropdown title-classes="btn btn-secondary" title="Kota" >
+                                <base-input alternative
+                                            class="mb-3"
+                                            placeholder="Customer Phone"
+                                            v-model="custPhone"
+                                           >
+                                </base-input>
+                                  <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="city" >
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a>
                                  </base-dropdown>
-                                   <base-dropdown title-classes="btn btn-secondary" title="Kabupaten" >
+                                   <base-dropdown title-classes="btn btn-secondary" title="Provinsi" v-model="province" >
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a>
                                  </base-dropdown>
-                                   <base-dropdown title-classes="btn btn-secondary" title="Kode Pos" >
+                                   <base-dropdown title-classes="btn btn-secondary" title="Kode Pos" v-model="postalCode">
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a>
@@ -66,7 +80,8 @@
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Check Price"
-                                            addon-left-icon="ni ni-email-83">
+                                            v-model="price"
+                                            >
                                 </base-input>
                                 <div class="text-center">
                                     <base-button type="primary" class="my-4">Create Dropship</base-button>
@@ -80,7 +95,20 @@
     </section>
 </template>
 <script>
-export default {};
+export default {
+    data(){
+        return {
+            itemName: "",
+            custName: "",
+            custAddress: "",
+            custPhone: "",
+            city: "",
+            postalCode: "",
+            province: "",
+            price: ""
+        };
+    }
+};
 </script>
 <style>
 </style>
