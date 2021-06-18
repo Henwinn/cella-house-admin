@@ -257,11 +257,12 @@ router.get('/dropship', (req, res) => {
   if(!req.query.dropshipId){
     dropships.findAll({
       where: {
-        storeId: req.session.storeId
+        storeId: 7 //req.session.storeId
+
       }
     })
     .then(dropship => {
-      return res.json({dropship})
+      return res.json(dropship)
     })
     .catch(err => {
       next(err)
@@ -269,12 +270,12 @@ router.get('/dropship', (req, res) => {
   } else {
     dropships.findOne({
       where: {
-        storeId: req.session.storeId,
+        storeId: 7,//req.session.storeId,
         id: req.query.dropshipId
       }
     })
     .then(dropship => {
-      return res.json({dropship})
+      return res.json(dropship)
     })
     .catch(err => {
       next(err)
@@ -288,7 +289,7 @@ router.post('/dropship', (req, res) => {
     status: 'COMPLETE'
   }, {
     where: {
-      id: req.query.dropshipId
+      id: req.query.dropshipId,
     }
   })
   .then(() => {
