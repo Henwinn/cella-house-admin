@@ -27,7 +27,7 @@
                                 </p>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Name" v-model="itemName" name="itemName" class="form-control"  />
+                                    <input type="text" placeholder="Name" v-model="name" name="name" class="form-control"  />
                                 </div>
 
                                   <div class="form-group" >
@@ -40,15 +40,15 @@
 
                                    <div class="radio-btn">
                                          <span class="male-radio-btn">
-                                            <input type="radio" id="clothing" v-model="category" name="category" value="clothing">
+                                            <input type="radio" id="clothing" v-model="categoryName" name="categoryName" value="clothing">
                                             <label class ="clothing" for="clothing">Clothing</label> 
                                          </span>
                                          <span class="female-radio-btn">
-                                            <input type="radio" id="jeans" v-model="category" name="category" value="jeans">
+                                            <input type="radio" id="jeans" v-model="categoryName" name="category" value="jeans">
                                             <label class ="jeans" for="jeans">Jeans</label> 
                                          </span>
                                          <span class="female-radio-btn">
-                                            <input type="radio" id="tshirts" v-model="category" name="category" value="thsirts">
+                                            <input type="radio" id="tshirts" v-model="categoryName" name="category" value="thsirts">
                                             <label class ="tshirts" for="tshirts">T Shirts</label> 
                                          </span>
                                      </div>
@@ -144,21 +144,22 @@ export default {
     el: '#app',
     data() {
         return {
-            itemName: "",
-            qty: "",
-            price: "",
-            category: "",
+            name:"",
+            qty:"",
+            price:"",
+            categoryName: "",
             variant: "",
             note: "",
             status: "",
             errors: [],
+            success: []
         };
     },
     methods: {
          saveItem: function(e){
             this.errors = [];
             
-            if (!this.itemName) {
+            if (!this.name) {
                 this.errors.push("Name required");
             }
 
@@ -170,7 +171,7 @@ export default {
                 this.errors.push("Price required");
             }
             
-            if (!this.category) {
+            if (!this.categoryName) {
                 this.errors.push("Select the Category required");
             }
 
@@ -182,15 +183,15 @@ export default {
 
              if (!this.errors.length) {
                 let data = {
-                    itemName: e.target.elements.itemName.value,
+                    name: this.name,
                     qty: e.target.elements.qty.value,
                     price: e.target.elements.price.value,
-                    category: e.target.elements.category.value,
+                    categoryName: e.target.elements.categoryName.value,
                     variant: e.target.elements.variant.value,
                     note: e.target.elements.note.value,
                   
                 }
-                axios.post('http://localhost:3000/products', data)
+                axios.post('http://localhost:3000/products/add', data)
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success add item')
