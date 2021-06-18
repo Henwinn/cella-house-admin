@@ -18,14 +18,14 @@ router.get('/', (req,res) => {
         }
     })
     .then(product => {
-        res.send("success")
+        res.json({product})
     })
     .catch(err => {
         console.log(err)
     })
 })
 
-router.post('/add', (req,res) => {
+router.post('/add', (req,res, next) => {
     products.create({
         name: req.body.name,
         qty: req.body.qty,
@@ -36,7 +36,7 @@ router.post('/add', (req,res) => {
         storeName: req.session.storeName
     })
     .then(product => {
-        res.json({product})
+        res.send("success")
     })
     .catch(err => {
         next(err)
