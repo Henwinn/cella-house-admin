@@ -85,7 +85,7 @@
                                             placeholder="Price"
                                             v-model="price"
                                       >
-                                </base-input>
+                                </base-input> -->
                                 <!-- <div class="category">
                                     <base-dropdown title-classes="btn btn-secondary" title="Category" >
                                             <a class="dropdown-item" href="#">Action</a>
@@ -99,33 +99,22 @@
                                             v-model="category"
                                       >
                                 </base-input> -->
-                                <div class="radio-btn">
-                                         <span class="male-radio-btn">
-                                            <input type="radio" id="clothing" v-model="category" name="category" value="clothing">
-                                            <label class ="clothing" for="clothing">Clothing</label> 
-                                         </span>
-                                         <span class="female-radio-btn">
-                                            <input type="radio" id="jeans" v-model="category" name="category" value="jeans">
-                                            <label class ="jeans" for="jeans">Jeans</label> 
-                                         </span>
-                                         <span class="female-radio-btn">
-                                            <input type="radio" id="tshirts" v-model="category" name="category" value="thsirts">
-                                            <label class ="tshirts" for="tshirts">T Shirts</label> 
-                                         </span>
-                                     </div>
+                             
                                
-                                <base-input alternative
+                                <!-- <base-input alternative
                                             class="mb-3"
                                             placeholder="Variant"
                                             v-model="variant"
                                           >
                                 </base-input>
+
+
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Note"
                                             v-model="note"
                                            >
-                                </base-input>
+                                </base-input> -->
                                <!-- <div class="uploadimage">
                                     <base-input alternative
                                                 class="mb-3"
@@ -134,10 +123,12 @@
                                     </base-input>
                                     <button>Upload</button>
                                </div> -->
-                                <div class="text-center">
-                                    <!-- <base-button type="primary" class="my-4" @click="saveItem">Add Item</base-button> -->
+                                <!-- <div class="text-center">
+                                    <base-button type="primary" class="my-4" @click="saveItem">Add Item</base-button>
                                     <button class="btn" type="submit" >    Add </button>
-                                </div>
+                                </div> -->
+
+
                             </form>
                         </template>
                     </card>
