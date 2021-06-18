@@ -44,11 +44,11 @@
                                             <label class ="clothing" for="clothing">Clothing</label> 
                                          </span>
                                          <span class="female-radio-btn">
-                                            <input type="radio" id="jeans" v-model="categoryName" name="category" value="jeans">
+                                            <input type="radio" id="jeans" v-model="categoryName" name="categoryName" value="jeans">
                                             <label class ="jeans" for="jeans">Jeans</label> 
                                          </span>
                                          <span class="female-radio-btn">
-                                            <input type="radio" id="tshirts" v-model="categoryName" name="category" value="thsirts">
+                                            <input type="radio" id="tshirts" v-model="categoryName" name="categoryName" value="thsirts">
                                             <label class ="tshirts" for="tshirts">T Shirts</label> 
                                          </span>
                                      </div>
