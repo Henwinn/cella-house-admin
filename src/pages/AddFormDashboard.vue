@@ -178,8 +178,28 @@ export default {
                 this.errors.push("Variant required");
                
             }
-            if (!this.errors.length) {
-                return true;
+            
+
+             if (!this.errors.length) {
+                let data = {
+                    itemName: e.target.elements.itemName.value,
+                    qty: e.target.elements.qty.value,
+                    price: e.target.elements.price.value,
+                    category: e.target.elements.category.value,
+                    variant: e.target.elements.variant.value,
+                    note: e.target.elements.note.value,
+                  
+                }
+                axios.post('http://localhost:3000/products', data)
+                .then(respond => {
+                    if(respond.data == 'success'){
+                        alert('success add item')
+                        
+                       
+                    } else {
+                        alert('fail')
+                    }
+                })
             }
             
             e.preventDefault();
