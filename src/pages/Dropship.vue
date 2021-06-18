@@ -26,6 +26,10 @@
                             <div class="text-center text-muted mb-4">
                                 <small>Input Your Dropship</small>
                             </div>
+
+
+
+
                             <form role="form">
                                  <!-- <base-dropdown title-classes="btn btn-secondary" title="Item Name">
                                        
@@ -33,6 +37,25 @@
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a>
                                  </base-dropdown> -->
+
+
+                                  <div class="form-group" >
+                                    <input type="text" placeholder="Item Name" v-model="ItemName" name="ItemName" class="form-control"  />
+                                </div>
+
+                                <div class="form-group" >
+                                    <input type="text" placeholder="Customer Name" v-model="custName" name="custName" class="form-control"  />
+                                </div>
+
+                                 <div class="form-group" >
+                                    <input type="text" placeholder="Customer Address" v-model="custAddress" name="custAddress" class="form-control"  />
+                                </div>
+
+                                 <div class="form-group" >
+                                    <input type="number" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control"  />
+                                </div>
+
+<!-- 
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Item Name"
@@ -56,7 +79,7 @@
                                             placeholder="Customer Phone"
                                             v-model="custPhone"
                                            >
-                                </base-input>
+                                </base-input> -->
                                   <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="city" >
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
