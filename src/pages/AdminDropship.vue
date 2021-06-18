@@ -1,25 +1,69 @@
 <template>
     <div class="row">
       <div class="col-12">
-        <card :title="table1.title">
+        <card>
           <div class="table-responsive">
+            <h1>Dropships History</h1>
             <div class="search">
                <base-input alternative class="mb-3"
-                placeholder="Search Item & Name"
-               >
+                placeholder="Search by Item & Name"
+       >
                 </base-input>
-               <base-button tag="a" href="#/formAddItem"
+               <base-button tag="a"
              class="mb-3 mb-sm-0">
              Search
              </base-button>
             </div>
-            <base-table-dropship :data="table1.data"
-                        :columns="table1.columns"
-                        thead-classes="text-primary">
-            </base-table-dropship>
+             <table class="table is-striped is-bordered mt-2 is-fullwidth">
+               <thead>
+                  <tr>
+                    <th>Qty</th>
+                    <th>Customer Name</th>
+                    <th>Customer Phone</th>
+                    <th>Province</th>
+                    <th>City</th>
+                    <th>Postal Code</th>
+                    <th>Address</th>
+                    <th>Shipment Price</th>
+                    <th>Payment Invoice</th>
+                    <th>Note</th>
+                    <th>Status</th>
+                    <th class="has-text-centered">Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+
+                    <tr v-for="dropship in dropships" :key="dropship.id">
+                      <td>{{ dropship.id }}</td>
+                      <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.customerName }}</td>
+                      <td>{{ dropship.customerPhone }}</td>
+                      <td>{{ dropship.province }}</td>
+                      <td>{{ dropship.city }}</td>
+                      <td>{{ dropship.postalCode }}</td>
+                      <td>{{ dropship.address }}</td>
+                      <td>{{ dropship.shipmentPrice }}</td>
+                      <td>{{ dropship.paymentInvoice }}</td>
+                      <td>{{ dropship.note }}</td>
+                      <td>{{ dropship.status }}</td>
+                      <td class="has-text-centered">
+                        <button class="btn"
+                        
+                          >Update Status</button >
+                        <!-- <a
+                          class="button is-danger is-small"
+                          @click="deleteProduct(product.id)"
+                          >Delete</a> -->
+                            <button class="btn">Tracking</button>
+                        
+                      </td>
+                    </tr>
+                </tbody>
+             </table>
           </div>
         </card>
       </div>
+
       <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
@@ -39,89 +83,38 @@
           </li>
         </ul>
       </nav>
-
     </div>
+
 </template>
 <script>
-import BaseTableDropship from '../components/BaseTableDropship.vue';
-const tableColumns = ["Merchant", "Item", "Name", "Resi", "Send", "Status"] ;
-const tableData = [
-  {
-    id: 1,
-    merchant: "Toko Henwin",
-    item: "T-shirts",
-    name: "Dakota Rice",
-    resi: "1244434",
-    send: "Jakarta",
-    status: "on progress"
-  },
-  {
-    id: 2,
-    merchant: "Toko Henwin",
-    item: "T-shirts",
-    name: "Minerva Hooper",
-    resi: "1222434",
-    send: "Jakarta",
-    status: "on progress"
-  },
-  {
-    id: 3,
-    merchant: "Toko Henwin",
-    item: "T-shirts",
-    name: "Sage Rodriguez",
-    resi: "1235434",
-    send: "Jakarta",
-    status: "on progress"
-  },
-  {
-    id: 4,
-    merchant: "Toko Henwin",
-    item: "T-shirts",
-    name: "Philip Chaney",
-    resi: "1244432",
-    send: "Jakarta",
-    status: "on progress"
-  },
-  {
-    id: 5,
-    merchant: "Toko Sejahtera",
-  },
-  {
-    id: 6,
-    merchant: "Toko Sejahtera",
-  },
-  {
-    id: 7,
-    merchant: "Toko Makmur",
-  },
-  {
-    id: 8,
-    merchant: "Toko Makmur",
-  },
-  {
-    id: 9,
-    merchant: "Toko Jaya",
-  },
-  {
-    id: 10,
-    merchant: "Toko Sentosa",
-  }
-];
-
+import axios from "axios";
+import BaseButton from '../components/BaseButton.vue';
 export default {
-  components: {
-    BaseTableDropship
-  },
-  data() {
-    return {
-      table1: {
-        title: "List Dropship",
-        columns: [...tableColumns],
-        data: [...tableData]
-      }
-    };
-  }
+  components: { BaseButton },
+    name:"dropshipsList",
+    data() {
+      return {
+        dropships: []
+      };
+    },
+    created() {
+      this.getDropships();
+    },
+    methods: {
+      async getDropships() {
+        try {
+          const response = await axios.get("http://localhost:3000/users/dropship"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          this.dropships = response.data;
+       
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
+        }
+      },
+    }
 };
 </script>
 <style>
+
+
 </style>

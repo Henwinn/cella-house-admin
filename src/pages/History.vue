@@ -17,6 +17,7 @@
              <table class="table is-striped is-bordered mt-2 is-fullwidth">
                <thead>
                   <tr>
+                    <th>Qty</th>
                     <th>Customer Name</th>
                     <th>Customer Phone</th>
                     <th>Province</th>
@@ -33,25 +34,26 @@
                <tbody>
 
                     <tr v-for="dropship in dropships" :key="dropship.id">
+                      <td>{{ dropship.qty }}</td>
                       <td>{{ dropship.customerName }}</td>
                       <td>{{ dropship.customerPhone }}</td>
-                      <td>{{ product.province }}</td>
-                      <td>{{ product.city }}</td>
-                      <td>{{ product.postalCode }}</td>
-                      <td>{{ product.address }}</td>
-                      <td>{{ product.shipmentPrice }}</td>
-                      <td>{{ product.paymentInvoice }}</td>
-                      <td>{{ product.note }}</td>
-                      <td>{{ product.status }}</td>
+                      <td>{{ dropship.province }}</td>
+                      <td>{{ dropship.city }}</td>
+                      <td>{{ dropship.postalCode }}</td>
+                      <td>{{ dropship.address }}</td>
+                      <td>{{ dropship.shipmentPrice }}</td>
+                      <td>{{ dropship.paymentInvoice }}</td>
+                      <td>{{ dropship.note }}</td>
+                      <td>{{ dropship.status }}</td>
                       <td class="has-text-centered">
-                        <button class="button is-success"
+                        <button class="btn"
                         
                           >Withdraw item</button >
                         <!-- <a
                           class="button is-danger is-small"
                           @click="deleteProduct(product.id)"
                           >Delete</a> -->
-                            <button class="button is-success">Tracking</button>
+                            <button class="btn">Tracking</button>
                         
                       </td>
                     </tr>
@@ -100,8 +102,9 @@ export default {
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get("http://localhost:3000/users/dropship"); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.dropships = response.data;
+       
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
