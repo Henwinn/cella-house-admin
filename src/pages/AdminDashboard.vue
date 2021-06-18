@@ -26,8 +26,8 @@
                     <tr v-for="user in users" :key="user.id">
                       <td>{{ user.storeName }}</td>
                       <td class="has-text-centered">
-                        <button class="button is-success">Profile</button >
-                        <button class="button is-success">Delete</button>
+                        <button class="btn">Profile</button >
+                        <button class="btn">Delete</button>
                         
                       </td>
                     </tr>
