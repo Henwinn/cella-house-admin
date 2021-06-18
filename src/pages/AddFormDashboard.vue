@@ -25,7 +25,49 @@
                                     <li v-for="error in errors">{{ error }}</li> <!-- yang ini emang cacing merah ya, jangan di apa apain  -->
                                     </ul>
                                 </p>
-                                <base-input alternative
+
+                                <div class="form-group" >
+                                    <input type="text" placeholder="Name" v-model="itemName" name="itemName" class="form-control"  />
+                                </div>
+
+                                  <div class="form-group" >
+                                    <input type="number" placeholder="Quantity" v-model="qty" name="qty" class="form-control"  />
+                                </div>
+
+                                <div class="form-group" >
+                                    <input type="number" placeholder="Price" v-model="price" name="price" class="form-control"  />
+                                </div>
+
+                                   <div class="radio-btn">
+                                         <span class="male-radio-btn">
+                                            <input type="radio" id="clothing" v-model="category" name="category" value="clothing">
+                                            <label class ="clothing" for="clothing">Clothing</label> 
+                                         </span>
+                                         <span class="female-radio-btn">
+                                            <input type="radio" id="jeans" v-model="category" name="category" value="jeans">
+                                            <label class ="jeans" for="jeans">Jeans</label> 
+                                         </span>
+                                         <span class="female-radio-btn">
+                                            <input type="radio" id="tshirts" v-model="category" name="category" value="thsirts">
+                                            <label class ="tshirts" for="tshirts">T Shirts</label> 
+                                         </span>
+                                     </div>
+
+                                 <div class="form-group" >
+                                    <input type="text" placeholder="Variant" v-model="variant" name="variant" class="form-control"  />
+                                </div>
+
+                                <div class="form-group" >
+                                    <input type="text" placeholder="Note" v-model="note" name="note" class="form-control"  />
+                                </div>
+
+                                 <div class="text-center">
+                                    <!-- <base-button type="primary" class="my-4" @click="saveItem">Add Item</base-button> -->
+                                    <button class="btn" type="submit" >    Add </button>
+                                </div>
+
+
+                                <!-- <base-input alternative
                                             class="mb-3"
                                             placeholder="Name"
                                             v-model="itemName"
@@ -43,7 +85,7 @@
                                             placeholder="Price"
                                             v-model="price"
                                       >
-                                </base-input>
+                                </base-input> -->
                                 <!-- <div class="category">
                                     <base-dropdown title-classes="btn btn-secondary" title="Category" >
                                             <a class="dropdown-item" href="#">Action</a>
@@ -57,33 +99,22 @@
                                             v-model="category"
                                       >
                                 </base-input> -->
-                                <div class="radio-btn">
-                                         <span class="male-radio-btn">
-                                            <input type="radio" id="clothing" v-model="category" name="category" value="clothing">
-                                            <label class ="clothing" for="clothing">Clothing</label> 
-                                         </span>
-                                         <span class="female-radio-btn">
-                                            <input type="radio" id="jeans" v-model="category" name="category" value="jeans">
-                                            <label class ="jeans" for="jeans">Jeans</label> 
-                                         </span>
-                                         <span class="female-radio-btn">
-                                            <input type="radio" id="tshirts" v-model="category" name="category" value="thsirts">
-                                            <label class ="tshirts" for="tshirts">T Shirts</label> 
-                                         </span>
-                                     </div>
+                             
                                
-                                <base-input alternative
+                                <!-- <base-input alternative
                                             class="mb-3"
                                             placeholder="Variant"
                                             v-model="variant"
                                           >
                                 </base-input>
+
+
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Note"
                                             v-model="note"
                                            >
-                                </base-input>
+                                </base-input> -->
                                <!-- <div class="uploadimage">
                                     <base-input alternative
                                                 class="mb-3"
@@ -92,10 +123,12 @@
                                     </base-input>
                                     <button>Upload</button>
                                </div> -->
-                                <div class="text-center">
-                                    <!-- <base-button type="primary" class="my-4" @click="saveItem">Add Item</base-button> -->
+                                <!-- <div class="text-center">
+                                    <base-button type="primary" class="my-4" @click="saveItem">Add Item</base-button>
                                     <button class="btn" type="submit" >    Add </button>
-                                </div>
+                                </div> -->
+
+
                             </form>
                         </template>
                     </card>
@@ -145,8 +178,28 @@ export default {
                 this.errors.push("Variant required");
                
             }
-            if (!this.errors.length) {
-                return true;
+            
+
+             if (!this.errors.length) {
+                let data = {
+                    itemName: e.target.elements.itemName.value,
+                    qty: e.target.elements.qty.value,
+                    price: e.target.elements.price.value,
+                    category: e.target.elements.category.value,
+                    variant: e.target.elements.variant.value,
+                    note: e.target.elements.note.value,
+                  
+                }
+                axios.post('http://localhost:3000/products', data)
+                .then(respond => {
+                    if(respond.data == 'success'){
+                        alert('success add item')
+                        
+                       
+                    } else {
+                        alert('fail')
+                    }
+                })
             }
             
             e.preventDefault();
