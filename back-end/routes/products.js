@@ -18,7 +18,7 @@ router.get('/', (req,res) => {
         }
     })
     .then(product => {
-        res.json(product)
+        res.send("success")
     })
     .catch(err => {
         console.log(err)
