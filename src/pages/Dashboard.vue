@@ -81,6 +81,7 @@
     </div>
 
 </template>
+<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 <script>
 import axios from "axios";
 import BaseButton from '../components/BaseButton.vue';
@@ -119,11 +120,9 @@ export default {
           console.log(err);
         }
       },
-
-
-       doSearch(value) { //ini bagian dari untuk search
+      doSearch(value) { //ini bagian dari untuk search
         axios
-        .get('http://localhost:3000/users/search/' + this.search)
+        .get('http://localhost:3000/users?search=' + value)
         .then((response) => {this.products = response.data})
         .catch(e => console.log(e));
       }

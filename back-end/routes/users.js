@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcrypt');
 const sequelize = require('../models')
-const {op} = require('sequelize')
+const {Op} = require('sequelize')
 const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
@@ -24,25 +24,61 @@ require('dotenv').config();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   // res.send('respond with a resource');
-  products.findAll({
-        where: {
-            storeId: 7,
-            status: 'A'
-        },
-        include: {
-            model: sequelize.categories,
-            attributes: ['name']
-        },
-        attributes: {
-            excldue: ['storeName', 'variant', 'note']
-        }
+  console.log('before')
+  if(!req.query.search){
+    products.findAll({
+      where: {
+          storeId: 7,
+          status: 'A'
+      },
+      include: {
+          model: sequelize.categories,
+          attributes: ['name']
+      },
+      attributes: {
+          excldue: ['storeName', 'variant', 'note']
+      }
     })
     .then(product => {
       res.send(product)
     })
     .catch(err => {
       res.send(err)
-  })
+    })
+  } else {
+    console.log('else block')
+    products.findAll({
+      where: {
+        storeId: 7,
+        status: 'A',
+        [Op.or]: [
+          {
+            name: {
+              [Op.like]: `%${req.query.search}%`
+            }
+          },
+          {
+            variant: {
+              [Op.like]: `%${req.query.variant}%`
+            }
+          }
+        ]
+      },
+      include: {
+          model: sequelize.categories,
+          attributes: ['name']
+      },
+      attributes: {
+          excldue: ['storeName', 'variant', 'note']
+      }
+    })
+    .then(product => {
+      res.send(product)
+    })
+    .catch(err => {
+      res.send(err)
+    })
+  }
 });
 
 router.get('/check-username-storename', (req, res, next) => {
