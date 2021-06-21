@@ -5,11 +5,12 @@
           <div class="table-responsive">
             <h1>Dashboard</h1>
             <div class="search">
-               <base-input alternative class="mb-3"
-                placeholder="Search by Item & Name"
-       v-model="search" @change="searchItem">
-                </base-input>
-               
+               <input type="text" class="form-control" placeholder="Search by Item & Name" v-model="search">
+                
+               <button tag="a"
+             class="btn" >
+             Search
+             </button>
             </div>
              <base-button tag="a" href="#/formAddItem"
              class="mb-3 mb-sm-0">

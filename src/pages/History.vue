@@ -5,15 +5,14 @@
           <div class="table-responsive">
             <h1>Dropships History</h1>
             <div class="search">
-               <base-input alternative class="mb-3"
-                placeholder="Search by Item & Name"
-       >
-                </base-input>
-               <base-button tag="a"
-             class="mb-3 mb-sm-0">
-             Search
-             </base-button>
+               <input type="text" class="form-control" placeholder="Search by Item & Name" v-model="search">
+                
+               <button tag="a"
+             class="btn" >   
+             Search  <!-- @click="searchData" -->
+             </button>  
             </div>
+            
              <table class="table is-striped is-bordered mt-2 is-fullwidth">
                <thead>
                   <tr>
@@ -93,7 +92,8 @@ export default {
     name:"dropshipsList",
     data() {
       return {
-        dropships: []
+        dropships: [],
+        search: "",
       };
     },
     created() {
@@ -110,8 +110,21 @@ export default {
           alert('err: ' + err)
         }
       },
-    }
-};
+      
+    // searchData() {
+    //  // gw ngestack di condition diatas then
+    //     .then(response => {
+    //       this.dropships = response.data;
+    //       console.log(response.data);
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
+    // }
+  }
+}
+    
+
 </script>
 <style>
 
