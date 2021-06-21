@@ -38,7 +38,7 @@ router.get('/', function(req, res, next) {
         }
     })
     .then(product => {
-      res.json(product)
+      res.send(product)
     })
     .catch(err => {
       res.send(err)
@@ -57,9 +57,9 @@ router.get('/check-username-storename', (req, res, next) => {
   })
   .then(user => {
     if(user.username){
-      return res.json({message: 'Username already exists'})
+      return res.send('Username already exists')
     } else if(user.storeName) {
-      return res.json({message: 'Store name already exists'})
+      return res.send('Store name already exists')
     } else {
       return
     }
@@ -85,7 +85,7 @@ router.post('/register', (req,res, next)=>{
       res.send("success")
     })
     .catch(err => {
-      res.send("failed")
+      res.send("fail")
       next(err)
     })
   })
@@ -139,7 +139,7 @@ router.post('/profile', upload.single("flProfilePic"), (req,res) => {
     if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
       target = path.join(__dirname, `../public/images/${req.session.storeName-Date.now()}${mimetype}`) //rename profilePic file
     } else {
-      return res.json({message: `file must be picture`})
+      return res.send(`file must be picture`)
     }
   }
 
@@ -168,7 +168,7 @@ router.post('/profile', upload.single("flProfilePic"), (req,res) => {
       
       await fs.unlink(req.session.profilePic, err => {
         if(err) {
-          return res.json({message:err})
+          return res.send(err)
         }
       })
 
@@ -177,7 +177,7 @@ router.post('/profile', upload.single("flProfilePic"), (req,res) => {
       })
       req.session.profilePic = user.profilePic
     }
-    return res.json({message: `success`})
+    return res.send('success')
   })
   .catch(err => {
     next(err)
@@ -193,7 +193,7 @@ router.post('/dropship/submission', (req, res) => {
   })
   .then(product => {
     if(product.qty < req.body.qty){
-      return res.json({message: `qty exceeds product qty: ${product.qty}`})
+      return res.send(`qty exceeds product qty: ${product.qty}`)
     } else {
       dropships.create({
         storeId: req.session.storeId,
@@ -210,7 +210,7 @@ router.post('/dropship/submission', (req, res) => {
         status: 'PENDING PAYMENT'
       })
       .then(dropship => {
-          return res.json({dropship})
+          return res.send(dropship)
       })
     }
   })
@@ -230,10 +230,10 @@ router.post('/dropship/upload-payment', pay.single('flPayment') , (req, res) => 
     if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
       target = path.join(__dirname, `../public/images/invoice/${req.session.storeName-Date.now()}_invoice${mimetype}`) //rename profilePic file
     } else {
-      return res.json({message: `file must be picture`})
+      return res.send('incorrect file')
     }
   } else {
-    return res.json({message: "no file"})
+    return res.send("no file")
   }
 
   dropships.update({
@@ -262,7 +262,7 @@ router.get('/dropship', (req, res) => {
       }
     })
     .then(dropship => {
-      return res.json(dropship)
+      return res.send(dropship)
     })
     .catch(err => {
       next(err)
@@ -275,7 +275,7 @@ router.get('/dropship', (req, res) => {
       }
     })
     .then(dropship => {
-      return res.json(dropship)
+      return res.send(dropship)
     })
     .catch(err => {
       next(err)
@@ -293,7 +293,7 @@ router.post('/dropship', (req, res) => {
     }
   })
   .then(() => {
-    res.json({message: 'complete'})
+    res.send('success')
   })
   .catch(err => {
     next(err)
@@ -311,7 +311,7 @@ router.post('/dropship/cancel', (req, res) => {
     }
   })
   .then(() => {
-    return res.json({message: 'canceled'})
+    return res.send('success')
   })
 })
 
