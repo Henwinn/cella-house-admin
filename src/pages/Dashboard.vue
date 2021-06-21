@@ -89,11 +89,17 @@ export default {
     name:"productsList",
     data() {
       return {
-        products: []
+        products: [],
+        search: ''
       };
     },
     created() {
       this.getProducts();
+    },
+    watch: { //ini bagian dari untuk search
+      search(value){
+        this.doSearch(value); 
+      }
     },
     methods: {
       async getProducts() {
@@ -112,6 +118,14 @@ export default {
         }catch (err) {
           console.log(err);
         }
+      },
+
+
+       doSearch(value) { //ini bagian dari untuk search
+        axios
+        .get('http://localhost:3000/users/search/' + this.search)
+        .then((response) => {this.products = response.data})
+        .catch(e => console.log(e));
       }
     }
 };
