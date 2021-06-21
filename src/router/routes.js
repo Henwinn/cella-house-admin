@@ -16,7 +16,7 @@ import EditProfileForm from "@/pages/Profile/EditProfileForm.vue";
 import EditProfileAdminForm from "@/pages/Profile/EditProfileAdminForm.vue";
 import ListApproval from "@/pages/ListApproval.vue";
 import Tracking from "@/pages/Tracking.vue";
-
+import Forgot from "@/pages/Forgot.vue";
 
 const Dashboard = () => import("@/pages/Dashboard.vue");
 const AdminDashboard = () => import("@/pages/AdminDashboard.vue");
@@ -98,6 +98,10 @@ const routes = [
   {
     path: "/register",
     component: Register
+  },
+  {
+    path: "/forgot",
+    component: Forgot
   },
   {
     path: "/admin",
