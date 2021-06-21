@@ -92,4 +92,7 @@ export default {
 };
 </script>
 <style>
+.form-control{
+    margin-bottom: 10px;
+}
 </style>
