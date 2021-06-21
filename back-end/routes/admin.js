@@ -14,7 +14,7 @@ router.get('/approve', (req, res) => {
         }
     })
     .then(product => {
-        return res.json({product})
+        return res.send(product)
     })
     .catch(err => {
         next(err)
@@ -38,9 +38,9 @@ router.post('/approve', (req, res) => {
     })
     .then(() => {
         if(status == 'A') {
-            return res.json({message: 'approved'})
+            return res.send('approved')
         } else {
-            return res.json({message: 'rejected'})
+            return res.send('rejected')
         }
     })
     .catch(err => {
@@ -57,7 +57,7 @@ router.get('/dropship/approve', (req, res) => {
         }
     })
     .then(dropship => {
-        return res.json({dropship})
+        return res.send(dropship)
     })
     .catch(err => {
         next(err)
@@ -84,9 +84,9 @@ router.post('/dropship/approve', (req, res) => {
     })
     .then(() => {
         if(status == 'ON PACKAGING') {
-            return res.json({message: 'approved'})
+            return res.send('approved')
         } else {
-            return res.json({message: 'rejected'})
+            return res.send('rejected')
         }
     })
     .catch(err => {
