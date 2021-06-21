@@ -6,7 +6,7 @@ const categories = sequelize.categories
 router.get('/', (req, res) => {
     categories.findAll({})
     .then(category => {
-        res.json(category)
+        res.send(category)
     })
     .catch(err => {
         next(err)
@@ -18,7 +18,7 @@ router.post('/add', (req, res) => {
         name: req.body.name
     })
     .then(category => {
-        res.json({category})
+        res.send(category)
     })
     .catch(err => {
         next(err)
@@ -32,7 +32,7 @@ router.post('/delete', (req,res) => {
         }
     })
     .then( () => {
-        res.json({message: 'delete success'})
+        res.send('success')
     })
     .catch(err => {
         next(err)

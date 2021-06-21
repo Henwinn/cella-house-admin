@@ -10,7 +10,7 @@ router.get('/', (req,res) => {
             status: 'A'
         },
         include: {
-            model: 'categories',
+            model: sequelize.categories,
             attributes: ['name']
         },
         attributes: {
@@ -18,7 +18,7 @@ router.get('/', (req,res) => {
         }
     })
     .then(product => {
-        res.json({product})
+        res.send(product)
     })
     .catch(err => {
         console.log(err)
@@ -33,7 +33,7 @@ router.post('/add', (req,res, next) => {
         categoryName: req.body.categoryName,
         variant: req.body.variant,
         note: req.body.note,
-        storeName: req.session.storeName
+        storeId: req.session.storeId
     })
     .then(product => {
         res.send("success")
@@ -59,7 +59,7 @@ router.post('/update', (req,res) => {
         }
     })
     .then(product => {
-        res.json({product})
+        res.send(product)
     })
     .catch(err => {
         next(err)
@@ -76,7 +76,7 @@ router.post('/delete', (req, res) => {
         }
     })
     .then( () => {
-        res.json({message: 'delete success'})
+        res.send('success')
     })
     .catch(err => {
         next(err)

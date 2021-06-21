@@ -29,6 +29,8 @@ var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products')
 var categoriesRouter = require('./routes/categories')
 var adminRouter = require('./routes/admin')
+var provinceRouter = require('./routes/province')
+var cityRouter = require('./routes/city')
 
 var app = express();
 
@@ -68,6 +70,8 @@ app.use('/users', usersRouter); //checkSession
 app.use('/products', productsRouter); //checkSession
 app.use('/categories', categoriesRouter); //checkSession
 app.use('/admin', adminRouter) //checkSession
+app.use('/province', provinceRouter) //checkSession
+app.use('/city', cityRouter) //checkSession
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
