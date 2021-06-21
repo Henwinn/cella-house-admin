@@ -112,7 +112,7 @@ export default {
       },
       
     searchData() {
-      axios.get("http://localhost:3000/users/dropship" + this.search)
+      axios.get("http://localhost:3000/users/dropship?search=" + this.search)
         .then(response => {
           this.dropships = response.data;
           console.log(response.data);
