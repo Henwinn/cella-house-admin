@@ -7,12 +7,9 @@
             <div class="search">
                <base-input alternative class="mb-3"
                 placeholder="Search by Item & Name"
-       >
+       v-model="search" @change="searchItem">
                 </base-input>
-               <base-button tag="a"
-             class="mb-3 mb-sm-0">
-             Search
-             </base-button>
+               
             </div>
              <base-button tag="a" href="#/formAddItem"
              class="mb-3 mb-sm-0">
@@ -46,10 +43,7 @@
                       <td>{{ product.note }}</td>
                       <td>{{ product.status }}</td>
                       <td class="has-text-centered">
-                        <button class="btn"
-                          :to="{ name: 'Edit', params: { id: product.id } }"
-                          
-                          >Edit</button >
+                        <button class="btn">Edit</button >
                         <!-- <a
                           class="button is-danger is-small"
                           @click="deleteProduct(product.id)"
@@ -112,7 +106,7 @@ export default {
       },
       async deleteProduct(id) {
         try {
-          await axios.delete("http://localhost:3000/users/${id}");
+          await axios.delete('http://localhost:3000/users/${id}');
           this.getProducts();
         }catch (err) {
           console.log(err);
