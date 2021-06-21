@@ -12,12 +12,12 @@
                           class="border-0">
                         <template>
                             <div class="text-muted text-center mb-3">
-                                <small>Log In</small>
+                                <small>Forgot Password</small>
                             </div>
                         </template>
                         <template>
                             <!-- <form action="http://localhost:3000/users/login" method="POST"> -->
-                            <form @submit="login">
+                            <form @submit.prevent="handleSubmit">
                                 <!-- <base-input alternative
                                             class="mb-3"
                                             placeholder="Email"
@@ -25,7 +25,7 @@
                                             name="username"
                                        >
                                 </base-input> -->
-                                <input type="text" class="form-control" v-model="username" name="username"  placeholder="Username">
+                                <input type="text" class="form-control" v-model="email" name="email"  placeholder="Email">
                                 <!-- <base-input alternative
                                             type="password"
                                             placeholder="Password"
@@ -33,10 +33,7 @@
                                             name="password"
                                          >
                                 </base-input> -->
-                                <input type="password" class="form-control" v-model="password" name="password"  placeholder="Password">
-                                <base-checkbox>
-                                    Remember me
-                                </base-checkbox>
+                                
                                 <div class="text-center">
                                     <button type="submit" class="btn" value="Login">submit</button>
                                     
@@ -44,18 +41,7 @@
                             </form>
                         </template>
                     </card>
-                    <div class="row mt-3">
-                        <div class="col-6">
-                            <a href="#/forgot" class="text-light">
-                                <small>Forgot password?</small>
-                            </a>
-                        </div>
-                        <div class="col-6 text-right">
-                            <a href="#/register" class="text-light">
-                                <small>Create new account</small>
-                            </a>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>
@@ -65,28 +51,20 @@
 import axios from "axios";
 
 export default {
-    name: "Login",
+    name: "Forgot",
+    data(){
+        return{
+            email:''
+        }
+    },
     methods: {
-        login: (e) => {
-            e.preventDefault()
-            let login = () => {
-                let data = {
-                    username: e.target.elements.username.value,
-                    password: e.target.elements.password.value
-                }
-                axios.post("http://localhost:3000/users/login", data)
-                .then((response) => {
-                    if(response.data == 'success'){
-                        console.log("logged")
-                        alert('success') //redirect ke dashboard
-                    } else {
-                        console.log("fail")
-                        alert('username or password incorrect!')
-                    }
-                })
-                .catch(err => console.log(err))
-            }
-            login()
+       async handleSubmit(){
+           const response = await axios.post('forgot', { //forgot ada di db?
+               email: this.email
+           });
+
+
+           console.log(response)
         }
     }
 };
