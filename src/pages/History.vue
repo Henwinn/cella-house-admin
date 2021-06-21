@@ -8,8 +8,8 @@
                <input type="text" class="form-control" placeholder="Search by Item & Name" v-model="search">
                 
                <button tag="a"
-             class="btn" >   
-             Search  <!-- @click="searchData" -->
+             class="btn" @click="searchData">   
+             Search  
              </button>  
             </div>
             
@@ -111,16 +111,16 @@ export default {
         }
       },
       
-    // searchData() {
-    //  // gw ngestack di condition diatas then
-    //     .then(response => {
-    //       this.dropships = response.data;
-    //       console.log(response.data);
-    //     })
-    //     .catch(e => {
-    //       console.log(e);
-    //     });
-    // }
+    searchData() {
+      axios.get("http://localhost:3000/users/dropship" + this.search)
+        .then(response => {
+          this.dropships = response.data;
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   }
 }
     
