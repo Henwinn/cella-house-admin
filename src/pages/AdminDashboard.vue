@@ -5,14 +5,7 @@
           <div class="table-responsive">
             <h1>List Merchants</h1>
             <div class="search">
-               <base-input alternative class="mb-3"
-                placeholder="Search by Merchant's Name"
-       >
-                </base-input>
-               <base-button tag="a"
-             class="mb-3 mb-sm-0">
-             Search
-             </base-button>
+              <input type="text" class="form-control" placeholder="Search" v-model="search">
             </div>
              <table class="table is-striped is-bordered mt-2 is-fullwidth">
                <thead>
@@ -27,8 +20,7 @@
                       <td>{{ user.storeName }}</td>
                       <td class="has-text-centered">
                         <button class="btn">Profile</button >
-                        <button class="btn">Delete</button>
-                        
+                        <button class="btn" @click="deleteMerchant(user.id)">Delete</button>
                       </td>
                     </tr>
                 </tbody>
@@ -43,44 +35,66 @@
           :total="1000">
         </el-pagination>
     </div>
-
 </template>
 <script>
 import axios from "axios";
+import _ from "lodash";
 import BaseButton from '../components/BaseButton.vue';
+
 export default {
   components: { BaseButton },
     name:"merchantsList",
     data() {
       return {
-        users: []
+        users: [],
+        search: '',
+        showModal: false
       };
     },
     created() {
       this.getMerchants();
+      this.searchMerchant = _.debounce(this.searchMerchant, 400)
+    },
+    watch: {
+      search(value){
+        this.searchMerchant(value);
+      }
     },
     methods: {
       async getMerchants() {
         try {
-          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get("http://localhost:3000/admin/user/all");
           this.users = response.data;
         } catch (err) {
           console.log(err);
-          alert('err: ' + err)
         }
       },
-      async deleteProduct(id) {
+      async getMerchantProfile(){
+        try{
+          const response = await axios.get("http://localhost:3000/admin/user")
+          //INI HARUSNYA DIRECT KE PAGE PROFILE?
+        } catch (err) {
+          console.log(err)
+        }
+      },
+      async deleteMerchant(id) {
         try {
-          await axios.delete("http://localhost:3000/users/${id}");
+          await axios.delete(`http://localhost:3000/admin/user/${id}`);
           this.getMerchants();
         }catch (err) {
           console.log(err);
+        }
+      },
+      async searchMerchant(value){
+        try{
+          var response = await axios.get("http://localhost:3000/admin/user?search=" + encodeURIComponent(value))
+          this.users = response.data
+        } catch(err) {
+          console.log(err)
         }
       }
     }
 };
 </script>
 <style>
-
-
 </style>
