@@ -1,9 +1,13 @@
 var express = require('express')
+const { isInteger } = require('lodash')
 var router = express.Router()
 const sequelize = require('../models')
+const {Op} = require('sequelize')
+const { route } = require('./users')
 const {
     products,
-    dropships
+    dropships,
+    users
 } = sequelize
 
 //GET PRODUCTS NEEDED TO BE APPROVED
@@ -91,6 +95,80 @@ router.post('/dropship/approve', (req, res) => {
     })
     .catch(err => {
         next(err)
+    })
+})
+
+//GET USER BY PARAM
+router.get('/user/:param', (req, res) => {
+    // if(req.session.roleId == 1){
+            //ALL USERS
+            if(req.params.param == 'all'){
+                users.findAll()
+                .then(users => {
+                    return res.send(users)
+                })
+            } else {
+                users.findOne({
+                    where: {
+                        username: req.params.param
+                    }
+                })
+                .then(user => {
+                    if(!user){
+                        return res.send('fail')
+                    } else {
+                        return res.send(user)
+                    }
+                })
+            }
+            // //USER BY ID
+            // } else if(isNaN(req.params.id) == false){
+            //     users.findOne({
+            //         where: {
+            //             id: req.params.id
+            //         }
+            //     })
+            //     .then(user => res.send(user))
+            // //INVALID PARAMETER
+            // } else {
+            //     console.log('else block')
+            //     return res.status(404).send('invalid param string')
+            // }
+        // }
+    //NOT ADMIN
+    // } else {
+    //     return res.status(403).send('restricted')
+    // }
+})
+
+//GET USER BY QUERY STRING
+router.get('/user', (req, res) => {
+    users.findAll({
+        where: {
+            username: {
+                [Op.like]: `%${req.query.search}%`
+            }
+        }
+    })
+    .then(user => res.send(user))
+})
+
+//DELETE USER
+router.delete('/user/:id', (req, res) => {
+    users.destroy({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(user => {
+        if(user){
+            return res.send('success')
+        } else {
+            return res.send('fail')
+        }
+    })
+    .catch(err => {
+        return res.send('error')
     })
 })
 

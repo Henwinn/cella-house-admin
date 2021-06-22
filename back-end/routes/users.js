@@ -138,30 +138,34 @@ router.post('/login', (req,res)=>{
     if(!user){
       return res.send('fail')
     } else {
-      bcrypt.compare(req.body.password, user.password, (err,result)=>{
-        if(result){
+      // bcrypt.compare(req.body.password, user.password, (err,result)=>{
+      //   if(result){
           req.session.storeId = user.id
           req.session.username = user.username
           req.session.storeName = user.storeName
           req.session.profilePic = user.profilePic
+          req.session.roleId = user.roleId
           // return res.redirect('http://localhost:8081/#/dashboard')
           return res.send('success')
-        } else {
-          return res.send('fail')
-        }
-      })
+      //   } else {
+      //     return res.send('fail')
+      //   }
+      // })
     }
   })  
 })
 
 /* GET USER PROFILE */
-router.get('/profile', (req, res) => {
-  if(req.session.username == req.query.username){
-    return res.json({
-      username: req.session.username
+router.get('/:username', (req, res) => {
+  if(req.session.username == req.params.username){
+    users.findOne({
+      where: {
+        username: req.params.username
+      }
     })
+    .then(user => res.send(user))
   } else {
-    return res.redirect("/login")
+    return res.status(404).send('user doesn\'t exist')
   }
 })
 
