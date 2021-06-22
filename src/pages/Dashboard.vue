@@ -56,27 +56,16 @@
         </card>
       </div>
 
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
 
+        <el-pagination
+        
+          background
+          layout="prev, pager, next"
+          :total="total"
+          :page-size="pageSize"
+          @current-change="page">
+        </el-pagination>
+    </div>
 </template>
 <script>
 import axios from "axios";
@@ -88,12 +77,16 @@ export default {
     data() {
       return {
         products: [],
-        search: ''
+        search: '',
+        pageSize:'',
+        total:''
       };
     },
     created() {
       this.getProducts();
-      this.doSearch = _.debounce(this.doSearch, 400)
+      this.doSearch = _.debounce(this.doSearch, 400);
+
+
     },
     watch: { //ini bagian dari untuk search
       search(value){
@@ -119,14 +112,24 @@ export default {
         }
       },
       doSearch(value) { //ini bagian dari untuk search
-        axios
-        .get('http://localhost:3000/users?search=' + encodeURIComponent(value))
+        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value))
         .then((response) => {this.products = response.data})
         .catch(e => console.log(e));
-      }
+      },
+      page(){
+        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
+        .then((response) => {
+          this.products = response.data
+          this.pageSize = response.data
+          this.total = resp.data
+          })
+        .catch(e => console.log(e));
+      },
     }
+    
 };
 </script>
+
 <style>
 
 
