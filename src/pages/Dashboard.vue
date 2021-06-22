@@ -81,9 +81,9 @@
     </div>
 
 </template>
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 <script>
 import axios from "axios";
+import _ from "lodash";
 import BaseButton from '../components/BaseButton.vue';
 export default {
   components: { BaseButton },
@@ -96,6 +96,7 @@ export default {
     },
     created() {
       this.getProducts();
+      this.doSearch = _.debounce(this.doSearch, 500)
     },
     watch: { //ini bagian dari untuk search
       search(value){
