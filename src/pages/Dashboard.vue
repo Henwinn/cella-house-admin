@@ -122,7 +122,7 @@ export default {
       },
       doSearch(value) { //ini bagian dari untuk search
         axios
-        .get('http://localhost:3000/users?search=' + value)
+        .get('http://localhost:3000/users?search=' + encodeURIComponent(value))
         .then((response) => {this.products = response.data})
         .catch(e => console.log(e));
       }
