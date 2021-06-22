@@ -35,7 +35,7 @@
                </thead>
                <tbody>
 
-                    <tr v-for="product in this.products" :key="product">
+                    <tr v-for="(product, idx) in this.products" :key="idx">
                       <td>{{ product.name }}</td>
                       <td>{{ product.qty }}</td>
                       <td>{{ product.price }}</td>
@@ -96,7 +96,7 @@ export default {
     },
     created() {
       this.getProducts();
-      this.doSearch = _.debounce(this.doSearch, 500)
+      this.doSearch = _.debounce(this.doSearch, 400)
     },
     watch: { //ini bagian dari untuk search
       search(value){
