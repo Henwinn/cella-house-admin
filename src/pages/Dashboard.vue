@@ -7,7 +7,10 @@
             <div class="search">
                <input type="text" class="form-control" placeholder="Search by Item & Name" v-model="search">
                 
-              
+               <button tag="a"
+             class="btn" >
+             Search
+             </button>
             </div>
              <base-button tag="a" href="#/formAddItem"
              class="mb-3 mb-sm-0">
