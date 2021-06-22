@@ -35,7 +35,7 @@
                </thead>
                <tbody>
 
-                    <tr v-for="product in this.products" :key="product">
+                    <tr v-for="(product, idx) in this.products" :key="idx">
                       <td>{{ product.name }}</td>
                       <td>{{ product.qty }}</td>
                       <td>{{ product.price }}</td>
@@ -81,9 +81,9 @@
     </div>
 
 </template>
-<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
 <script>
 import axios from "axios";
+import _ from "lodash";
 import BaseButton from '../components/BaseButton.vue';
 export default {
   components: { BaseButton },
@@ -96,6 +96,7 @@ export default {
     },
     created() {
       this.getProducts();
+      this.doSearch = _.debounce(this.doSearch, 400)
     },
     watch: { //ini bagian dari untuk search
       search(value){
@@ -122,7 +123,7 @@ export default {
       },
       doSearch(value) { //ini bagian dari untuk search
         axios
-        .get('http://localhost:3000/users?search=' + value)
+        .get('http://localhost:3000/users?search=' + encodeURIComponent(value))
         .then((response) => {this.products = response.data})
         .catch(e => console.log(e));
       }

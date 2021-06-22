@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const sequelize = require('../models')
 const {Op} = require('sequelize')
 const multer = require('multer')
@@ -59,7 +59,7 @@ router.get('/', function(req, res, next) {
           },
           {
             variant: {
-              [Op.like]: `%${req.query.variant}%`
+              [Op.like]: `%${req.query.search}%`
             }
           }
         ]
@@ -289,12 +289,11 @@ router.post('/dropship/upload-payment', pay.single('flPayment') , (req, res) => 
 })
 
 //GET DROPSHIP MADE BY THIS USER
-router.get('/dropship', (req, res) => {
+router.get('/dropship', (req, res, next) => {
   if(!req.query.dropshipId){
     dropships.findAll({
       where: {
         storeId: 7 //req.session.storeId
-
       }
     })
     .then(dropship => {

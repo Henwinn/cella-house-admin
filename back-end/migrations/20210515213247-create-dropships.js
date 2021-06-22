@@ -9,28 +9,49 @@ module.exports = {
         type: Sequelize.INTEGER(5)
       },
       storeId: {
-        type: Sequelize.INTEGER(5)
+        type: Sequelize.INTEGER(5),
+        references: {
+          model: 'users',
+          key: 'id'
+        }
       },
       qty: {
         type: Sequelize.INTEGER
       },
       customerId: {
-        type: Sequelize.INTEGER(5)
+        type: Sequelize.INTEGER(5),
+        references: {
+          model: 'customers',
+          key: 'id'
+        }
       },
-      customerName: {
-        type: Sequelize.STRING(40)
+      provinceIdOrigin: {
+        type: Sequelize.STRING(40),
+        references: {
+          model: 'provinces',
+          key: 'id'
+        }
       },
-      customerPhone: {
-        type: Sequelize.STRING(20)
+      cityIdOrigin: {
+        type: Sequelize.STRING(40),
+        references: {
+          model: 'cities',
+          key: 'id'
+        }
       },
-      province: {
-        type: Sequelize.STRING(40)
+      provinceIdDestination: {
+        type: Sequelize.STRING(40),
+        references: {
+          model: 'provinces',
+          key: 'id'
+        }
       },
-      city: {
-        type: Sequelize.STRING(40)
-      },
-      postalCode: {
-        type: Sequelize.STRING(5)
+      cityIdDestination: {
+        type: Sequelize.STRING(40),
+        references: {
+          model: 'cities',
+          key: 'id'
+        }
       },
       address: {
         type: Sequelize.TEXT
