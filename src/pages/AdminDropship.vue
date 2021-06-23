@@ -82,17 +82,17 @@ export default {
     name:"dropshipsList",
     data() {
       return {
-        dropships: []
+        users: []
       };
     },
     created() {
-      this.getDropships();
+      this.getUsers();
     },
     methods: {
-      async getDropships() {
+      async getUsers() {
         try {
-          const response = await axios.get("http://localhost:3000/admin/dropship/approve");
-          this.dropships = response.data;
+          const response = await axios.get("http://localhost:3000/users");
+          this.users = response.data;
           //UNFINISHED
         } catch (err) {
           console.log(err);
