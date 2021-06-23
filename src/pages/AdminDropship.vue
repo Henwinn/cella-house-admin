@@ -25,9 +25,7 @@
                     <th>Postal Code</th>
                     <th>Address</th>
                     <th>Shipment Price</th>
-                    <th>Payment Invoice</th>
-                    <th>Note</th>
-                    <th>Status</th>
+                
                     <th class="has-text-centered">Actions</th>
                   </tr>
                </thead>
