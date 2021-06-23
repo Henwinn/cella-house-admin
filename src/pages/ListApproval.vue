@@ -80,8 +80,22 @@ export default {
   },
   data() {
     return {
-     
+      products: []
     };
+  },
+  created() {
+    this.getProducts();
+  },
+  methods: {
+     async getProducts() {
+        try {
+          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          this.products = response.data;
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
+        }
+      },
   }
 };
 </script>
