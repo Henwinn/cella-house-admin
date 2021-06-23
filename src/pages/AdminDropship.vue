@@ -63,12 +63,13 @@
           </div>
         </card>
       </div>
-<!-- 
-              <el-pagination
-          background
-          layout="prev, pager, next"
-          :total="1000">
-        </el-pagination> -->
+        <el-pagination 
+        background
+        layout="prev, pager, next"
+        :total="total"
+        :page-size="pageSize"
+        @current-change="page">
+      </el-pagination>
     </div>
 
 </template>
@@ -97,6 +98,15 @@ export default {
           alert('err: ' + err)
         }
       },
+      page(){
+        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
+        .then((response) => {
+          this.users = response.data
+          this.pageSize = response.data
+          this.total = resp.data
+          })
+        .catch(e => console.log(e));
+      }
     }
 };
 </script>

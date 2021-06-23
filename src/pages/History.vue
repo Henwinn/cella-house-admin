@@ -62,10 +62,13 @@
         </card>
       </div>
 
-              <el-pagination
+           <el-pagination
+        
           background
           layout="prev, pager, next"
-          :total="1000">
+          :total="total"
+          :page-size="pageSize"
+          @current-change="page">
         </el-pagination>
     </div>
 
@@ -79,7 +82,9 @@ export default {
     data() {
       return {
         dropships: [],
-        search: "",
+        search: '',
+        pageSize:'',
+        total:''
       };
     },
     created() {
@@ -106,7 +111,16 @@ export default {
         .catch(e => {
           console.log(e);
         });
-    }
+    },
+    page(){
+        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
+        .then((response) => {
+          this.dropships = response.data
+          this.pageSize = response.data
+          this.total = resp.data
+          })
+        .catch(e => console.log(e));
+      }
   }
 }
     
