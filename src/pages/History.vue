@@ -88,7 +88,7 @@ export default {
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get("http://localhost:3000/users/dropship"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.dropships = response.data;
        
         } catch (err) {
