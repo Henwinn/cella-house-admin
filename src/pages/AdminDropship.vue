@@ -33,19 +33,21 @@
                </thead>
                <tbody>
 
-                    <tr v-for="dropship in dropships" :key="dropship.id">
-                      <td>{{ dropship.id }}</td>
-                      <td>{{ dropship.qty }}</td>
-                      <td>{{ dropship.customerName }}</td>
-                      <td>{{ dropship.customerPhone }}</td>
-                      <td>{{ dropship.province }}</td>
-                      <td>{{ dropship.city }}</td>
-                      <td>{{ dropship.postalCode }}</td>
-                      <td>{{ dropship.address }}</td>
-                      <td>{{ dropship.shipmentPrice }}</td>
-                      <td>{{ dropship.paymentInvoice }}</td>
+                    <tr v-for="user in users" :key="user.id">
+                      
+                      <td>{{ user.qty }}</td>
+                      <td>{{ user.customerName }}</td>
+                      <td>{{ user.customerPhone }}</td>
+                      <td>{{ user.province }}</td>
+                      <td>{{ user.city }}</td>
+                      <td>{{ user.postalCode }}</td>
+                      <td>{{ user.address }}</td>
+                      <td>{{ user.shipmentPrice }}</td>
+
+                      
+                      <!-- <td>{{ dropship.paymentInvoice }}</td> //ini buat apa ya? ada paymentInvoice?
                       <td>{{ dropship.note }}</td>
-                      <td>{{ dropship.status }}</td>
+                      <td>{{ dropship.status }}</td> -->
                       <td class="has-text-centered">
                         <button class="btn"
                         
