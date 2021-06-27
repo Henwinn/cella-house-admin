@@ -80,16 +80,48 @@
                                             v-model="custPhone"
                                            >
                                 </base-input> -->
-                                  <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="city" >
+
+
+
+
+
+                             
+                               <!-- <select v-model="kota">
+                                <option disabled value="">Please select one</option>
+                                <option v-for="city in cities" :key="city.id"> {{ city.city_name }} </option>
+                                
+                                </select>  -->
+
+
+
+
+
+                                <!-- nanti kalau mau tes, coba salah satu select di uncomment aja, terus save. klo udah save terus di refresh manual chrome nya -->
+                                
+                                  <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="kota" >
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a>
+
                                  </base-dropdown>
-                                   <base-dropdown title-classes="btn btn-secondary" title="Provinsi" v-model="province" >
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
+
+                               <select v-model="provinsi">
+                                <option disabled value="">Please select one</option>
+                                <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
+                                
+                                </select>
+                                
+                                    
+
+
+                                   <base-dropdown title-classes="btn btn-secondary" title="Provinsi" v-model="provinsi" >
+                                   
+                                    <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
+                                   
                                  </base-dropdown>
+
+                                
+
                                    <base-dropdown title-classes="btn btn-secondary" title="Kode Pos" v-model="postalCode">
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
