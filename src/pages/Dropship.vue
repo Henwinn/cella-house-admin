@@ -150,18 +150,47 @@
     </section>
 </template>
 <script>
+import axios from "axios";
 export default {
+    
     data(){
+
+        
         return {
             itemName: "",
             custName: "",
             custAddress: "",
             custPhone: "",
-            city: "",
+            kota: "",
             postalCode: "",
-            province: "",
-            price: ""
+            provinsi: "",
+            price: "",
+            options: []
         };
+    },
+  created() {
+      this.getProvinces();
+    this.getCities();
+    },
+    methods: {
+        async getProvinces() {
+            try {
+            const response = await axios.get("http://localhost:3000/province/all"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+            this.provinces = response.data;
+            } catch (err) {
+            console.log(err);
+            alert('err: ' + err)
+            }
+        },
+        async getCities() {
+            try {
+            const response = await axios.get("http://localhost:3000/city/all"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+            this.cities = response.data;
+            } catch (err) {
+            console.log(err);
+            alert('err: ' + err)
+            }
+        }
     }
 };
 </script>
