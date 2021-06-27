@@ -88,7 +88,7 @@ export default {
   methods: {
      async getProducts() {
         try {
-          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get("http://localhost:3000/admin/product/approve"); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.products = response.data;
         } catch (err) {
           console.log(err);
@@ -97,7 +97,7 @@ export default {
       },
        async cancelApproval(id) {
         try {
-          await axios.delete(`http://localhost:3000/admin/user/${id}`);
+          await axios.post(`http://localhost:3000/admin/reject-product/${id}`);
           this.getProducts();
         }catch (err) {
           console.log(err);

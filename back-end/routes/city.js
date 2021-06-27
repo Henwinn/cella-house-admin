@@ -22,4 +22,15 @@ router.get('/:id', (req, res) => {
     })
 })
 
+//GET CITY BY PROVINCE
+router.get('/province/:provinceId', (req, res, next) => {
+    sequelize.cities.findAll({
+        where: {
+            province_id: req.params.provinceId
+        }
+    })
+    .then(cities => res.send(cities))
+    .catch(err => next(err))
+})
+
 module.exports = router

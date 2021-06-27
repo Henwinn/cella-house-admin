@@ -39,7 +39,7 @@
                                  </base-dropdown> -->
 
 
-                                  <div class="form-group" >
+                                <div class="form-group" >
                                     <input type="text" placeholder="Item Name" v-model="ItemName" name="ItemName" class="form-control"  />
                                 </div>
 
@@ -47,11 +47,11 @@
                                     <input type="text" placeholder="Customer Name" v-model="custName" name="custName" class="form-control"  />
                                 </div>
 
-                                 <div class="form-group" >
+                                <div class="form-group" >
                                     <input type="text" placeholder="Customer Address" v-model="custAddress" name="custAddress" class="form-control"  />
                                 </div>
 
-                                 <div class="form-group" >
+                                <div class="form-group" >
                                     <input type="number" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control"  />
                                 </div>
 
@@ -98,27 +98,30 @@
 
                                 <!-- nanti kalau mau tes, coba salah satu select di uncomment aja, terus save. klo udah save terus di refresh manual chrome nya -->
                                 
-                                  <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="kota" >
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
+                                <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="kota" >
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </base-dropdown>
 
-                                 </base-dropdown>
+                                <select v-model="provinces" @change="getCities()">
+                                    <option disabled value="">Please select one</option>
+                                    <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
+                                </select>
 
-                               <select v-model="provinsi">
-                                <option disabled value="">Please select one</option>
-                                <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
-                                
+                                <select v-model="city">
+                                    <option disabled value="">Please select one</option>
+                                    <option v-for="city in cities" :key="city.id"> {{ city.city_name }} </option>
                                 </select>
                                 
                                     
 
 
-                                   <base-dropdown title-classes="btn btn-secondary" title="Provinsi" v-model="provinsi" >
+                                <base-dropdown title-classes="btn btn-secondary" title="Provinsi" v-model="provinsi" >
                                    
                                     <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
                                    
-                                 </base-dropdown>
+                                </base-dropdown>
 
                                 
 
@@ -165,12 +168,13 @@ export default {
             postalCode: "",
             provinsi: "",
             price: "",
-            options: []
+            options: [],
+            provinces: [],
+            cities: []
         };
     },
-  created() {
-      this.getProvinces();
-    this.getCities();
+    created() {
+        this.getProvinces();
     },
     methods: {
         async getProvinces() {
@@ -183,8 +187,9 @@ export default {
             }
         },
         async getCities() {
+            alert('response.data')
             try {
-            const response = await axios.get("http://localhost:3000/city/all"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+            const response = await axios.get(`http://localhost:3000/city/province/${provinces.id}`); //cara ngambil id province yang dipilih gimana ya?
             this.cities = response.data;
             } catch (err) {
             console.log(err);

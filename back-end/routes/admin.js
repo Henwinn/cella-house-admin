@@ -3,7 +3,6 @@ const { isInteger } = require('lodash')
 var router = express.Router()
 const sequelize = require('../models')
 const {Op} = require('sequelize')
-const { route } = require('./users')
 const {
     products,
     dropships,
@@ -11,7 +10,7 @@ const {
 } = sequelize
 
 //GET PRODUCTS NEEDED TO BE APPROVED
-router.get('/approve', (req, res) => {
+router.get('/product/approve', (req, res) => {
     products.findAll({
         where: {
             status: 'N'
@@ -26,30 +25,42 @@ router.get('/approve', (req, res) => {
 })
 
 //ADMIN APPROVE PRODUCTS
-router.post('/approve', (req, res) => {
-    var status
-    if(req.body.status == 'Approve') {
-        status = 'A'
-    } else {
-        status = 'N'
-    }
+router.post('/approve-product/:id', (req, res) => {
     products.update({
-        status: status
+        status: 'A'
     }, {
         where: {
-            id: req.body.id
+            id: req.params.id
         }
     })
-    .then(() => {
-        if(status == 'A') {
-            return res.send('approved')
+    .then((result) => {
+        if(result){
+            return res.send('APPROVED')
         } else {
-            return res.send('rejected')
+            return res.send('fail')
         }
     })
     .catch(err => {
         next(err)
     })
+})
+
+router.post('/reject-product/:id', (req, res, next) => {
+    products.update({
+        status: 'R'
+    }, {
+        where: {
+            id: req.params.id
+        }
+    })
+    .then((result) => {
+        if(!result){
+            return res.send('fail')
+        } else {
+            return res.send('REJECTED')
+        }
+    })
+    .catch(err => next(err))
 })
 
 
@@ -99,46 +110,35 @@ router.post('/dropship/approve', (req, res) => {
 })
 
 //GET USER BY PARAM
-router.get('/user/:param', (req, res) => {
+router.get('/user/all', (req, res, next) => {
     // if(req.session.roleId == 1){
             //ALL USERS
-            if(req.params.param == 'all'){
-                users.findAll()
-                .then(users => {
-                    return res.send(users)
-                })
-            } else {
-                users.findOne({
-                    where: {
-                        username: req.params.param
-                    }
-                })
-                .then(user => {
-                    if(!user){
-                        return res.send('fail')
-                    } else {
-                        return res.send(user)
-                    }
-                })
-            }
-            // //USER BY ID
-            // } else if(isNaN(req.params.id) == false){
-            //     users.findOne({
-            //         where: {
-            //             id: req.params.id
-            //         }
-            //     })
-            //     .then(user => res.send(user))
-            // //INVALID PARAMETER
-            // } else {
-            //     console.log('else block')
-            //     return res.status(404).send('invalid param string')
-            // }
+            users.findAll()
+            .then(users => {
+                return res.send(users)
+            })
+            .catch(err => next(err))
         // }
     //NOT ADMIN
     // } else {
     //     return res.status(403).send('restricted')
     // }
+})
+
+router.get('/user/:id', (req, res, next) => {
+    users.findOne({
+        where: {
+            id: req.params.id
+        }
+    })
+    .then(user => {
+        if(user){
+            return res.send(user)
+        } else {
+            return res.send('empty')
+        }
+    })
+    .catch(err => next(err))
 })
 
 //GET USER BY QUERY STRING
