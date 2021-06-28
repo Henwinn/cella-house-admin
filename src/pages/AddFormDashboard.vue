@@ -196,6 +196,7 @@ export default {
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success add item')
+                        this.$router.push('dashboard')
                         
                         
                     } else {
