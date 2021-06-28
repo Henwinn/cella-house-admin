@@ -14,7 +14,7 @@
       </div>
       <div class="col-md-3 px-md-1">
         <div class="form-group" >
-            <input  type="text" placeholder="Username" v-model="unsername" name="username" class="form-control"  />
+            <input  type="text" placeholder="Username" v-model="username" name="username" class="form-control"  />
         </div>
       </div>
      
@@ -38,23 +38,7 @@
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-4 pr-md-1">
-       <div class="form-group" >
-            <input  type="text" placeholder="City" v-model="city" name="city" class="form-control"  />
-        </div>
-      </div>
-      <div class="col-md-4 px-md-1">
-       <div class="form-group" >
-            <input  type="text" placeholder="Country" v-model="country" name="country" class="form-control"  />
-        </div>
-      </div>
-      <div class="col-md-4 pl-md-1">
-       <div class="form-group" >
-            <input  type="text" placeholder="Postal Zip" v-model="postalZip" name="postalZip" class="form-control"  />
-        </div>
-      </div>
-    </div>
+    
     <div class="row">
       <div class="col-md-8">
         <base-input>
@@ -68,10 +52,11 @@
         </base-input>
       </div>
     </div>
-    <base-button slot="footer" type="primary" fill>Save</base-button>
+    <button class="btn" type="submit">Save</button>
   </card>
 </template>
 <script>
+import axios from 'axios';
   export default {
     props: {
       model: {
@@ -82,7 +67,59 @@
           };
         }
       }
+    },
+    data(){
+      return {
+        storeName: "",
+        fullName: "",
+        username: "",
+        storeEmail: "",
+        storeNumber: "",
+        address: "",
+      };
+    },
+    created: function () {
+      this.getUserById();
+    },
+    methods: {
+      async getUserById() { //getbyid
+        try {
+          const response = await axios.get ('http://localhost:3000/');//gw gatau kemana
+          this.storeName = response.data.storeName;
+          this.fullName = response.data.fullName;
+          this.username = response.data.username;
+          this.storeEmail = response.data.email;
+          this.storeNumber = response.data.phone;
+          this.address = response.data.address;
+
+        }catch (err) {
+          console.log(err);
+        }
+      },
+      async updateProfile() { //update
+        try {
+          await axios.put('http://localhost:3000/',
+          {
+            storeName: this.storeName,
+            fullName: this.fullName,
+            username: this.username,
+            email: this.storeEmail,
+            phone: this.storeNumber,
+            address: this.address
+          }
+          );
+          this.storeName = "";
+          this.fullName ="";
+          this.username ="";
+          this.storeEmail="";
+          this.storeNumber="";
+          this.address="";
+        }catch (err){
+          console.log(err);
+        }
+      }
     }
+
   }
 </script>
 <style>
