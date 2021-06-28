@@ -52,7 +52,7 @@
         </base-input>
       </div>
     </div>
-    <button class="btn" type="submit">Save</button>
+    <button class="btn" type="submit" @change="updateProfile">Save</button>
   </card>
 </template>
 <script>

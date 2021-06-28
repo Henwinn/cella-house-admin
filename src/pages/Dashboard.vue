@@ -41,12 +41,9 @@
                       <td>{{ product.note }}</td>
                       <td>{{ product.status }}</td>
                       <td class="has-text-centered">
-                        <button class="btn">Edit</button >
-                        <!-- <a
-                          class="button is-danger is-small"
-                          @click="deleteProduct(product.id)"
-                          >Delete</a> -->
-                            <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
+                        <button class="btn" @click="updateItem(product.id)">Edit</button >
+                       
+                        <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
                         
                       </td>
                     </tr>

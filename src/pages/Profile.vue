@@ -37,10 +37,10 @@
       {{user.description}}
     </p>
     <center>
-    <base-button tag="a"
+    <button tag="a"
              class="mb-3 mb-sm-0" href="#/editProfile">
              Edit Profile
-             </base-button>
+    </button>
     </center>
     <div slot="footer" class="button-container">
       <base-button icon round class="btn-facebook">
