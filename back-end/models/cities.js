@@ -10,30 +10,24 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      cities.belongsTo(models.provinces, {foreignKey: 'province_id'})
+      cities.hasOne(models.provinces, {foreignKey: 'province_id'})
     }
   };
   cities.init({
     province_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER(11),
       references: {
         model: 'provinces',
         key: 'id'
       }
     },
-    type: {
-      type: DataTypes.STRING(10)
-    },
-    city_name: {
-      type: DataTypes.STRING
-    },
-    postal_code: {
-      type: DataTypes.STRING(5)
-    }
+    province_name: DataTypes.STRING,
+    type: DataTypes.STRING(10),
+    city_name: DataTypes.STRING,
+    postal_code: DataTypes.STRING(5)
   }, {
     sequelize,
     modelName: 'cities',
-    timestamps: false
   });
   return cities;
 };

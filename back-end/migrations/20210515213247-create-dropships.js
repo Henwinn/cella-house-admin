@@ -26,28 +26,28 @@ module.exports = {
         }
       },
       provinceIdOrigin: {
-        type: Sequelize.STRING(40),
+        type: Sequelize.INTEGER(5),
         references: {
           model: 'provinces',
           key: 'id'
         }
       },
       cityIdOrigin: {
-        type: Sequelize.STRING(40),
+        type: Sequelize.INTEGER(5),
         references: {
           model: 'cities',
           key: 'id'
         }
       },
       provinceIdDestination: {
-        type: Sequelize.STRING(40),
+        type: Sequelize.INTEGER(5),
         references: {
           model: 'provinces',
           key: 'id'
         }
       },
       cityIdDestination: {
-        type: Sequelize.STRING(40),
+        type: Sequelize.INTEGER(5),
         references: {
           model: 'cities',
           key: 'id'

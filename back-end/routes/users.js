@@ -293,7 +293,7 @@ router.post('/dropship/upload-payment', pay.single('flPayment') , (req, res) => 
 })
 
 //GET DROPSHIP MADE BY THIS USER
-router.get('/dropship', (req, res, next) => {
+router.get('/get/dropship', (req, res, next) => {
   if(!req.query.dropshipId){
     dropships.findAll({
       where: {
