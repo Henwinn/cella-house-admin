@@ -33,14 +33,17 @@
 
                     <tr v-for="dropship in dropships" :key="dropship.id">
                       
-                      <td>{{ dropship.qty }}</td>
-                      <td>{{ dropship.customerI }}</td>
-                      <td>{{ dropship.customerPhone }}</td>
-                      <td>{{ dropship.provinceIdOrigin }}</td>
-                      <td>{{ user.city }}</td>
-                      <td>{{ user.postalCode }}</td>
-                      <td>{{ user.address }}</td>
-                      <td>{{ user.shipmentPrice }}</td>
+                       <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.customer.name }}</td>
+                      <td>{{ dropship.customer.phone }}</td>
+                      <td>{{ dropship.city.province_name }}</td>
+                      <td>{{ dropship.city.city_name }}</td>
+                      <td>{{ dropship.city.postal_code }}</td>
+                      <td>{{ dropship.address }}</td>
+                      <td>{{ dropship.shipmentPrice }}</td>
+                      <td>{{ dropship.paymentInvoice }}</td>
+                      <td>{{ dropship.note }}</td>
+                      <td>{{ dropship.status }}</td>
 
                       
                       <!-- <td>{{ dropship.paymentInvoice }}</td> //ini buat apa ya? ada paymentInvoice?
@@ -91,9 +94,9 @@ export default {
       async getDropships() {
         try {
           const response = await axios.get("http://localhost:3000/users/get/dropship");
-          this.dropships = response.data;
-           alert(response.data.rows[0].qty)
-          //UNFINISHED
+          this.dropships = response.data.rows;
+           
+          
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
