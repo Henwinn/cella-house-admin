@@ -55,36 +55,6 @@
                                     <input type="number" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control"  />
                                 </div>
 
-<!-- 
-                                 <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Item Name"
-                                            v-model="itemName"
-                                           >
-                                </base-input>
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Customer Name"
-                                            v-model="custName"
-                                           >
-                                </base-input>
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Customer Address"
-                                            v-model="custAddress"
-                                           >
-                                </base-input>
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Customer Phone"
-                                            v-model="custPhone"
-                                           >
-                                </base-input> -->
-
-
-
-
-
                              
                                <!-- <select v-model="kota">
                                 <option disabled value="">Please select one</option>
@@ -98,13 +68,13 @@
 
                                 <!-- nanti kalau mau tes, coba salah satu select di uncomment aja, terus save. klo udah save terus di refresh manual chrome nya -->
                                 
-                                <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="kota" >
+                                <!-- <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="kota" >
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                     <a class="dropdown-item" href="#">Something else here</a>
-                                </base-dropdown>
+                                </base-dropdown> -->
 
-                                <select v-model="provinces" @change="getCities()">
+                                <!-- <select v-model="provinces">
                                     <option disabled value="">Please select one</option>
                                     <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
                                 </select>
@@ -112,19 +82,34 @@
                                 <select v-model="city">
                                     <option disabled value="">Please select one</option>
                                     <option v-for="city in cities" :key="city.id"> {{ city.city_name }} </option>
-                                </select>
-                                
-                                    
+                                </select> -->
+                                 
+                                     <!-- <el-select v-model="value" placeholder="Select Cities">
+                                        <el-option
+                                        v-for="province in provinces"
+                                        :key="province.id"
+                                        :label="province.province_name"
+                                        :value="item.value">
+                                        </el-option>
+                                    </el-select> -->
+                                    <select v-model="value" placeholder="Select Provinces" >
+                                        <option
+                                        v-for="province in provinces"
+                                        :key="province.id"
+                                        >{{ province.province_name }}
+                                        </option>
+                                    </select> 
 
 
-                                <base-dropdown title-classes="btn btn-secondary" title="Provinsi" v-model="provinsi" >
+
+                                <!-- <base-dropdown title-classes="btn btn-secondary" title="Provinsi" v-model="provinsi" >
                                    
                                     <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
                                    
-                                </base-dropdown>
+                                </base-dropdown> -->
 
                                 
-
+<!-- 
                                    <base-dropdown title-classes="btn btn-secondary" title="Kode Pos" v-model="postalCode">
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
@@ -134,7 +119,7 @@
                                         <a class="dropdown-item" href="#">Action</a>
                                         <a class="dropdown-item" href="#">Another action</a>
                                         <a class="dropdown-item" href="#">Something else here</a>
-                                 </base-dropdown>
+                                 </base-dropdown> -->
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Check Price"
@@ -175,6 +160,7 @@ export default {
     },
     created() {
         this.getProvinces();
+ 
     },
     methods: {
         async getProvinces() {
