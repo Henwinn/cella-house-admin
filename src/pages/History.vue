@@ -34,11 +34,11 @@
 
                     <tr v-for="dropship in dropships" :key="dropship.id">
                       <td>{{ dropship.qty }}</td>
-                      <td>{{ dropship.customerId }}</td>
-                      <td>{{ dropship.customerPhone }}</td>
-                      <td>{{ dropship.provinceIdOrigin }}</td>
-                      <td>{{ dropship.cityIdOrigin }}</td>
-                      <td>{{ dropship.postalCode }}</td>
+                      <td>{{ dropship.customer.name }}</td>
+                      <td>{{ dropship.customer.phone }}</td>
+                      <td>{{ dropship.city.province_name }}</td>
+                      <td>{{ dropship.city.city_name }}</td>
+                      <td>{{ dropship.city.postal_code }}</td>
                       <td>{{ dropship.address }}</td>
                       <td>{{ dropship.shipmentPrice }}</td>
                       <td>{{ dropship.paymentInvoice }}</td>
@@ -94,10 +94,8 @@ export default {
         try {
           const response = await axios.get("http://localhost:3000/users/get/dropship"); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.dropships = response.data.rows;
-          alert(response.data.rows[0].qty)
         } catch (err) {
           console.log(err);
-          alert('err: ' + err)
         }
       },
       async withdrawItem(id) {
