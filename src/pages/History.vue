@@ -6,11 +6,7 @@
             <h1>Dropships History</h1>
             <div class="search">
                <input type="text" class="form-control" placeholder="Search by Item & Name" v-model="search">
-                
-               <button tag="a"
-             class="btn" @click="searchData">   
-             Search  
-             </button>  
+              
             </div>
             
              <table class="table is-striped is-bordered mt-2 is-fullwidth">
@@ -73,6 +69,7 @@
 </template>
 <script>
 import axios from "axios";
+import _ from "lodash";
 import BaseButton from '../components/BaseButton.vue';
 export default {
   components: { BaseButton },
@@ -88,6 +85,12 @@ export default {
     },
     created() {
       this.getDropships();
+       this.doSearch = _.debounce(this.doSearch, 400);
+    },
+    watch: { //ini bagian dari untuk search
+      search(value){
+        this.doSearch(value); 
+      }
     },
     methods: {
       async getDropships() {
@@ -106,17 +109,22 @@ export default {
           console.log(err);
         }
       },
+       doSearch(value) { //ini bagian dari untuk search
+        axios.get('http://localhost:3000/users/get/dropship?search=' + encodeURIComponent(value))
+        .then((response) => {this.dropships = response.data.rows})
+        .catch(e => console.log(e));
+      },
       
-    searchData() {
-      axios.get("http://localhost:3000/users/get/dropship?search=" + this.search)
-        .then(response => {
-          this.dropships = response.data.rows;
-          console.log(response.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
+    // searchData() {
+    //   axios.get("http://localhost:3000/users/get/dropship?search=" + this.search)
+    //     .then(response => {
+    //       this.dropships = response.data.rows;
+    //       console.log(response.data);
+    //     })
+    //     .catch(e => {
+    //       console.log(e);
+    //     });
+    // },
     page(){
         axios.get('http://localhost:3000/users/get/dropship?page=' + encodeURIComponent(value)) //Gw gatau get url nya
         .then((response) => {
