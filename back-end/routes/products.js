@@ -4,7 +4,7 @@ const sequelize = require('../models')
 const products = sequelize.products
 
 router.get('/', (req,res) => {
-    products.findAll({
+    products.findAndCountAll({
         where: {
             storeId: req.session.storeId,
             status: 'A'
@@ -15,7 +15,9 @@ router.get('/', (req,res) => {
         },
         attributes: {
             excldue: ['storeName', 'variant', 'note']
-        }
+        },
+        limit: 5,
+        offset: (req.query.page ? req.query.page : 0) * 5
     })
     .then(product => {
         res.send(product)

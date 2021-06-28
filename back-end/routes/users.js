@@ -24,9 +24,8 @@ require('dotenv').config();
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   // res.send('respond with a resource');
-  console.log('before')
   if(!req.query.search){
-    products.findAll({
+    products.findAndCountAll({
       where: {
           storeId: 7,
           status: 'A'
@@ -37,7 +36,9 @@ router.get('/', function(req, res, next) {
       },
       attributes: {
           excldue: ['storeName', 'variant', 'note']
-      }
+      },
+      limit: 3,
+      offset: (req.query.page ? req.query.page : 0) * 3
     })
     .then(product => {
       res.send(product)
@@ -295,10 +296,12 @@ router.post('/dropship/upload-payment', pay.single('flPayment') , (req, res) => 
 //GET DROPSHIP MADE BY THIS USER
 router.get('/get/dropship', (req, res, next) => {
   if(!req.query.dropshipId){
-    dropships.findAll({
+    dropships.findAndCountAll({
       where: {
         storeId: 7 //req.session.storeId
-      }
+      },
+      limit: 5,
+      offset: (req.query.page ? req.query.page : 0) * 5
     })
     .then(dropship => {
       return res.send(dropship)

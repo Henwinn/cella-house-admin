@@ -11,10 +11,12 @@ const {
 
 //GET PRODUCTS NEEDED TO BE APPROVED
 router.get('/product/approve', (req, res) => {
-    products.findAll({
+    products.findAndCountAll({
         where: {
             status: 'N'
-        }
+        },
+        limit: 5,
+        offset: (req.query.page ? req.query.page : 0) * 5
     })
     .then(product => {
         return res.send(product)
@@ -45,6 +47,7 @@ router.post('/approve-product/:id', (req, res) => {
     })
 })
 
+//REJECT PRODUCT
 router.post('/reject-product/:id', (req, res, next) => {
     products.update({
         status: 'R'
@@ -66,10 +69,12 @@ router.post('/reject-product/:id', (req, res, next) => {
 
 //GET DROPSHIP REQUEST NEEDED TO BE APPROVED
 router.get('/dropship/approve', (req, res) => {
-    dropships.findAll({
+    dropships.findAndCountAll({
         where: {
             status: 'PENDING APPROVAL'
-        }
+        },
+        limit: 5,
+        offset: (req.query.page ? req.query.page : 0) * 5
     })
     .then(dropship => {
         return res.send(dropship)
@@ -113,7 +118,10 @@ router.post('/dropship/approve', (req, res) => {
 router.get('/user/all', (req, res, next) => {
     // if(req.session.roleId == 1){
             //ALL USERS
-            users.findAll()
+            users.findAndCountAll({
+                limit: 5,
+                offset: (req.query.page ? req.query.page : 0) * 5
+            })
             .then(users => {
                 return res.send(users)
             })
@@ -143,12 +151,14 @@ router.get('/user/:id', (req, res, next) => {
 
 //GET USER BY QUERY STRING
 router.get('/user', (req, res) => {
-    users.findAll({
+    users.findAndCountAll({
         where: {
             username: {
                 [Op.like]: `%${req.query.search}%`
             }
-        }
+        },
+        limit: 5,
+        offset: (req.query.page ? req.query.page : 0) * 5
     })
     .then(user => res.send(user))
 })

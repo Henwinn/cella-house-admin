@@ -117,7 +117,7 @@ export default {
         .catch(e => console.log(e));
       },
       page(){
-        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
+        axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //diganti dengan current page tapi gw gatau cara ambil current page
         .then((response) => {
           this.products = response.data
           this.pageSize = response.data
