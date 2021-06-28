@@ -197,7 +197,9 @@ export default {
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success add item')
-                        //Redirect ke dashboard?
+                        this.$router.push('dashboard')
+                        
+                        
                     } else {
                         alert('fail')
                     }

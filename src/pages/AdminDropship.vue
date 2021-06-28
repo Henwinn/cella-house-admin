@@ -31,12 +31,12 @@
                </thead>
                <tbody>
 
-                    <tr v-for="user in users" :key="user.id">
+                    <tr v-for="dropship in dropships" :key="dropship.id">
                       
-                      <td>{{ user.qty }}</td>
-                      <td>{{ user.customerName }}</td>
-                      <td>{{ user.customerPhone }}</td>
-                      <td>{{ user.province }}</td>
+                      <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.customerI }}</td>
+                      <td>{{ dropship.customerPhone }}</td>
+                      <td>{{ dropship.provinceIdOrigin }}</td>
                       <td>{{ user.city }}</td>
                       <td>{{ user.postalCode }}</td>
                       <td>{{ user.address }}</td>
@@ -81,17 +81,18 @@ export default {
     name:"dropshipsList",
     data() {
       return {
-        users: []
+        dropships: []
       };
     },
     created() {
-      this.getUsers();
+      this.getDropships();
     },
     methods: {
-      async getUsers() {
+      async getDropships() {
         try {
-          const response = await axios.get("http://localhost:3000/users");
-          this.users = response.data;
+          const response = await axios.get("http://localhost:3000/users/get/dropship");
+          this.dropships = response.data;
+           alert(response.data.rows[0].qty)
           //UNFINISHED
         } catch (err) {
           console.log(err);

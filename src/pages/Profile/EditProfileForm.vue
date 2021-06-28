@@ -3,62 +3,56 @@
     <h5 slot="header" class="title">Edit Profile</h5>
     <div class="row">
       <div class="col-md-5 pr-md-1">
-        <base-input label="Store Name"
-                  placeholder="Store Name"
-                  v-model="model.company"
-                  >
-        </base-input>
+        <div class="form-group" >
+            <input  type="text" placeholder="Store Name" v-model="storeName" name="storeName" class="form-control"  />
+        </div>
       </div>
        <div class="col-md-4 pl-md-1">
-        <base-input label="Owner's Full Name"
-                  placeholder="Owner's Full Name">
-        </base-input>
+        <div class="form-group" >
+            <input  type="text" placeholder="Owner's Full Name" v-model="fullName" name="fullName" class="form-control"  />
+        </div>
       </div>
       <div class="col-md-3 px-md-1">
-        <base-input label="Username"
-                  placeholder="Username"
-                  v-model="model.username">
-        </base-input>
+        <div class="form-group" >
+            <input  type="text" placeholder="Username" v-model="unsername" name="username" class="form-control"  />
+        </div>
       </div>
      
     </div>
     <div class="row">
       <div class="col-md-6 pr-md-1">
-        <base-input label="Store Email"
-                  placeholder="Store Email">
-        </base-input>
+        <div class="form-group" >
+            <input  type="text" placeholder="Store Email" v-model="storeEmail" name="storeEmail" class="form-control"  />
+        </div>
       </div>
       <div class="col-md-6 pl-md-1">
-        <base-input label="Store Number"
-                  placeholder="Store Number">
-        </base-input>
+        <div class="form-group" >
+            <input  type="text" placeholder="Store Number" v-model="storeNumber" name="storeNumber" class="form-control"  />
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-        <base-input label="Address"
-                  v-model="model.address"
-                  placeholder="Home Address">
-        </base-input>
+  <div class="form-group" >
+            <input  type="text" placeholder="Address" v-model="address" name="address" class="form-control"  />
+        </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-4 pr-md-1">
-        <base-input label="City"
-                  v-model="model.city"
-                  placeholder="City">
-        </base-input>
+       <div class="form-group" >
+            <input  type="text" placeholder="City" v-model="city" name="city" class="form-control"  />
+        </div>
       </div>
       <div class="col-md-4 px-md-1">
-        <base-input label="Country"
-                  v-model="model.country"
-                  placeholder="Country">
-        </base-input>
+       <div class="form-group" >
+            <input  type="text" placeholder="Country" v-model="country" name="country" class="form-control"  />
+        </div>
       </div>
       <div class="col-md-4 pl-md-1">
-        <base-input label="Postal Code"
-                  placeholder="ZIP Code">
-        </base-input>
+       <div class="form-group" >
+            <input  type="text" placeholder="Postal Zip" v-model="postalZip" name="postalZip" class="form-control"  />
+        </div>
       </div>
     </div>
     <div class="row">
@@ -83,7 +77,9 @@
       model: {
         type: Object,
         default: () => {
-          return {};
+          return {
+
+          };
         }
       }
     }
