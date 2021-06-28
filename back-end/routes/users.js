@@ -37,8 +37,8 @@ router.get('/', function(req, res, next) {
       attributes: {
           excldue: ['storeName', 'variant', 'note']
       },
-      limit: 3,
-      offset: (req.query.page ? req.query.page : 0) * 3
+      limit: 5,
+      offset: (req.query.page ? req.query.page : 0) * 5
     })
     .then(product => {
       res.send(product)
@@ -47,8 +47,7 @@ router.get('/', function(req, res, next) {
       res.send(err)
     })
   } else {
-    console.log('else block')
-    products.findAll({
+    products.findAndCountAll({
       where: {
         storeId: 7,
         status: 'A',
@@ -71,7 +70,9 @@ router.get('/', function(req, res, next) {
       },
       attributes: {
           excldue: ['storeName', 'variant', 'note']
-      }
+      },
+      limit: 3,
+      offset: (req.query.page ? req.query.page : 0) * 3
     })
     .then(product => {
       res.send(product)

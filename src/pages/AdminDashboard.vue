@@ -66,7 +66,7 @@ export default {
       async getMerchants() {
         try {
           const response = await axios.get("http://localhost:3000/admin/user/all");
-          this.users = response.data;
+          this.users = response.data.rows;
         } catch (err) {
           console.log(err);
         }
@@ -90,17 +90,17 @@ export default {
       async searchMerchant(value){
         try{
           var response = await axios.get("http://localhost:3000/admin/user?search=" + encodeURIComponent(value))
-          this.users = response.data
+          this.users = response.data.rows
         } catch(err) {
           console.log(err)
         }
       },
       page(){
-        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
+        axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //Gw gatau get url nya
         .then((response) => {
-          this.users = response.data
+          this.users = response.data.rows
           this.pageSize = response.data
-          this.total = resp.data
+          this.total = response.data.count
           })
         .catch(e => console.log(e));
       }

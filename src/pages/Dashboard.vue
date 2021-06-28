@@ -97,7 +97,7 @@ export default {
       async getProducts() {
         try {
           const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
-          this.products = response.data;
+          this.products = response.data.rows;
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -113,15 +113,14 @@ export default {
       },
       doSearch(value) { //ini bagian dari untuk search
         axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value))
-        .then((response) => {this.products = response.data})
+        .then((response) => {this.products = response.data.rows})
         .catch(e => console.log(e));
       },
       page(){
         axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //diganti dengan current page tapi gw gatau cara ambil current page
         .then((response) => {
-          this.products = response.data
-          this.pageSize = response.data
-          this.total = resp.data
+          this.products = response.data.rows
+          this.total = response.data.count
           })
         .catch(e => console.log(e));
       },

@@ -91,9 +91,9 @@ export default {
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
-          this.dropships = response.data;
-       
+          const response = await axios.get("http://localhost:3000/users/get/dropship"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          this.dropships = response.data.rows;
+          alert(response.data.rows[0].qty)
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -109,9 +109,9 @@ export default {
       },
       
     searchData() {
-      axios.get("http://localhost:3000/users/dropship?search=" + this.search)
+      axios.get("http://localhost:3000/users/get/dropship?search=" + this.search)
         .then(response => {
-          this.dropships = response.data;
+          this.dropships = response.data.rows;
           console.log(response.data);
         })
         .catch(e => {
@@ -119,7 +119,7 @@ export default {
         });
     },
     page(){
-        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
+        axios.get('http://localhost:3000/users/get/dropship?page=' + encodeURIComponent(value)) //Gw gatau get url nya
         .then((response) => {
           this.dropships = response.data
           this.pageSize = response.data
