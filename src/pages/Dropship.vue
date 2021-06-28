@@ -74,12 +74,12 @@
                                     <a class="dropdown-item" href="#">Something else here</a>
                                 </base-dropdown> -->
 
-                                <!-- <select v-model="provinces">
+                                <select v-model="provinsi">
                                     <option disabled value="">Please select one</option>
-                                    <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
+                                    <option v-for="province in provinces" :key="province"> {{ province.province_name }} </option>
                                 </select>
 
-                                <select v-model="city">
+                                <!-- <select v-model="city">
                                     <option disabled value="">Please select one</option>
                                     <option v-for="city in cities" :key="city.id"> {{ city.city_name }} </option>
                                 </select> -->
@@ -92,13 +92,14 @@
                                         :value="item.value">
                                         </el-option>
                                     </el-select> -->
-                                    <select v-model="value" placeholder="Select Provinces" >
+                                    <!-- <select v-model="value" placeholder="Select Provinces" >
                                         <option
                                         v-for="province in provinces"
                                         :key="province.id"
-                                        >{{ province.province_name }}
+                                        > {{ province.province_name }}
                                         </option>
-                                    </select> 
+                                       
+                                    </select>  -->
 
 
 
@@ -153,9 +154,8 @@ export default {
             postalCode: "",
             provinsi: "",
             price: "",
-            options: [],
-            provinces: [],
-            cities: []
+            province: ""
+           
         };
     },
     created() {
@@ -175,7 +175,7 @@ export default {
         async getCities() {
             alert('response.data')
             try {
-            const response = await axios.get(`http://localhost:3000/city/province/${provinces.id}`); //cara ngambil id province yang dipilih gimana ya?
+            const response = await axios.get(`http://localhost:3000/city/province/`); //cara ngambil id province yang dipilih gimana ya?
             this.cities = response.data;
             } catch (err) {
             console.log(err);
