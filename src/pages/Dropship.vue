@@ -73,16 +73,18 @@
                                     <a class="dropdown-item" href="#">Another action</a>
                                     <a class="dropdown-item" href="#">Something else here</a>
                                 </base-dropdown> -->
-
-                                <select v-model="selectedProvinces" @change="getCities()">
-                                    <option disabled value="">Please select one</option>
-                                    <option v-for="province in provinces" :key="province.id" :value="province"> {{ province.province_name }} </option>
-                                </select>
-
-                                <select v-model="selectedCities" @change="getPostalCode()">
-                                    <option disabled value="">Please select one</option>
-                                    <option v-for="city in cities" :key="city.id" :value="city"> {{ city.city_name }} </option>
-                                </select>
+                                <div class="provinces-dropdown">
+                                    <select v-model="selectedProvinces" @change="getCities()" placeholder="select">
+                                        <option disabled value="">Please select one</option>
+                                        <option v-for="province in provinces" :key="province.id" :value="province"> {{ province.province_name }} </option>
+                                    </select>
+                                </div>
+                                <div class="cities-dropdown">
+                                    <select v-model="selectedCities" @change="getPostalCode()">
+                                        <option disabled value="">Please select one</option>
+                                        <option v-for="city in cities" :key="city.id" :value="city"> {{ city.city_name }} </option>
+                                    </select>
+                                </div>
 
                                 <div class="form-group" >
                                     <input type="text" placeholder="Postal Code" v-model="postalCode" name="postalCode" class="form-control" disabled />
@@ -192,4 +194,22 @@ export default {
 };
 </script>
 <style>
+.provinces-dropdown > select{
+    background-color: #26293D;
+     border: 1px solid #273553;
+    color:aliceblue;
+    padding: 8px;
+    padding-right: 95px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.cities-dropdown > select{
+    background-color: #26293D;
+     border: 1px solid #273553;
+    color:aliceblue;
+    padding: 8px;
+    padding-right: 215px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
 </style>
