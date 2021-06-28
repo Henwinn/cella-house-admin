@@ -31,12 +31,12 @@
                </thead>
                <tbody>
 
-                    <tr v-for="user in users" :key="user.id">
+                    <tr v-for="dropship in dropships" :key="dropship.id">
                       
-                      <td>{{ user.qty }}</td>
-                      <td>{{ user.customerName }}</td>
-                      <td>{{ user.customerPhone }}</td>
-                      <td>{{ user.province }}</td>
+                      <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.customerI }}</td>
+                      <td>{{ dropship.customerPhone }}</td>
+                      <td>{{ dropship.provinceIdOrigin }}</td>
                       <td>{{ user.city }}</td>
                       <td>{{ user.postalCode }}</td>
                       <td>{{ user.address }}</td>
