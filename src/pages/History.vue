@@ -34,10 +34,10 @@
 
                     <tr v-for="dropship in dropships" :key="dropship.id">
                       <td>{{ dropship.qty }}</td>
-                      <td>{{ dropship.customerName }}</td>
+                      <td>{{ dropship.customerId }}</td>
                       <td>{{ dropship.customerPhone }}</td>
-                      <td>{{ dropship.province }}</td>
-                      <td>{{ dropship.city }}</td>
+                      <td>{{ dropship.provinceIdOrigin }}</td>
+                      <td>{{ dropship.cityIdOrigin }}</td>
                       <td>{{ dropship.postalCode }}</td>
                       <td>{{ dropship.address }}</td>
                       <td>{{ dropship.shipmentPrice }}</td>
@@ -80,6 +80,7 @@ export default {
     data() {
       return {
         dropships: [],
+        users:[],
         search: '',
         pageSize:'',
         total:''
