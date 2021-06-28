@@ -22,7 +22,7 @@
                                 <p v-if="errors.length">
                                     <b>Please correct the following error(s):</b>
                                     <ul>
-                                    <li v-for="error in errors">{{ error }}</li> <!-- yang ini emang cacing merah ya, jangan di apa apain  -->
+                                        <li v-for="error in errors">{{ error }}</li> <!-- yang ini emang cacing merah ya, jangan di apa apain  -->
                                     </ul>
                                 </p>
 
@@ -38,20 +38,10 @@
                                     <input type="number" placeholder="Price" v-model="price" name="price" class="form-control"  />
                                 </div>
 
-                                   <div class="radio-btn">
-                                         <span class="male-radio-btn">
-                                            <input type="radio" id="clothing" v-model="categoryName" name="categoryName" value="clothing">
-                                            <label class ="clothing" for="clothing">Clothing</label> 
-                                         </span>
-                                         <span class="female-radio-btn">
-                                            <input type="radio" id="jeans" v-model="categoryName" name="categoryName" value="jeans">
-                                            <label class ="jeans" for="jeans">Jeans</label> 
-                                         </span>
-                                         <span class="female-radio-btn">
-                                            <input type="radio" id="tshirts" v-model="categoryName" name="categoryName" value="thsirts">
-                                            <label class ="tshirts" for="tshirts">T Shirts</label> 
-                                         </span>
-                                     </div>
+                                <select name="categoryName">
+                                    <option value="" disabled>Please Select One</option>
+                                    <option v-for="category in categories" :key="category.name" :value="category.name"> {{category.name}} </option>
+                                </select>
 
                                  <div class="form-group" >
                                     <input type="text" placeholder="Variant" v-model="variant" name="variant" class="form-control"  />
@@ -147,7 +137,7 @@ export default {
             name:"",
             qty:"",
             price:"",
-            categoryName: "",
+            categories: [],
             variant: "",
             note: "",
             status: "",
@@ -155,8 +145,20 @@ export default {
             success: []
         };
     },
+    created() {
+        this.getCategories();
+    },
     methods: {
-         saveItem: function(e){
+        getCategories: async function(){
+            try {
+                const response = await axios.get('http://localhost:3000/categories')
+                this.categories = response.data
+            } catch(err) {
+                console.log(err)
+            }
+        },
+
+        saveItem: function(e){
             this.errors = [];
             
             if (!this.name) {
@@ -177,11 +179,10 @@ export default {
 
             if (!this.variant) {
                 this.errors.push("Variant required");
-               
+                
             }
-            
-
-             if (!this.errors.length) {
+        
+            if (!this.errors.length) {
                 let data = {
                     name: this.name,
                     qty: e.target.elements.qty.value,
@@ -189,14 +190,14 @@ export default {
                     categoryName: e.target.elements.categoryName.value,
                     variant: e.target.elements.variant.value,
                     note: e.target.elements.note.value,
-                  
+                    
                 }
-                axios.post('http://localhost:3000/products/add', data)
+                axios.post('http://localhost:3000/users/products/add', data) //ini untuk testing add product, nanti diubah ke route aslinya
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success add item')
                         
-                       
+                        
                     } else {
                         alert('fail')
                     }

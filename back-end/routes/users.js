@@ -83,6 +83,25 @@ router.get('/', function(req, res, next) {
   }
 });
 
+router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD ITEM
+  products.create({
+    name: req.body.name,
+    qty: req.body.qty,
+    price: req.body.price,
+    categoryName: req.body.categoryName,
+    variant: req.body.variant,
+    note: req.body.note,
+    storeId: 7,
+    status: 'A'
+  })
+  .then(product => {
+    res.send("success")
+  })
+  .catch(err => {
+    next(err)
+  })
+})
+
 router.get('/check-username-storename', (req, res, next) => {
   users.findOne({
     attributes: ['username', 'storeName'],

@@ -6,7 +6,7 @@ const categories = sequelize.categories
 router.get('/', (req, res) => {
     categories.findAll({})
     .then(category => {
-        res.send(category)
+        return res.send(category)
     })
     .catch(err => {
         next(err)
