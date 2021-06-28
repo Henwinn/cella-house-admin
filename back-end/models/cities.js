@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      cities.hasOne(models.provinces, {foreignKey: 'province_id'})
+      cities.belongsTo(models.provinces, {foreignKey: 'province_id'})
     }
   };
   cities.init({
@@ -27,6 +27,7 @@ module.exports = (sequelize, DataTypes) => {
     postal_code: DataTypes.STRING(5)
   }, {
     sequelize,
+    timestamps: false,
     modelName: 'cities',
   });
   return cities;

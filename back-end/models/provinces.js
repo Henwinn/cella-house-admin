@@ -17,6 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     province_name: DataTypes.STRING
   }, {
     sequelize,
+    timestamps: false,
     modelName: 'provinces',
   });
   return provinces;

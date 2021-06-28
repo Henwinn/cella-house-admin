@@ -74,15 +74,19 @@
                                     <a class="dropdown-item" href="#">Something else here</a>
                                 </base-dropdown> -->
 
-                                <select v-model="provinsi">
+                                <select v-model="selectedProvinces" @change="getCities()">
                                     <option disabled value="">Please select one</option>
-                                    <option v-for="province in provinces" :key="province"> {{ province.province_name }} </option>
+                                    <option v-for="province in provinces" :key="province.id" :value="province"> {{ province.province_name }} </option>
                                 </select>
 
-                                <!-- <select v-model="city">
+                                <select v-model="selectedCities" @change="getPostalCode()">
                                     <option disabled value="">Please select one</option>
-                                    <option v-for="city in cities" :key="city.id"> {{ city.city_name }} </option>
-                                </select> -->
+                                    <option v-for="city in cities" :key="city.id" :value="city"> {{ city.city_name }} </option>
+                                </select>
+
+                                <div class="form-group" >
+                                    <input type="text" placeholder="Postal Code" v-model="postalCode" name="postalCode" class="form-control" disabled />
+                                </div>
                                  
                                      <!-- <el-select v-model="value" placeholder="Select Cities">
                                         <el-option
@@ -123,9 +127,9 @@
                                  </base-dropdown> -->
                                  <base-input alternative
                                             class="mb-3"
-                                            placeholder="Check Price"
+                                            placeholder="Shipment Price"
                                             v-model="price"
-                                            >
+                                            disabled>
                                 </base-input>
                                 <div class="text-center">
                                     <base-button type="primary" class="my-4">Create Dropship</base-button>
@@ -154,33 +158,35 @@ export default {
             postalCode: "",
             provinsi: "",
             price: "",
-            province: ""
-           
+            provinces: [],
+            cities: [],
+            selectedCities: [],
+            selectedProvinces: []
         };
     },
     created() {
         this.getProvinces();
- 
     },
     methods: {
         async getProvinces() {
             try {
-            const response = await axios.get("http://localhost:3000/province/all"); //route ini untuk testing aja karena perlu login kalau pakai route asli
-            this.provinces = response.data;
+                const response = await axios.get("http://localhost:3000/province/all"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+                this.provinces = response.data;
             } catch (err) {
-            console.log(err);
-            alert('err: ' + err)
+                console.log(err);
             }
         },
         async getCities() {
-            alert('response.data')
+            alert(this.selectedProvinces.province_id)
             try {
-            const response = await axios.get(`http://localhost:3000/city/province/`); //cara ngambil id province yang dipilih gimana ya?
-            this.cities = response.data;
+                const response = await axios.get(`http://localhost:3000/city/province/${this.selectedProvinces.id}`); //cara ngambil id province yang dipilih gimana ya?
+                this.cities = response.data;
             } catch (err) {
-            console.log(err);
-            alert('err: ' + err)
+                console.log(err);
             }
+        },
+        async getPostalCode() {
+            this.postalCode = this.selectedCities.postal_code
         }
     }
 };

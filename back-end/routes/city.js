@@ -22,7 +22,7 @@ router.get('/:id', (req, res) => {
     })
 })
 
-//GET CITY BY PROVINCE
+//GET CITY BY PROVINCE ID
 router.get('/province/:provinceId', (req, res, next) => {
     sequelize.cities.findAll({
         where: {
