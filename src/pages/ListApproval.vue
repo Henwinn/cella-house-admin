@@ -89,7 +89,8 @@ export default {
      async getProducts() {
         try {
           const response = await axios.get("http://localhost:3000/admin/product/approve"); //route ini untuk testing aja karena perlu login kalau pakai route asli
-          this.products = response.data;
+          this.products = response.data.rows;
+          
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
