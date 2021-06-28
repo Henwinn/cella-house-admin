@@ -25,7 +25,7 @@
                </thead>
                <tbody>
 
-                    <tr v-for="product in products" :key="product">
+                    <tr v-for="product in products" :key="product.id">
                       <td>{{ product.storeId}}</td>
                       <td>{{ product.name }}</td>
                       <td>{{ product.qty }}</td>
@@ -33,21 +33,14 @@
                       <td>{{ product.categoryName }}</td>
                       <td>{{ product.variant }}</td>
                       <td>{{ product.note }}</td>
-                     
-                     
                       
                       <td class="has-text-centered">
-                        <button class="btn"
-                        
-                          >Approve</button >
-                       
-                            <button class="btn">Cancel</button>
-                        
+                        <button class="btn" @click="approveProduct(product.id);">Approve</button>
+                        <button class="btn" @click="rejectProduct(product.id)">Reject</button>
                       </td>
                     </tr> 
                 </tbody>
              </table>
-
          </div>
 
 
@@ -86,33 +79,42 @@ export default {
     this.getProducts();
   },
   methods: {
-     async getProducts() {
-        try {
-          const response = await axios.get("http://localhost:3000/admin/product/approve"); //route ini untuk testing aja karena perlu login kalau pakai route asli
-          this.products = response.data.rows;
-          
-        } catch (err) {
-          console.log(err);
-          alert('err: ' + err)
-        }
-      },
-       async cancelApproval(id) {
-        try {
-          await axios.post(`http://localhost:3000/admin/reject-product/${id}`);
-          this.getProducts();
-        }catch (err) {
-          console.log(err);
-        }
-      },
-       page(){
-        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
-        .then((response) => {
-          this.products = response.data
-          this.pageSize = response.data
-          this.total = resp.data
-          })
-        .catch(e => console.log(e));
+    async getProducts() {
+      try {
+        const response = await axios.get("http://localhost:3000/admin/product/approve"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+        this.products = response.data.rows;
+      } catch (err) {
+        console.log(err);
+        alert('err: ' + err)
       }
+    },
+    async approveProduct(val){
+      try{
+        await axios.post(`http://localhost:3000/admin/approve-product/${val}`)
+        alert('Product Approved')
+        this.getProducts()
+      } catch(err) {
+        console.log(err)
+      }
+    },
+    async rejectProduct(val) {
+      try {
+        await axios.post(`http://localhost:3000/admin/reject-product/${val}`);
+        alert('Product Rejected')
+        this.getProducts();
+      }catch (err) {
+        console.log(err);
+      }
+    },
+    page(){
+      axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //Cara dapetin current page gimana
+      .then((response) => {
+        this.products = response.data.rows
+        this.pageSize = response.data
+        this.total = response.data.count
+        })
+      .catch(e => console.log(e));
+    }
   }
 };
 </script>

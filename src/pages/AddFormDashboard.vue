@@ -38,8 +38,8 @@
                                     <input type="number" placeholder="Price" v-model="price" name="price" class="form-control"  />
                                 </div>
 
-                                <select name="categoryName">
-                                    <option value="" disabled>Please Select One</option>
+                                <select v-model="categoryName">
+                                    <option disabled>Please Select One</option>
                                     <option v-for="category in categories" :key="category.name" :value="category.name"> {{category.name}} </option>
                                 </select>
 
@@ -137,6 +137,7 @@ export default {
             name:"",
             qty:"",
             price:"",
+            categoryName: "",
             categories: [],
             variant: "",
             note: "",
@@ -187,7 +188,7 @@ export default {
                     name: this.name,
                     qty: e.target.elements.qty.value,
                     price: e.target.elements.price.value,
-                    categoryName: e.target.elements.categoryName.value,
+                    categoryName: this.categoryName,
                     variant: e.target.elements.variant.value,
                     note: e.target.elements.note.value,
                     

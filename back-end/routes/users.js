@@ -92,7 +92,7 @@ router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD IT
     variant: req.body.variant,
     note: req.body.note,
     storeId: 7,
-    status: 'A'
+    status: 'N'
   })
   .then(product => {
     res.send("success")
@@ -320,6 +320,16 @@ router.get('/get/dropship', (req, res, next) => {
       where: {
         storeId: 7 //req.session.storeId
       },
+      include: [
+        {
+          model: sequelize.customers,
+          attributes: ['name', 'phone']
+        },
+        {
+          model: sequelize.cities,
+          attributes: ['province_name', 'city_name', 'postal_code']
+        }
+      ],
       limit: 5,
       offset: (req.query.page ? req.query.page : 0) * 5
     })
