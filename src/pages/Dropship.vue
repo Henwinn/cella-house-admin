@@ -30,13 +30,14 @@
 
 
 
-                            <form role="form">
-                                 <!-- <base-dropdown title-classes="btn btn-secondary" title="Item Name">
-                                       
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                 </base-dropdown> -->
+                            <form id="app" @submit.prevent="handleSubmit" method="post">
+                                
+                                    <p v-if="errors.length">
+                                    <b>Please correct the following error(s):</b>
+                                    <ul>
+                                    <li v-for="error in errors">{{ error }}</li> <!-- yang ini emang cacing merah ya, jangan di apa apain  -->
+                                    </ul>
+                                </p>
 
 
                                 <div class="form-group" >
@@ -56,31 +57,15 @@
                                 </div>
 
                              
-                               <!-- <select v-model="kota">
-                                <option disabled value="">Please select one</option>
-                                <option v-for="city in cities" :key="city.id"> {{ city.city_name }} </option>
-                                
-                                </select>  -->
-
-
-
-
-
-                                <!-- nanti kalau mau tes, coba salah satu select di uncomment aja, terus save. klo udah save terus di refresh manual chrome nya -->
-                                
-                                <!-- <base-dropdown title-classes="btn btn-secondary" title="Kota" v-model="kota" >
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </base-dropdown> -->
+                        
                                 <div class="provinces-dropdown">
-                                    <select v-model="selectedProvinces" @change="getCities()" placeholder="select">
+                                    <select v-model="selectedProvinces" @change="getCities()" placeholder="select" name="selectedProvinces" :hide-selected="true">
                                         <option disabled value="">Please select one</option>
                                         <option v-for="province in provinces" :key="province.id" :value="province"> {{ province.province_name }} </option>
                                     </select>
                                 </div>
                                 <div class="cities-dropdown">
-                                    <select v-model="selectedCities" @change="getPostalCode()">
+                                    <select v-model="selectedCities" @change="getPostalCode()" name="selectedCities">
                                         <option disabled value="">Please select one</option>
                                         <option v-for="city in cities" :key="city.id" :value="city"> {{ city.city_name }} </option>
                                     </select>
@@ -90,52 +75,18 @@
                                     <input type="text" placeholder="Postal Code" v-model="postalCode" name="postalCode" class="form-control" disabled />
                                 </div>
                                  
-                                     <!-- <el-select v-model="value" placeholder="Select Cities">
-                                        <el-option
-                                        v-for="province in provinces"
-                                        :key="province.id"
-                                        :label="province.province_name"
-                                        :value="item.value">
-                                        </el-option>
-                                    </el-select> -->
-                                    <!-- <select v-model="value" placeholder="Select Provinces" >
-                                        <option
-                                        v-for="province in provinces"
-                                        :key="province.id"
-                                        > {{ province.province_name }}
-                                        </option>
-                                       
-                                    </select>  -->
-
-
-
-                                <!-- <base-dropdown title-classes="btn btn-secondary" title="Provinsi" v-model="provinsi" >
-                                   
-                                    <option v-for="province in provinces" :key="province.id"> {{ province.province_name }} </option>
-                                   
-                                </base-dropdown> -->
-
-                                
-<!-- 
-                                   <base-dropdown title-classes="btn btn-secondary" title="Kode Pos" v-model="postalCode">
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                 </base-dropdown>
-                                  <base-dropdown title-classes="btn btn-secondary" title="Select Kurir" >
-                                        <a class="dropdown-item" href="#">Action</a>
-                                        <a class="dropdown-item" href="#">Another action</a>
-                                        <a class="dropdown-item" href="#">Something else here</a>
-                                 </base-dropdown> -->
+                                    
                                  <base-input alternative
                                             class="mb-3"
                                             placeholder="Shipment Price"
                                             v-model="price"
                                             disabled>
                                 </base-input>
+
                                 <div class="text-center">
-                                    <base-button type="primary" class="my-4">Create Dropship</base-button>
+                                    <button class="btn" type="submit">Create Dropship</button>
                                 </div>
+                                
                             </form>
                         </template>
                     </card>
@@ -147,12 +98,13 @@
 <script>
 import axios from "axios";
 export default {
-    
+    name:'Dropship',
+    el: '#app',
     data(){
 
         
         return {
-            itemName: "",
+            ItemName: "",
             custName: "",
             custAddress: "",
             custPhone: "",
@@ -163,7 +115,9 @@ export default {
             provinces: [],
             cities: [],
             selectedCities: [],
-            selectedProvinces: []
+            selectedProvinces: [],
+            errors: [],
+            success: []
         };
     },
     created() {
@@ -189,7 +143,69 @@ export default {
         },
         async getPostalCode() {
             this.postalCode = this.selectedCities.postal_code
-        }
+        },
+
+          handleSubmit: function(e){
+            this.errors = [];
+            
+            // if (!this.ItemName) {
+            //     this.errors.push("Name required");
+            // }
+
+            // if (!this.custName) {
+            //     this.errors.push("Customer Name required");
+            // }
+
+            // if (!this.custAddress) {
+            //     this.errors.push("Customer Address required");
+            // }
+            
+            // if (!this.custPhone) {
+            //     this.errors.push("Customer Phone required");
+            // }
+
+            // if (!this.selectedProvinces) {
+            //     this.errors.push("Select provinces required");
+            // }
+
+        
+            // if (!this.selectedCities) {
+            //     this.errors.push("Select City required");
+               
+            // }
+           
+
+
+            if (!this.errors.length) {
+                let data = {
+                    ItemName: e.target.elements.itemName.value,
+                    custName: e.target.elements.custName.value,
+                    custAddress: e.target.elements.custAddress.value,
+                   custPhone: e.target.elements.custPhone.value,
+                    selectedProvinces: e.target.elements.selectedProvinces.value,
+                    selectedCities: e.target.elements.selectedCities.value,
+                    postalCode: this.postalCode,
+                    // address: e.target.elements.address.value,
+                    // password: e.target.elements.password.value
+                }
+                axios.post('http://localhost:3000/users/dropship/approve', data)
+                .then(respond => {
+                    if(respond.data == 'success'){
+                        alert('success')
+                        
+                       
+                    } else {
+                        alert('fail')
+                    }
+                })
+            }
+            e.preventDefault();
+        },
+
+
+
+
+
     }
 };
 </script>
