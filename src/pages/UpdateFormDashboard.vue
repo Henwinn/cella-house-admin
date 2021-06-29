@@ -102,9 +102,9 @@ export default {
       },
          
 
-        async updateItem(){
+        async updateItem(val){
             try {
-                await axios.post("http://localhost:3000/users", {
+                await axios.post(`http://localhost:3000/products/update?prodId=${val}`, {
                     name: this.itemName,
                     qty: this.qty,
                     price: this.price,
@@ -118,7 +118,7 @@ export default {
                 this.category = "";
                 this.variant = "";
                 this.note = "";
-                this.$router.push('dashboard');
+                
             }catch (err) {
                 console.log(err);
             }
