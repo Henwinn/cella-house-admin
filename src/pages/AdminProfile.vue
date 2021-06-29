@@ -19,7 +19,8 @@
                 </td>
                 <td>
                    <div class="coninformation col-md-10">
-                    <label> *14 July 1997</label>
+                 
+                
                   </div>
                 </td>
               </tr>
@@ -31,7 +32,8 @@
                 </td>
                 <td>
                    <div class="coninformation col-md-10">
-                    <label> *henwin@gmail.com</label>
+              
+                  
                   </div>
                 </td>
               </tr>
@@ -43,7 +45,8 @@
                 </td>
                 <td>
                   <div class="coninformation col-md-10">
-                    <label> *08124456538192</label>
+                  
+                 
                   </div>
                 </td>
               </tr>
@@ -55,46 +58,12 @@
                 </td>
                 <td>
                   <div class="coninformation col-md-10">
-                    <label> *Jl. Nusantara No. 5, Palmerah, Jakarta Barat, DKI Jakarta</label>
+                   
+                
                   </div>
                 </td>
               </tr>
-              <tr>
-                <td>
-                  <div class="coninformation">
-                    <label> City</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="coninformation col-md-10">
-                    <label> *Jakarta</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="coninformation">
-                    <label> Country</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="coninformation col-md-10">
-                    <label>*Indonesia</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>
-                  <div class="coninformation">
-                    <label> ZIP Code</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="coninformation col-md-10">
-                    <label> *76126</label>
-                  </div>
-                </td>
-              </tr>
+              
             </table>
           </div>
         </div>
@@ -105,6 +74,7 @@
   
 </template>
 <script>
+  import axios from "axios";
   import EditProfileForm from './Profile/EditProfileForm';
   import UserCard from './Profile/UserCard'
   export default {
@@ -114,6 +84,20 @@
     },
     data() {
       return {
+      }
+    },
+    created(){
+      this.getUsers();
+    },
+    methods: {
+      async getUsers() {
+        try {
+          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          this.users = response.data.rows;
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
+        }
       }
     }
   }
