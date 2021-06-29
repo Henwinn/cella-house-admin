@@ -178,7 +178,7 @@ export default {
 
             if (!this.errors.length) {
                 let data = {
-                    ItemName: e.target.elements.itemName.value,
+                    ItemName: e.target.elements.ItemName.value,
                     custName: e.target.elements.custName.value,
                     custAddress: e.target.elements.custAddress.value,
                    custPhone: e.target.elements.custPhone.value,
@@ -188,7 +188,7 @@ export default {
                     // address: e.target.elements.address.value,
                     // password: e.target.elements.password.value
                 }
-                axios.post('http://localhost:3000/users/dropship/approve', data)
+                axios.post('http://localhost:3000//users/dropship/submission', data)
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success')
