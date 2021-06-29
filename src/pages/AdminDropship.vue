@@ -4,16 +4,12 @@
         <card>
           <div class="table-responsive">
             <h1>Dropships History</h1>
+
             <div class="search">
-               <base-input alternative class="mb-3"
-                placeholder="Search by Item & Name"
-       >
-                </base-input>
-               <base-button tag="a"
-             class="mb-3 mb-sm-0">
-             Search
-             </base-button>
+               <input type="text" class="form-control" placeholder="Search by Item & Name" v-model="search">
+              
             </div>
+            
              <table class="table is-striped is-bordered mt-2 is-fullwidth">
                <thead>
                   <tr>
@@ -78,17 +74,25 @@
 </template>
 <script>
 import axios from "axios";
+import _ from "lodash";
 import BaseButton from '../components/BaseButton.vue';
 export default {
   components: { BaseButton },
     name:"dropshipsList",
     data() {
       return {
-        dropships: []
+        dropships: [],
+        search: ''
       };
     },
     created() {
       this.getDropships();
+       this.doSearch = _.debounce(this.doSearch, 400);
+    },
+     watch: { //ini bagian dari untuk search
+      search(value){
+        this.doSearch(value); 
+      }
     },
     methods: {
       async getDropships() {
@@ -102,6 +106,12 @@ export default {
           alert('err: ' + err)
         }
       },
+       doSearch(value) { //ini bagian dari untuk search
+        axios.get('http://localhost:3000/users/get/dropship?search=' + encodeURIComponent(value))
+        .then((response) => {this.dropships = response.data.rows})
+        .catch(e => console.log(e));
+      },
+      
       page(){
         axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
         .then((response) => {

@@ -184,11 +184,11 @@ export default {
                    custPhone: e.target.elements.custPhone.value,
                     selectedProvinces: e.target.elements.selectedProvinces.value,
                     selectedCities: e.target.elements.selectedCities.value,
-                    postalCode: this.postalCode,
+                    postalCode:e.target.elements.postalCode.value,
                     // address: e.target.elements.address.value,
                     // password: e.target.elements.password.value
                 }
-                axios.post('http://localhost:3000//users/dropship/submission', data)
+                axios.post('http://localhost:3000/users/dropship/submission', data)
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success')
