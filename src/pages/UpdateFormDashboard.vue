@@ -89,13 +89,15 @@ export default {
     methods: {
         async getProductById() { //getbyid
         try {
-          const response = await axios.get ('http://localhost:3000/');//gw gatau kemana
+          const response = await axios.get (`http://localhost:3000/users`);
           this.name = response.data.name;
           this.qty = response.data.qty;
           this.price = response.data.price;
           this.categoryName = response.data.categoryName;
           this.variant = response.data.variant;
           this.note = response.data.note;
+          
+           
         }catch (err) {
           console.log(err);
         }
