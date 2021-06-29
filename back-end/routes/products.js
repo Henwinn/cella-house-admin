@@ -55,7 +55,7 @@ router.post('/update', (req,res) => {
         note: req.body.note
     }, {
         where: {
-            storeName: req.session.storeName,
+            // storeName: req.session.storeName,
             id: req.query.prodId,
             status: 'A'
         }
