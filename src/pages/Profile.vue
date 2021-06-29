@@ -21,12 +21,12 @@
         <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
       </el-upload>
 
-        <h5 class="title">*Toko Henwin*(Store Name)</h5>
-        <h5 class="title">*Henwin*(Owner)</h5>
-        <h5 class="title">*Henwin91*(Username)</h5>
-        <h5 class="title">*henwin@gmail.com*(Store Email)</h5>
-        <h5 class="title">*Jl A No 21*(Store Address)</h5>
-        <h5 class="title">*081615555222*(Store Number)</h5>
+        <h5 class="title">{{ user.storeName }}</h5>
+        <h5 class="title">{{ user.fullName }}</h5>
+        <h5 class="title">{{ user.username }} </h5>
+        <h5 class="title">{{ user.email }}</h5>
+        <h5 class="title">{{ user.address }}</h5>
+        <h5 class="title">{{ user.number }}</h5>
       </a>
       <p class="description">
         *Store Description
@@ -57,6 +57,7 @@
 </div>
 </template>
 <script>
+import axios from "axios";
   export default {
     props: {
       user: {
@@ -68,11 +69,22 @@
     },
   data() {
     return {
-     
+      
     };
   },
+  created(){
+    this.getUsers();
+  },
   methods: {
-    
+    async getUsers() {
+        try {
+          const response = await axios.get("http://localhost:3000/users"); 
+          this.users = response.data.rows;
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
+        }
+      },
       submitUpload() {
         this.$refs.upload.submit();
       }
