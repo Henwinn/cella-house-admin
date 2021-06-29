@@ -316,29 +316,81 @@ router.post('/dropship/upload-payment', pay.single('flPayment') , (req, res) => 
 //GET DROPSHIP MADE BY THIS USER
 router.get('/get/dropship', (req, res, next) => {
   if(!req.query.dropshipId){
-    dropships.findAndCountAll({
-      where: {
-        storeId: 7 //req.session.storeId
-      },
-      include: [
-        {
-          model: sequelize.customers,
-          attributes: ['name', 'phone']
+    if(!req.query.search){
+      dropships.findAndCountAll({
+        where: {
+          storeId: 7 //req.session.storeId
         },
-        {
-          model: sequelize.cities,
-          attributes: ['province_name', 'city_name', 'postal_code']
-        }
-      ],
-      limit: 5,
-      offset: (req.query.page ? req.query.page : 0) * 5
-    })
-    .then(dropship => {
-      return res.send(dropship)
-    })
-    .catch(err => {
-      next(err)
-    })
+        include: [
+          {
+            model: sequelize.customers,
+            attributes: ['name', 'phone'],
+          },
+          {
+            model: sequelize.cities,
+            attributes: ['province_name', 'city_name', 'postal_code']
+          }
+        ],
+        limit: 5,
+        offset: (req.query.page ? req.query.page : 0) * 5
+      })
+      .then(dropship => {
+        return res.send(dropship)
+      })
+      .catch(err => {
+        next(err)
+      })
+    } else {
+      dropships.findAndCountAll({
+        where: {
+          storeId: 7, //req.session.storeId
+          [Op.or]: [
+            {
+              address: {
+                [Op.like]: `%${req.query.search}%`
+              }
+            },
+            {
+              paymentInvoice: {
+                [Op.like]: `%${req.query.search}%`
+              }
+            },
+            {
+              note: {
+                [Op.like]: `%${req.query.search}%`
+              }
+            }
+          ]
+        },
+        include: [
+          {
+            model: sequelize.customers,
+            attributes: ['name', 'phone']
+            // where: {
+            //   [Op.or]: [
+            //     {
+            //       name: {
+            //         [Op.like]: `%${req.query.search}%`
+            //       }
+            //     }
+            //   ]
+            // }
+          },
+          {
+            model: sequelize.cities,
+            attributes: ['province_name', 'city_name', 'postal_code']
+          }
+        ],
+        limit: 5,
+        offset: (req.query.page ? req.query.page : 0) * 5
+      })
+      .then(dropship => {
+        return res.send(dropship)
+      })
+      .catch(err => {
+        next(err)
+      })
+    }
   } else {
     dropships.findOne({
       where: {
