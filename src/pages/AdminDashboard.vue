@@ -20,7 +20,8 @@
                       <td>{{ user.storeName }}</td>
                       <td class="has-text-centered">
                         <button class="btn">Profile</button >
-                        <button class="btn" @click="deleteMerchant(user.id)">Delete</button>
+                        <button class="btn" type="submit" @click="deleteMerchant(user.id)">Delete</button>
+                         
                       </td>
                     </tr>
                 </tbody>
@@ -79,9 +80,25 @@ export default {
           console.log(err)
         }
       },
-      async deleteMerchant(id) {
+
+      
+      deleteMerchant(user, id) {
+        // try {
+        //   await axios.delete(`http://localhost:3000/admin/user/:id?id=${id}`);
+        //   this.getMerchants();
+        // }catch (err) {
+        //   console.log(err);
+        // }
+
+        //  axios
+        //   .delete(`http://localhost:3000/admin/user/:id?id=${id}`)
+        //   .then(response => {
+        //     this.result.splice(id, 1);
+        //     console.log(this.result);
+        //   });
+
         try {
-          await axios.delete(`http://localhost:3000/admin/user/${id}`);
+          axios.delete(`http://localhost:3000/admin/user/:id?id=${id}`);
           this.getMerchants();
         }catch (err) {
           console.log(err);
