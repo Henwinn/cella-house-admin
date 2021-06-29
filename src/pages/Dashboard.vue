@@ -100,9 +100,9 @@ export default {
           alert('err: ' + err)
         }
       },
-      async deleteProduct(id) {
+      deleteProduct(id) {
         try {
-          await axios.delete(`http://localhost:3000/users/${id}`);
+          axios.post(`http://localhost:3000/products/delete?prodId=${id}`);
           this.getProducts();
         }catch (err) {
           console.log(err);
