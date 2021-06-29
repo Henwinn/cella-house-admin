@@ -246,7 +246,7 @@ router.post('/profile', upload.single("flProfilePic"), (req,res) => {
 })
 
 /* USER CREATE DROPSHIP REQUEST */
-router.post('/dropship/submission', (req, res) => {
+router.post('/dropship/submission', (req, res, next) => {
   products.findOne({
     where: {
       id: req.body.productId
