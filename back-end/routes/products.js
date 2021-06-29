@@ -73,7 +73,7 @@ router.post('/delete', (req, res) => {
         status: 'N'
     }, {
         where: {
-            storeName: req.session.storeName,
+            // storeName: req.session.storeName,
             id: req.query.prodId
         }
     })
