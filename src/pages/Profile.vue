@@ -37,6 +37,15 @@
       {{user.description}}
     </p>
     <center>
+
+
+       <router-link
+                          :to="{ name: 'Edit', params: { id: user.id } }"
+                          class="button is-info is-small"
+                          > 
+                          <button href="#/editProfile" class="btn" @click="updateProfile(user.id)">Edit Profile</button >
+                          </router-link
+                        >
     <button tag="a"
              class="mb-3 mb-sm-0" href="#/editProfile">
              Edit Profile

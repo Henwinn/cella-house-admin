@@ -84,7 +84,7 @@ import axios from 'axios';
     methods: {
       async getUserById() { //getbyid
         try {
-          const response = await axios.get ('http://localhost:3000/');//gw gatau kemana
+          const response = await axios.get ('http://localhost:3000/users');
           this.storeName = response.data.storeName;
           this.fullName = response.data.fullName;
           this.username = response.data.username;
@@ -98,7 +98,7 @@ import axios from 'axios';
       },
       async updateProfile() { //update
         try {
-          await axios.put('http://localhost:3000/',
+          await axios.put('http://localhost:3000/users/profile?username=${username}',
           {
             storeName: this.storeName,
             fullName: this.fullName,
