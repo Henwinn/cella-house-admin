@@ -70,7 +70,7 @@ router.post('/update', (req,res) => {
 
 router.post('/delete', (req, res) => {
     products.update({
-        status: 'N'
+        status: 'D'
     }, {
         where: {
             // storeName: req.session.storeName,
