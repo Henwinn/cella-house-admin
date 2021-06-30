@@ -113,15 +113,15 @@ export default {
           console.log(err)
         }
       },
-      page(){
-        axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //Gw gatau get url nya
-        .then((response) => {
-          this.users = response.data.rows
-          this.pageSize = response.data
-          this.total = response.data.count
-          })
-        .catch(e => console.log(e));
-      }
+      // page(){
+      //   axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //Gw gatau get url nya
+      //   .then((response) => {
+      //     this.users = response.data.rows
+      //     this.pageSize = response.data
+      //     this.total = response.data.count
+      //     })
+      //   .catch(e => console.log(e));
+      // }
     }
     
 };
