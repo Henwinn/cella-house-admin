@@ -27,6 +27,18 @@ router.get('/', (req,res) => {
     })
 })
 
+router.get('/:id', (req, res, next) => {
+    products.findOne({
+        where: {
+            //storeId
+            id: req.params.id,
+            status: 'A'
+        }
+    })
+    .then(product => res.send(product))
+    .catch(err => next(err))
+})
+
 router.post('/add', (req,res, next) => {
     products.create({
         name: req.body.name,
