@@ -108,7 +108,7 @@ export default {
                     name: this.name,
                     qty: this.qty,
                     price: this.price,
-                    categoryName: this.category,
+                    categoryName: this.categoryName,
                     variant: this.variant,
                     note: this.note,
                 });
