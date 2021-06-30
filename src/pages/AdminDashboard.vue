@@ -30,13 +30,13 @@
         </card>
       </div>
 
-      <el-pagination 
+      <!-- <el-pagination 
         background
         layout="prev, pager, next"
         :total="total"
         :page-size="pageSize"
         @current-change="page">
-      </el-pagination>
+      </el-pagination> -->
     </div>
 </template>
 <script>
