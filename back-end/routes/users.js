@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const sequelize = require('../models')
 const {Op} = require('sequelize')
 const multer = require('multer')
@@ -246,10 +246,10 @@ router.post('/profile', upload.single("flProfilePic"), (req,res) => {
 })
 
 /* USER CREATE DROPSHIP REQUEST */
-router.post('/dropship/submission', (req, res, next) => {
+router.post('/dropship/submission/:prodId', (req, res, next) => {
   products.findOne({
     where: {
-      id: req.body.productId
+      id: req.params.prodId
     }
   })
   .then(product => {

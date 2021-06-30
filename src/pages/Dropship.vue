@@ -45,18 +45,20 @@
                                 </div>
 
                                 <div class="form-group" >
+                                    <input type="text" placeholder="Item Weight(gr)" v-model="ItemWeight" name="ItemWeight" class="form-control"  />
+                                </div>
+
+                                <div class="form-group" >
+                                    <input type="text" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
+                                </div>
+
+                                <div class="form-group" >
                                     <input type="text" placeholder="Customer Name" v-model="custName" name="custName" class="form-control"  />
                                 </div>
 
                                 <div class="form-group" >
                                     <input type="text" placeholder="Customer Address" v-model="custAddress" name="custAddress" class="form-control"  />
-                                </div>
-
-                                <div class="form-group" >
-                                    <input type="number" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control"  />
-                                </div>
-
-                             
+                                </div>                             
                         
                                 <div class="provinces-dropdown">
                                     <select v-model="selectedProvinces" @change="getCities()" placeholder="select" name="selectedProvinces" :hide-selected="true">
@@ -75,8 +77,16 @@
                                     <input type="text" placeholder="Postal Code" v-model="postalCode" name="postalCode" class="form-control" disabled />
                                 </div>
                                  
+                                <div class="courier-dropdown">
+                                    <select v-model="courier" name="courier">
+                                        <option disabled value="">Please select one</option>
+                                        <option value="jne"> JNE </option>
+                                        <option value="pos"> POS INDONESIA </option>
+                                        <option value="tiki"> TIKI </option>
+                                    </select>
+                                </div>
                                     
-                                 <base-input alternative
+                                <base-input alternative
                                             class="mb-3"
                                             placeholder="Shipment Price"
                                             v-model="price"
@@ -97,20 +107,22 @@
 </template>
 <script>
 import axios from "axios";
+import _ from "lodash";
+
 export default {
     name:'Dropship',
     el: '#app',
     data(){
-
-        
         return {
             ItemName: "",
+            ItemWeight: 0,
             custName: "",
             custAddress: "",
             custPhone: "",
             kota: "",
             postalCode: "",
             provinsi: "",
+            courier: "",
             price: "",
             provinces: [],
             cities: [],
@@ -122,6 +134,12 @@ export default {
     },
     created() {
         this.getProvinces();
+        this.getCustomer = _.debounce(this.getCustomer, 550)
+    },
+    watch: {
+        custPhone(){
+            this.getCustomer()
+        }
     },
     methods: {
         async getProvinces() {
@@ -142,9 +160,24 @@ export default {
         },
         async getPostalCode() {
             this.postalCode = this.selectedCities.postal_code
+            let data = {
+                origin: '151',
+                destination: toString(this.selectedCities[0].id),
+                weight: 100,
+                courier: 'jne'
+            }
+            const response = await axios.post(`https://api.rajaongkir.com/starter/cost`, data)
+            // alert(response.data.results.cost[0].cost.value)
         },
-
-          handleSubmit: function(e){
+        async getCustomer(){
+            try {
+                const response = await axios.get(`http://localhost:3000/customers/${this.custPhone}/7`) //should be storeId from session
+                this.custName = response.data.name
+            } catch(err) {
+                console.log(err)
+            }
+        },
+        handleSubmit: function(e){
             this.errors = [];
             
             // if (!this.ItemName) {
@@ -170,14 +203,15 @@ export default {
         
             // if (!this.selectedCities) {
             //     this.errors.push("Select City required");
-               
+                
             // }
-           
+            
 
 
             if (!this.errors.length) {
                 let data = {
                     ItemName: e.target.elements.ItemName.value,
+                    ItemWeight: e.target.elements.ItemWeight.value,
                     custName: e.target.elements.custName.value,
                     custAddress: e.target.elements.custAddress.value,
                     custPhone: e.target.elements.custPhone.value,
@@ -191,8 +225,6 @@ export default {
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success')
-                        
-                       
                     } else {
                         alert('fail')
                     }
@@ -219,6 +251,15 @@ export default {
     margin-bottom: 10px;
 }
 .cities-dropdown > select{
+    background-color: #26293D;
+     border: 1px solid #273553;
+    color:aliceblue;
+    padding: 8px;
+    padding-right: 215px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+.courier-dropdown > select{
     background-color: #26293D;
      border: 1px solid #273553;
     color:aliceblue;

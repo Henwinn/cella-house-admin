@@ -18,6 +18,9 @@ module.exports = {
       qty: {
         type: Sequelize.INTEGER
       },
+      itemWeight: {
+        type: Sequelize.INTEGER
+      },
       customerId: {
         type: Sequelize.INTEGER(5),
         references: {
@@ -55,6 +58,9 @@ module.exports = {
       },
       address: {
         type: Sequelize.TEXT
+      },
+      courier: {
+        type: Sequelize.STRING(4),
       },
       shipmentPrice: {
         type: Sequelize.FLOAT

@@ -29,6 +29,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     qty: DataTypes.INTEGER,
+    itemWeight: DataTypes.INTEGER,
     customerId: {
       type: DataTypes.INTEGER(5),
       references: {
@@ -65,6 +66,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     address: DataTypes.TEXT,
+    courier: DataTypes.STRING(4),
     shipmentPrice: DataTypes.FLOAT,
     paymentInvoice: DataTypes.STRING,
     status: DataTypes.STRING(30),

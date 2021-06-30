@@ -114,13 +114,16 @@ router.post('/dropship/approve', (req, res) => {
     })
 })
 
-//GET USER BY PARAM
-router.get('/user/all', (req, res, next) => {
+//GET ACTIVE USER BY PARAM
+router.get('/user/active', (req, res, next) => {
     // if(req.session.roleId == 1){
             //ALL USERS
             users.findAndCountAll({
                 limit: 5,
-                offset: (req.query.page ? req.query.page : 0) * 5
+                offset: (req.query.page ? req.query.page : 0) * 5,
+                where: {
+                    status: 'A'
+                }
             })
             .then(users => {
                 return res.send(users)
@@ -165,7 +168,9 @@ router.get('/user', (req, res) => {
 
 //DELETE USER
 router.delete('/user/:id', (req, res) => {
-    users.destroy({
+    users.update({
+        status: 'N',
+    }, {
         where: {
             id: req.params.id
         }

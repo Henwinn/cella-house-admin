@@ -89,8 +89,6 @@ export default {
     created() {
       this.getProducts();
       this.doSearch = _.debounce(this.doSearch, 400);
-
-
     },
     watch: { //ini bagian dari untuk search
       search(value){

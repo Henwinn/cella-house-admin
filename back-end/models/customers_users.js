@@ -14,8 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   customers_users.init({
-    customerId: DataTypes.INTEGER(5),
-    usersId: DataTypes.INTEGER(5)
+    customerId: {
+      type: DataTypes.INTEGER(5),
+      references: {
+        model: 'customers',
+        key: 'id'
+      }
+    },
+    userId: {
+      type: DataTypes.INTEGER(5),
+      references: {
+        model: 'users',
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'customers_users',
