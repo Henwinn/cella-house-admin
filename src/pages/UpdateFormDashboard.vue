@@ -19,7 +19,12 @@
                                 <small>Update Your Item</small>
                             </div>
                             <form id="app" @submit.prevent="updateItem" method="post">
-                                
+                                <p v-if="errors.length">
+                                    <b>Please correct the following error(s):</b>
+                                    <ul>
+                                    <li v-for="error in errors">{{ error }}</li> <!-- yang ini emang cacing merah ya, jangan di apa apain  -->
+                                    </ul>
+                                </p>
 
                                 <div class="form-group" >
                                     <input type="text" placeholder="Name" v-model="name" name="name" class="form-control"  />
@@ -102,17 +107,17 @@ export default {
         async updateItem(val){
             try {
                 await axios.post(`http://localhost:3000/products/update?prodId=${val}`, {
-                    name: this.name,
+                    name: this.itemName,
                     qty: this.qty,
                     price: this.price,
-                    categoryName: this.categoryName,
+                    categoryName: this.category,
                     variant: this.variant,
                     note: this.note,
                 });
-                this.name = "";
+                this.itemName = "";
                 this.qty = "";
                 this.price = "";
-                this.categoryName = "";
+                this.category = "";
                 this.variant = "";
                 this.note = "";
                 
