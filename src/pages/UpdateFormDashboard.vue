@@ -21,9 +21,7 @@
                             <form id="app" @submit.prevent="updateItem" method="post">
                                 <p v-if="errors.length">
                                     <b>Please correct the following error(s):</b>
-                                    <ul>
-                                    <li v-for="error in errors">{{ error }}</li> <!-- yang ini emang cacing merah ya, jangan di apa apain  -->
-                                    </ul>
+                                   
                                 </p>
 
                                 <div class="form-group" >
