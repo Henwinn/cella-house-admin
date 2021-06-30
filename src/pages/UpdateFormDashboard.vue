@@ -85,9 +85,9 @@ export default {
         this.getProductById();
     },
     methods: {
-        async getProductById() { //getbyid
+        async getProductById(id) { //getbyid
         try {
-          const response = await axios.get (`http://localhost:3000/users`);
+          const response = await axios.get (`http://localhost:3000/products/${id}`);
           this.name = response.data.name;
           this.qty = response.data.qty;
           this.price = response.data.price;
