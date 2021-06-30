@@ -105,7 +105,7 @@ export default {
         async updateItem(val){
             try {
                 await axios.post(`http://localhost:3000/products/update?prodId=${val}`, {
-                    name: this.itemName,
+                    name: this.name,
                     qty: this.qty,
                     price: this.price,
                     categoryName: this.category,
