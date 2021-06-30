@@ -160,13 +160,13 @@ export default {
         },
         async getPostalCode() {
             this.postalCode = this.selectedCities.postal_code
-            let data = {
-                origin: '151',
-                destination: toString(this.selectedCities[0].id),
-                weight: 100,
-                courier: 'jne'
-            }
-            const response = await axios.post(`https://api.rajaongkir.com/starter/cost`, data)
+            // let data = {
+            //     origin: '151',
+            //     destination: toString(this.selectedCities[0].id),
+            //     weight: 100,
+            //     courier: 'jne'
+            // }
+            // const response = await axios.post(`https://api.rajaongkir.com/starter/cost`, data)
             // alert(response.data.results.cost[0].cost.value)
         },
         async getCustomer(){

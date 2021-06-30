@@ -257,9 +257,10 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
       return res.send(`qty exceeds product qty: ${product.qty}`)
     } else {
       dropships.create({
-        storeId: req.session.storeId,
-        productId: req.body.productId,
+        storeId: 7, //req.session.storeId
+        productId: 1,
         qty: req.body.qty,
+        itemWeight: req.body.itemWeight,
         customerName: req.body.customerName,
         customerPhone: req.body.customerPhone,
         province: req.body.city,
@@ -267,6 +268,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
         kelurahan: req.body.kelurahan,
         postalCode: req.body.postalCode,
         address: req.body.address,
+        courier: req.body.courier,
         shipmentPrice: req.body.shipmentPrice,
         status: 'PENDING PAYMENT'
       })
