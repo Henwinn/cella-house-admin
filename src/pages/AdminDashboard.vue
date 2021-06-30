@@ -51,6 +51,7 @@ export default {
       return {
         users: [],
         search: '',
+        pageSize: '',
         showModal: false
       };
     },
@@ -82,7 +83,7 @@ export default {
       },
 
       
-      deleteMerchant(user, id) {
+      deleteMerchant(val) {
         // try {
         //   await axios.delete(`http://localhost:3000/admin/user/:id?id=${id}`);
         //   this.getMerchants();
@@ -98,7 +99,7 @@ export default {
         //   });
 
         try {
-          axios.delete(`http://localhost:3000/admin/user/:id?id=${id}`);
+          axios.delete(`http://localhost:3000/admin/user/${val}`);
           this.getMerchants();
         }catch (err) {
           console.log(err);
