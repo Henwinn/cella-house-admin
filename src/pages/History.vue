@@ -101,9 +101,15 @@ export default {
           console.log(err);
         }
       },
-      async withdrawItem(id) {
-        try {
-          await axios.delete(`http://localhost:3000/users/${id}`); //Gw gatau get url nya
+      withdrawItem(id) {
+        // try {
+        //   await axios.delete(`http://localhost:3000/users/${id}`); //Gw gatau get url nya
+        //   this.getDropships();
+        // }catch (err) {
+        //   console.log(err);
+        // }
+         try {
+          axios.post(`http://localhost:3000/users/dropship/cancel/${id}`);
           this.getDropships();
         }catch (err) {
           console.log(err);
