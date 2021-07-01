@@ -4,10 +4,7 @@
     <p class="card-text">
     </p>
     <div class="author">
-      <div class="block block-one"></div>
-      <div class="block block-two"></div>
-      <div class="block block-three"></div>
-      <div class="block block-four"></div>
+
       <a href="#">
         <img class="avatar" src="img/anime6.png" alt="...">
         <h5 class="title">*Store Name</h5>
@@ -48,10 +45,7 @@
              Search
              </base-button>
   </div>
-  <base-table-profile-merchant :data="table1.data"
-                        :columns="table1.columns"
-                        thead-classes="text-primary">
-  </base-table-profile-merchant>
+
             <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item">
@@ -74,64 +68,6 @@
 </div>
 </template>
 <script>
-import BaseTableProfileMerchant from '../components/BaseTableProfileMerchant.vue';
-const tableColumns = ["Item","Name","Qty","Category", "Price", "Weight","Size","City","image"] ;
-const tableData = [
-  {
-    id: 1,
-    item: "T-shirts",
-    name: "Jose Carillo",
-    qty: "10",
-    category: "Clothes",
-    price: "20.000",
-    weight: "10kg",
-    size: "",
-    image: ""
-  
-  },
-  {
-    id: 2,
-    name: "Miguel Gallardo",
-  },
-  {
-    id: 3,
-    name: "Antonio Escobar",
-   
-  },
-  {
-    id: 4,
-    name: "Dakota Rice",
-  
-  },
-  {
-    id: 5,
-    name: "Mason Porter",
-  },
-  {
-    id: 6,
-    name: "Doris Greene",
- 
-  },
-  {
-    id: 7,
-    name: "Philip Chaney",
-    
-  },
-  {
-    id: 8,
-    name: "Minerva Hooper",
-    
-  },
-  {
-    id: 9,
-     name: "Jon Porter",
- 
-  },
-  {
-    id: 10,
-    name: "Andres Smith",
-  }
-];
   export default {
     props: {
       user: {
@@ -141,17 +77,23 @@ const tableData = [
         }
       }
     },
-    components: {
-    BaseTableProfileMerchant
-  },
   data() {
     return {
-      table1: {
-        title: "LIST Dropship",
-        columns: [...tableColumns],
-        data: [...tableData]
+      users: [],
+    }
+  },
+  created: function (){
+    this.getMerchantProfileById();
+  },
+  methods: {
+    async getMerchantProfileById(id){
+        try{
+          const response = await axios.get("http://localhost:3000/admin/user")
+          this.users = response.data;
+        } catch (err) {
+          console.log(err)
+        }
       },
-    };
   }
   }
 </script>
