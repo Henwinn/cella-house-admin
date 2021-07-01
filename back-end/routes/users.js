@@ -428,12 +428,13 @@ router.post('/dropship', (req, res) => {
 })
 
 //CANCEL DROPSHIP REQUEST
-router.post('/dropship/cancel', (req, res) => {
+router.post('/dropship/cancel/:prodId', (req, res) => {
   dropships.update({
     status: 'CANCELED'
   }, {
     where: {
-      productId: req.body.productId,
+      //storeId: req.session.storeId
+      productId: req.params.productId,
       status: 'ON PROCESS'
     }
   })
