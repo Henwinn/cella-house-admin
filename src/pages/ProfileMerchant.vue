@@ -103,18 +103,29 @@ import Card from '../components/Cards/Card.vue';
   data() {
     return {
       users: [],
+      products: []
     }
   },
   created: function (){
     this.getMerchantProfileById();
+    this.getProduts();
   },
   methods: {
     async getMerchantProfileById(id){
         try{
-          const response = await axios.get("http://localhost:3000/admin/user")
+          const response = await axios.get("http://localhost:3000/admin/user") //get user id nya
           this.users = response.data;
         } catch (err) {
           console.log(err)
+        }
+      },
+     async getProducts() {
+        try {
+          const response = await axios.get("http://localhost:3000/users"); //get table nya berdasarkan user nya
+          this.products = response.data.rows;
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
         }
       },
   }
