@@ -19,7 +19,7 @@
                     <tr v-for="user in users" :key="user.id">
                       <td>{{ user.storeName }}</td>
                       <td class="has-text-centered">
-                        <button class="btn">Profile</button >
+                        <button class="btn">Profile</button>
                         <button class="btn" @click="deleteMerchant(user.id)">Delete</button>
                          
                       </td>
@@ -73,14 +73,14 @@ export default {
           console.log(err);
         }
       },
-      async getMerchantProfile(){
-        try{
-          const response = await axios.get("http://localhost:3000/admin/user")
-          //INI HARUSNYA DIRECT KE PAGE PROFILE?
-        } catch (err) {
-          console.log(err)
-        }
-      },
+      // async getMerchantProfile(){
+      //   try{
+      //     const response = await axios.get("http://localhost:3000/admin/user")
+      //     //INI HARUSNYA DIRECT KE PAGE PROFILE?
+      //   } catch (err) {
+      //     console.log(err)
+      //   }
+      // },
 
       
       async deleteMerchant(val) {

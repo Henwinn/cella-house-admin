@@ -42,12 +42,10 @@
                       <td>{{ product.status }}</td>
                       <td class="has-text-centered">
                        
-                          <router-link :to="{ path: 'formUpdateItem', query: { id: product.id }}"
-                           >
+                          <router-link :to="{ path: 'formUpdateItem', query: { id: product.id }}">
 
                           <button tag="a"  class="btn" @click="updateItem(product.id)">Edit</button >
-                          </router-link
-                        >
+                          </router-link>
                         
                        
                         <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
