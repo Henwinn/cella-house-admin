@@ -35,40 +35,63 @@
     </div>
     
   </card>
-  <div class="search">
-               <base-input alternative class="mb-3"
-                placeholder="Search"
-                addon-left-icon="ni ni-hat-3">
-                </base-input>
-               <base-button tag="a" 
-             class="mb-3 mb-sm-0">
-             Search
-             </base-button>
+  <card>
+   <div class="search">
+        <input type="text" class="form-control" placeholder="Search" v-model="search">
   </div>
+  <table class="table is-striped is-bordered mt-2 is-fullwidth">
+               <thead>
+                  <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Category Name</th>
+                    <th>Variant</th>
+                    <th>Note</th>
+                    <th>Status</th>
+                    <th class="has-text-centered">Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
 
-            <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-              <span class="sr-only">Previous</span>
-            </a>
-          </li>
-          <li class="page-item"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-              <span class="sr-only">Next</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+                    <tr v-for="(product, idx) in this.products" :key="idx">
+                      <td>{{ product.name }}</td>
+                      <td>{{ product.qty }}</td>
+                      <td>{{ product.price }}</td>
+                      <td>{{ product.categoryName }}</td>
+                      <td>{{ product.variant }}</td>
+                      <td>{{ product.note }}</td>
+                      <td>{{ product.status }}</td>
+                      <td class="has-text-centered">
+                       
+                          <router-link :to="{ path: 'formUpdateItem', query: { id: product.id }}">
+
+                          <button tag="a"  class="btn" @click="updateItem(product.id)">Edit</button >
+                          </router-link>
+                        
+                       
+                        <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
+                        
+                      </td>
+                    </tr>
+                </tbody>
+             </table>
+             <el-pagination
+        
+          background
+          layout="prev, pager, next"
+          :total="total"
+          :page-size="pageSize"
+          @current-change="page">
+        </el-pagination>
+  </card>
+  
 </div>
 </template>
 <script>
+import Card from '../components/Cards/Card.vue';
   export default {
+  components: { Card },
     props: {
       user: {
         type: Object,
