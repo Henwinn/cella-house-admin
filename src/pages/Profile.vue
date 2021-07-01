@@ -16,8 +16,8 @@
         ref="upload"
         action="https://jsonplaceholder.typicode.com/posts/"
         :auto-upload="false">
-        <el-button slot="trigger" size="small" type="primary">select file</el-button>
-        <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
+        <el-button class="btn" slot="trigger"  type="primary">select file</el-button>
+        <el-button class="btn" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
         <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
       </el-upload>
 
@@ -37,19 +37,9 @@
       {{user.description}}
     </p>
     <center>
-
-
-       <router-link
-                          :to="{ name: 'Edit', params: { id: user.id } }"
-                          class="button is-info is-small"
-                          > 
-                          <button href="#/editProfile" class="btn" @click="updateProfile(user.id)">Edit Profile</button >
-                          </router-link
-                        >
-    <button tag="a"
-             class="mb-3 mb-sm-0" href="#/editProfile">
-             Edit Profile
-    </button>
+       <router-link :to="{ path: 'editProfile', query: { id: user.id }}">
+            <button tag="a"  class="btn" >Edit</button >
+        </router-link>
     </center>
     <div slot="footer" class="button-container">
       <base-button icon round class="btn-facebook">
