@@ -177,17 +177,18 @@ router.post('/login', (req,res)=>{
 })
 
 /* GET USER PROFILE */
-router.get('/:username', (req, res) => {
-  if(req.session.username == req.params.username){
+router.get('/:id', (req, res, next) => {
+  // if(req.session.storeId == req.params.id){
     users.findOne({
       where: {
-        username: req.params.username
+        id: req.params.id
       }
     })
     .then(user => res.send(user))
-  } else {
-    return res.status(404).send('user doesn\'t exist')
-  }
+    .catch(err => next(err))
+  // } else {
+    // return res.status(404).send('user doesn\'t exist')
+  // }
 })
 
 /* UPDATE USER PROFILE */

@@ -80,13 +80,13 @@ router.post('/update', (req,res) => {
     })
 })
 
-router.post('/delete', (req, res) => {
+router.post('/delete/:prodId', (req, res) => {
     products.update({
         status: 'D'
     }, {
         where: {
-            // storeName: req.session.storeName,
-            id: req.query.prodId
+            // storeId: req.session.storeId,
+            id: req.params.prodId
         }
     })
     .then( () => {
@@ -95,6 +95,20 @@ router.post('/delete', (req, res) => {
     .catch(err => {
         next(err)
     })
+})
+
+//WITHDRAW PRODUCT
+router.post('/withdraw/:prodId', (req, res, next) => {
+    products.update({
+        status: 'W'
+    }, {
+        where: {
+            //storeId: req.session.storeId
+            id: req.params.prodId
+        }
+    })
+    .then(() => res.send('success'))
+    .catch(err => next(err))
 })
 
 module.exports = router
