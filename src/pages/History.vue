@@ -56,14 +56,14 @@
         </card>
       </div>
 
-           <el-pagination
+           <!-- <el-pagination
         
           background
           layout="prev, pager, next"
           :total="total"
           :page-size="pageSize"
           @current-change="page">
-        </el-pagination>
+        </el-pagination> -->
     </div>
 
 </template>
@@ -79,8 +79,8 @@ export default {
         dropships: [],
         users:[],
         search: '',
-        pageSize:'',
-        total:''
+        // pageSize:'',
+        // total:''
       };
     },
     created() {
@@ -125,15 +125,18 @@ export default {
     //       console.log(e);
     //     });
     // },
-    page(){
-        axios.get('http://localhost:3000/users/get/dropship?page=' + encodeURIComponent(value)) //Gw gatau get url nya
-        .then((response) => {
-          this.dropships = response.data
-          this.pageSize = response.data
-          this.total = resp.data
-          })
-        .catch(e => console.log(e));
-      }
+
+
+
+    // page(){
+    //     axios.get('http://localhost:3000/users/get/dropship?page=' + encodeURIComponent(value)) //Gw gatau get url nya
+    //     .then((response) => {
+    //       this.dropships = response.data
+    //       this.pageSize = response.data
+    //       this.total = resp.data
+    //       })
+    //     .catch(e => console.log(e));
+    //   }
   }
 }
     
