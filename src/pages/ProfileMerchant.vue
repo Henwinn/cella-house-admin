@@ -5,16 +5,25 @@
     </p>
     <div class="author">
 
-      <a href="#">
-        <img class="avatar" src="img/anime6.png" alt="...">
-        <h5 class="title">*Store Name</h5>
-        <h5 class="title">*Store Owner</h5>
-        <h5 class="title">*Store Address</h5>
-        <h5 class="title">*Store Number</h5>
-      </a>
-      <p class="description">
+     
+      <img class="avatar" src="img/anime6.png" alt="...">
+      <!-- <h5 class="title">*Store Name</h5>
+      <h5 class="title">*Store Owner</h5>
+      <h5 class="title">*Store Address</h5>
+      <h5 class="title">*Store Number</h5> -->
+      <tr v-for="(user, idx) in this.users" :key="idx">
+                      <td>{{ user.fullName }}</td>
+                      <td>{{ user.storeName }}</td>
+                      <td>{{ user.username }}</td>
+                      <td>{{ user.address }}</td>
+                      <td>{{ user.phone }}</td>
+                     
+                      <td class="has-text-centered"></td> 
+      </tr>
+                       
+      <!-- <p class="description">
         *Store Description
-      </p>
+      </p> -->
     </div>
     <p></p>
     <p class="card-description">
