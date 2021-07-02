@@ -45,6 +45,7 @@
     
   </card>
   <card>
+    <div class="table-responsive">
    <div class="search">
         <input type="text" class="form-control" placeholder="Search" v-model="search">
   </div>
@@ -85,6 +86,9 @@
                     </tr>
                 </tbody>
              </table>
+    </div>
+              </card>
+              
              <el-pagination
         
           background
@@ -93,7 +97,7 @@
           :page-size="pageSize"
           @current-change="page">
         </el-pagination>
-  </card>
+ 
   
 </div>
 </template>
@@ -125,7 +129,7 @@ import Card from '../components/Cards/Card.vue';
   methods: {
     async getMerchantProfileById(id){
         try{
-          const response = await axios.get(`http://localhost:3000/users/${id}`) //get user id nya
+          const response = await axios.get(`http://localhost:3000/admin/user/${id}`) //get user id nya
           this.users = response.data;
         } catch (err) {
           console.log(err)
