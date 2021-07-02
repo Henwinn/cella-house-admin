@@ -102,7 +102,7 @@ router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD IT
   })
 })
 
-router.get('/check-username-storename', (req, res, next) => {
+router.get('/validation/check-username-storename', (req, res, next) => {
   users.findOne({
     attributes: ['username', 'storeName'],
     where: {
