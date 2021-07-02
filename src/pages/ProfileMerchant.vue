@@ -135,7 +135,7 @@ import Card from '../components/Cards/Card.vue';
           console.log(err)
         }
       },
-     async getProducts() {
+     async getProducts(id) {
         try {
           const response = await axios.get(`http://localhost:3000/products/user/${id}`); //get table nya berdasarkan user nya
           this.products = response.data.rows;
