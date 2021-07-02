@@ -14,23 +14,17 @@
             ref="upload"
             action="https://jsonplaceholder.typicode.com/posts/"
             :auto-upload="false">
-            <el-button slot="trigger" size="small" type="primary">select file</el-button>
-            <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
+            <el-button slot="trigger" class="btn" type="primary">select file</el-button>
+            <el-button style="margin-left: 10px;" class="btn" size="small" type="success" @click="submitUpload">upload to server</el-button>
             <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
           </el-upload>
         <h5 class="title">*Henwin</h5>
         <h5 class="title">*hen_win</h5>
       </a>
-      <p class="position">
-        Admin
-      </p>
     </div>
     <p></p>
     <p class="card-description">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. 
-      Impedit odio aut eaque quas, doloremque sed maxime deleniti 
-      tempora ea id aliquid laborum ratione temporibus, ullam similique 
-      beatae accusantium, ipsum ducimus?
+     
     </p>
     <center>
     <base-button tag="a"

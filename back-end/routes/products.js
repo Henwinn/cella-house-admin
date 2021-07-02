@@ -39,6 +39,18 @@ router.get('/:id', (req, res, next) => {
     .catch(err => next(err))
 })
 
+router.get('/user/:id', (req, res, next) => {
+    products.findAndCountAll({
+        where: {
+            storeId: req.params.id
+        },
+        limit: 5,
+        offset: (req.query.page ? req.query.page : 0) * 5
+    })
+    .then(result => res.send(result))
+    .catch(err => next(err))
+})
+
 router.post('/add', (req,res, next) => {
     products.create({
         name: req.body.name,

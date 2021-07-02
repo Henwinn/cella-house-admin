@@ -19,7 +19,10 @@
                     <tr v-for="user in users" :key="user.id">
                       <td>{{ user.storeName }}</td>
                       <td class="has-text-centered">
-                        <button class="btn">Profile</button>
+                         <router-link :to="{ path: 'profileMerchant', query: { id: user.id }}">
+
+                          <button tag="a"  class="btn" >Profile</button >
+                          </router-link>
                         <button class="btn" @click="deleteMerchant(user.id)">Delete</button>
                          
                       </td>
