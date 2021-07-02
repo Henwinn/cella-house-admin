@@ -39,6 +39,16 @@ router.get('/:id', (req, res, next) => {
     .catch(err => next(err))
 })
 
+router.get('/user/:id', (req, res, next) => {
+    products.findAll({
+        where: {
+            storeId: req.params.id
+        }
+    })
+    .then(result => res.send(result))
+    .catch(err => next(err))
+})
+
 router.post('/add', (req,res, next) => {
     products.create({
         name: req.body.name,
