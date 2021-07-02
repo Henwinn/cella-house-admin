@@ -70,13 +70,14 @@ export default {
     el: '#app',
     data() {
         return {
-            name:"",
-            qty:"",
-            price:"",
-            categoryName: "",
-            variant: "",
-            note: "",
-            status: "",
+            
+            // name:"",
+            // qty:"",
+            // price:"",
+            // categoryName: "",
+            // variant: "",
+            // note: "",
+            // status: "",
             errors: [],
             success: []
         };
