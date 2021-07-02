@@ -40,10 +40,12 @@ router.get('/:id', (req, res, next) => {
 })
 
 router.get('/user/:id', (req, res, next) => {
-    products.findAll({
+    products.findAndCountAll({
         where: {
             storeId: req.params.id
-        }
+        },
+        limit: 5,
+        offset: (req.query.page ? req.query.page : 0) * 5
     })
     .then(result => res.send(result))
     .catch(err => next(err))
