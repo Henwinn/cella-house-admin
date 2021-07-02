@@ -78,7 +78,7 @@
                                 </div>
                                  
                                 <div class="courier-dropdown">
-                                    <select v-model="courier" name="courier">
+                                    <select v-model="courier" name="courier" @change="getPrice()">
                                         <option disabled value="">Please select one</option>
                                         <option value="jne"> JNE </option>
                                         <option value="pos"> POS INDONESIA </option>
@@ -160,20 +160,40 @@ export default {
         },
         async getPostalCode() {
             this.postalCode = this.selectedCities.postal_code
-            // let data = {
-            //     origin: '151',
-            //     destination: toString(this.selectedCities[0].id),
-            //     weight: 100,
-            //     courier: 'jne'
-            // }
-            // const response = await axios.post(`https://api.rajaongkir.com/starter/cost`, data)
-            // alert(response.data.results.cost[0].cost.value)
         },
         async getCustomer(){
             try {
                 const response = await axios.get(`http://localhost:3000/customers/${this.custPhone}/7`) //should be storeId from session
                 this.custName = response.data.name
             } catch(err) {
+                console.log(err)
+            }
+        },
+        async getPrice(){
+            alert('getprice')
+            let data = {
+                origin: '501',
+                destination: '500',
+                weight: 100,
+                courier: 'jne'
+            }
+            try{
+                axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
+                const config = {
+                    headers: {
+                        "Access-Control-Allow-Origin": "*"
+                        // 'Authorization': 'API Key 86fd1b1d861933d64c01dbf67235569e'
+                    }   
+                }
+                const response = await axios.post(
+                    `https://api.rajaongkir.com/starter/cost`,
+                    data,
+                    config,
+                    {crossorigin: true}
+                )
+                alert('tes: ' + response.data.results.cost[0].cost.value)
+            } catch(err){
+                alert(err)
                 console.log(err)
             }
         },
