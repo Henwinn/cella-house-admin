@@ -111,8 +111,11 @@ import Card from '../components/Cards/Card.vue';
     },
   data() {
     return {
-      users: [],
-      products: []
+      
+        users: [],
+        products: []
+      
+      
     }
   },
   created: function (){
@@ -130,7 +133,7 @@ import Card from '../components/Cards/Card.vue';
       },
      async getProducts() {
         try {
-          const response = await axios.get(`http://localhost:3000/users`); //get table nya berdasarkan user nya
+          const response = await axios.get(`http://localhost:3000/products/user/${id}`); //get table nya berdasarkan user nya
           this.products = response.data.rows;
         } catch (err) {
           console.log(err);
