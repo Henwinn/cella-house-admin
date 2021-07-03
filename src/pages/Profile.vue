@@ -77,10 +77,11 @@ import Card from '../components/Cards/Card.vue';
     this.getUsers();
   },
   methods: {
-    async getUsers() {
+    async getUsers(id) {
         try {
-          const response = await axios.get("http://localhost:3000/users"); 
-          this.users = response.data.rows;
+          const response = await axios.get(`http://localhost:3000/users?id=${id}`); 
+          this.user = response.data;
+          alert(this.user)
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
