@@ -128,17 +128,17 @@ import axios from "axios";
     this.getProducts();
   },
   methods: {
-    async getMerchantProfileById(){
+    async getMerchantProfileById(id){
         try{
           const response = await axios.get(`http://localhost:3000/admin/user?id=${this.$route.query.id}`) //get user id nya
-          this.users = response.data;
+          this.users = response.data.rows;
           // alert(this.users)
           // console.log('json: ' + this.users)
         } catch (err) {
           console.log(err)
         }
       },
-     async getProducts() {
+     async getProducts(id) {
         try {
           const response = await axios.get(`http://localhost:3000/products/user?id=${this.$route.query.id}`); //get table nya berdasarkan user nya
           this.products = response.data.rows;
