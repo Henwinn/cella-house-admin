@@ -132,8 +132,8 @@ import axios from "axios";
         try{
           const response = await axios.get(`http://localhost:3000/admin/user?id=${this.$route.query.id}`) //get user id nya
           this.user = response.data;
-          alert(this.users)
-          console.log('json: ' + this.users)
+          // alert(this.users)
+          // console.log('json: ' + this.users)
         } catch (err) {
           console.log(err)
         }
