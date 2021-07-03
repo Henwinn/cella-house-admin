@@ -27,7 +27,7 @@ router.get('/', (req,res) => {
     })
 })
 
-router.get('/:id', (req, res, next) => {
+router.get('/id/:id', (req, res, next) => {
     products.findOne({
         where: {
             //storeId
@@ -39,10 +39,10 @@ router.get('/:id', (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.get('/user/:id', (req, res, next) => {
+router.get('/user', (req, res, next) => {
     products.findAndCountAll({
         where: {
-            storeId: req.params.id
+            storeId: req.query.id
         },
         limit: 5,
         offset: (req.query.page ? req.query.page : 0) * 5

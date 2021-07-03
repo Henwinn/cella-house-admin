@@ -136,34 +136,45 @@ router.get('/user/active', (req, res, next) => {
     // }
 })
 
-router.get('/user/:id', (req, res, next) => {
-    users.findOne({
-        where: {
-            id: req.params.id
-        }
-    })
-    .then(user => {
-        if(user){
-            return res.send(user)
-        } else {
-            return res.send('empty')
-        }
-    })
-    .catch(err => next(err))
-})
+// router.get('/user', (req, res, next) => {
+//     users.findOne({
+//         where: {
+//             id: req.params.id
+//         }
+//     })
+//     .then(user => {
+//         if(user){
+//             return res.send(user)
+//         } else {
+//             return res.send('empty')
+//         }
+//     })
+//     .catch(err => next(err))
+// })
 
 //GET USER BY QUERY STRING
-router.get('/user', (req, res) => {
-    users.findAndCountAll({
-        where: {
-            username: {
-                [Op.like]: `%${req.query.search}%`
+router.get('/user', (req, res, next) => {
+    if(req.query.search){
+        users.findAndCountAll({
+            where: {
+                username: {
+                    [Op.like]: `%${req.query.search}%`
+                }
+            },
+            limit: 5,
+            offset: (req.query.page ? req.query.page : 0) * 5
+        })
+        .then(user => res.send(user))
+    } else if(req.query.id){
+        users.findOne({
+            where: {
+                id: req.query.id
             }
-        },
-        limit: 5,
-        offset: (req.query.page ? req.query.page : 0) * 5
-    })
-    .then(user => res.send(user))
+        })
+        .then(user => res.send(user))
+        .catch(err => next(err))
+    }
+    
 })
 
 //DELETE USER
