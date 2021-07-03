@@ -57,7 +57,9 @@
 </template>
 <script>
 import axios from "axios";
+import Card from '../components/Cards/Card.vue';
   export default {
+     components: { Card },
     props: {
       user: {
         type: Object,
