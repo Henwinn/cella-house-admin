@@ -59,7 +59,7 @@
                     <th>Variant</th>
                     <th>Note</th>
                     <th>Status</th>
-                    <th class="has-text-centered">Actions</th>
+                   
                   </tr>
                </thead>
                <tbody>
@@ -72,17 +72,7 @@
                       <td>{{ product.variant }}</td>
                       <td>{{ product.note }}</td>
                       <td>{{ product.status }}</td>
-                      <td class="has-text-centered">
-
-                          <router-link :to="{ path: 'formUpdateItem', query: { id: product.id }}">
-
-                          <button tag="a"  class="btn" @click="updateItem(product.id)">Edit</button >
-                          </router-link>
-
-
-                        <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
-
-                      </td>
+        
                     </tr>
                 </tbody>
              </table>
