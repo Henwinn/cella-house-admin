@@ -11,7 +11,16 @@
       <h5 class="title">*Store Owner</h5>
       <h5 class="title">*Store Address</h5>
       <h5 class="title">*Store Number</h5> -->
-      <tr v-for="(item, idx) in this.users" :key="idx">
+
+      <h5 class="title">{{ user.fullName }}</h5>
+        <h5 class="title">{{ user.storeName }}</h5>
+        <h5 class="title">{{ user.username }} </h5>
+        <h5 class="title">{{ user.email }}</h5>
+        <h5 class="title">{{ user.address }}</h5>
+        <h5 class="title">{{ user.phone }}</h5>
+
+        
+      <!-- <tr v-for="(item, idx) in this.users" :key="idx">
         <td>{{ item.fullName }}</td>
         <td>{{ item.storeName }}</td>
         <td>{{ item.username }}</td>
@@ -19,7 +28,7 @@
         <td>{{ item.phone }}</td>
 
         <td class="has-text-centered"></td>
-      </tr>
+      </tr> -->
 
       <!-- <p class="description">
         *Store Description
@@ -50,6 +59,7 @@
         <input type="text" class="form-control" placeholder="Search" v-model="search">
   </div>
   <table class="table is-striped is-bordered mt-2 is-fullwidth">
+    
                <thead>
                   <tr>
                     <th>Product Name</th>
@@ -121,9 +131,9 @@ import axios from "axios";
     async getMerchantProfileById(id){
         try{
           const response = await axios.get(`http://localhost:3000/admin/user?id=${this.$route.query.id}`) //get user id nya
-          this.users = response.data.rows;
-          // alert(this.users)
-          // console.log('json: ' + this.users)
+          this.user = response.data;
+          alert(this.users)
+          console.log('json: ' + this.users)
         } catch (err) {
           console.log(err)
         }
