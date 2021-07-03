@@ -49,7 +49,7 @@
                         
                        
                         <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
-                        
+                        <button class="btn" type="submit">Withdraw Product</button>
                       </td>
                     </tr>
                 </tbody>
