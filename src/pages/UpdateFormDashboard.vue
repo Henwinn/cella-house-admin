@@ -1,83 +1,89 @@
 <template>
-    <section class="section section-shaped section-lg my-0">
-        <div class="shape shape-style-1 bg-gradient-default">
+  <card>
+    <h5 slot="header" class="title">Edit Item</h5>
+    <div class="row">
+      <div class="col-md-5 pr-md-1">
+        <div class="form-group" >
+            <input  type="text" placeholder="Item Name" v-model="name" name="name" class="form-control"  />
         </div>
-        <div class="container pt-lg-md">
-            <div class="row justify-content-center">
-                <div class="col-lg-5">
-                    <card type="secondary" shadow
-                          header-classes="bg-white pb-5"
-                          body-classes="px-lg-5 py-lg-5"
-                          class="border-0">
-                        <template>
-                            <div class="text-muted text-center mb-3">
-                             Update Item
-                            </div>
-                        </template>
-                        <template>
-                            <div class="text-center text-muted mb-4">
-                                <small>Update Your Item</small>
-                            </div>
-                            <form id="app" @submit.prevent="updateItem" method="post">
-                                <p v-if="errors.length">
-                                    <b>Please correct the following error(s):</b>
-                                   
-                                </p>
-
-                                <div class="form-group" >
-                                    <input type="text" placeholder="Name" v-model="name" name="name" class="form-control"  />
-                                </div>
-
-                                  <div class="form-group" >
-                                    <input type="number" placeholder="Quantity" v-model="qty" name="qty" class="form-control"  />
-                                </div>
-
-                                <div class="form-group" >
-                                    <input type="number" placeholder="Price" v-model="price" name="price" class="form-control"  />
-                                </div>
-
-                                <select v-model="categoryName">
+      </div>
+       <div class="col-md-4 pl-md-1">
+        <div class="form-group" >
+            <input  type="text" placeholder="Quantity" v-model="qty" name="qty" class="form-control"  />
+        </div>
+      </div>
+      <div class="col-md-3 px-md-1">
+        <div class="form-group" >
+            <input  type="text" placeholder="Price" v-model="price" name="price" class="form-control"  />
+        </div>
+      </div>
+     
+    </div>
+     <select v-model="categoryName" name="categoryName">
                                     <option disabled>Please Select One</option>
                                     <option v-for="category in categories" :key="category.name" :value="category.name"> {{category.name}} </option>
-                                </select>
-
-                                 <div class="form-group" >
-                                    <input type="text" placeholder="Variant" v-model="variant" name="variant" class="form-control"  />
-                                </div>
-
-                                <div class="form-group" >
-                                    <input type="text" placeholder="Note" v-model="note" name="note" class="form-control"  />
-                                </div>
-
-                                 <div class="text-center">
-                                    <!-- <base-button type="primary" class="my-4" @click="saveItem">Add Item</base-button> -->
-                                    <button class="btn" type="submit" >    Add </button>
-                                </div>
-
-
-                            </form>
-                        </template>
-                    </card>
-                </div>
-            </div>
+                                </select>  gak kedetect ini category nya, gak tau kenapa
+    <div class="row">
+      <div class="col-md-6 pr-md-1">
+        <div class="form-group" >
+            <input  type="text" placeholder="Category" v-model="categoryName" name="categoryName" class="form-control"  />
         </div>
-    </section>
+      </div>
+      <div class="col-md-6 pl-md-1">
+        <div class="form-group" >
+            <input  type="text" placeholder="Variant" v-model="variant" name="variant" class="form-control"  />
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+  <div class="form-group" >
+            <input  type="text" placeholder="Note" v-model="note" name="note" class="form-control"  />
+        </div>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-8">
+        <base-input>
+          <label>Description</label>
+          <textarea rows="4" cols="80"
+                    class="form-control"
+                    placeholder="Here can be your description"
+                    v-model="model.about">
+
+              </textarea>
+        </base-input>
+      </div>
+    </div>
+    <button class="btn" type="submit" @change="updateProfile">Save</button>
+  </card>
 </template>
 <script>
 import axios from "axios";
 export default {
-    name: "AddItem",
-    el: '#app',
+   
+
+     props: {
+      model: {
+        type: Object,
+        default: () => {
+          return {
+
+          };
+        }
+      }
+    },
     data() {
         return {
             
-            // name:"",
-            // qty:"",
-            // price:"",
-            // categoryName: "",
-            // variant: "",
-            // note: "",
-            // status: "",
+            name:"",
+            qty:"",
+            price:"",
+            categoryName: "",
+            variant: "",
+            note: "",
+            status: "",
             errors: [],
             success: []
         };
