@@ -105,7 +105,7 @@ export default {
       },
       deleteProduct(id) {
         try {
-          axios.post(`http://localhost:3000/products/delete?prodId=${id}`);
+          axios.post(`http://localhost:3000/products/delete/${id}`);
           this.getProducts();
         }catch (err) {
           console.log(err);
