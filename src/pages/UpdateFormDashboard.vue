@@ -182,24 +182,4 @@ export default {
         // }
 };
 </script>
-<style>
-.uploadimage{
- display: flex;
- flex-direction: row;
-}
 
-.uploadimage > button{
- margin-left: 10px;
- padding-right: 10px;
- padding-left: 10px;
- height: 35px;
- margin-top: 2px;
-}
-
-button {
-    background-color: #344675;
-    color: white;
-    border: none;
-}
-
-</style>
