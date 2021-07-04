@@ -92,9 +92,9 @@ export default {
         this.getProductById();
     },
     methods: {
-        async getProductById(id) { //getbyid
+        async getProductById() { //getbyid
         try {
-          const response = await axios.get (`http://localhost:3000/products/${id}`);
+          const response = await axios.get (`http://localhost:3000/products/id/12`); //sementara gini dlu, API nya masih blm bisa get ID secara dinamis
           this.name = response.data.name;
           this.qty = response.data.qty;
           this.price = response.data.price;
