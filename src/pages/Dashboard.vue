@@ -49,7 +49,7 @@
                         
                        
                         <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
-                        <button class="btn" type="submit">Withdraw Product</button>
+                        <button class="btn" type="submit" @click="withdrawProduct(product.id)">Withdraw Product</button>
                       </td>
                     </tr>
                 </tbody>
@@ -106,6 +106,14 @@ export default {
       deleteProduct(id) {
         try {
           axios.post(`http://localhost:3000/products/delete?prodId=${id}`);
+          this.getProducts();
+        }catch (err) {
+          console.log(err);
+        }
+      },
+      withdrawProduct(id){
+        try {
+          axios.post(`http://localhost:3000/products/withdraw?prodId=${id}`);
           this.getProducts();
         }catch (err) {
           console.log(err);
