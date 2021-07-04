@@ -41,7 +41,7 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td>
                       <td class="has-text-centered">
-                        <button class="btn" @click="withdrawItem(dropship.id)">Withdraw item</button >
+                        <button class="btn" @click="cancelDropship(dropship.id)">Cancel Dropship</button >
                         <!-- <a
                           class="button is-danger is-small"
                           @click="deleteProduct(product.id)"
@@ -101,7 +101,7 @@ export default {
           console.log(err);
         }
       },
-      withdrawItem(id) {
+      cancelDropship(id) {
         // try {
         //   await axios.delete(`http://localhost:3000/users/${id}`); //Gw gatau get url nya
         //   this.getDropships();
