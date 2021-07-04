@@ -44,8 +44,10 @@
                        
                           <router-link :to="{ path: 'formUpdateItem', query: { id: product.id }}">
 
-                          <button tag="a"  class="btn" @click="updateItem(product.id)">Edit</button >
+                          <button tag="a"  class="btn" >Edit</button >
                           </router-link>
+
+                            
                         
                        
                         <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
