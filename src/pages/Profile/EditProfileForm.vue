@@ -84,7 +84,7 @@ import axios from 'axios';
     methods: {
       async getUserById() { //getbyid
         try {
-          const response = await axios.get ('http://localhost:3000/users');
+          const response = await axios.get (`http://localhost:3000/users/7`); //sementara kyk gini dlu, biar keliatan
           this.storeName = response.data.storeName;
           this.fullName = response.data.fullName;
           this.username = response.data.username;
@@ -96,9 +96,9 @@ import axios from 'axios';
           console.log(err);
         }
       },
-      async updateProfile() { //update
+      async updateProfile(username) { //update
         try {
-          await axios.put('http://localhost:3000/users/profile?username=${username}',
+          await axios.put(`http://localhost:3000/users/profile?username=${username}`,
           {
             storeName: this.storeName,
             fullName: this.fullName,
