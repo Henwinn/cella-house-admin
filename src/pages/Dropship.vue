@@ -30,7 +30,7 @@
 
 
 
-                            <form id="app" @submit.prevent="handleSubmit" method="post">
+                            <form @submit.prevent="handleSubmit" method="post">
                                 
                                     <p v-if="errors.length">
                                     <b>Please correct the following error(s):</b>
@@ -111,7 +111,7 @@ import _ from "lodash";
 
 export default {
     name:'Dropship',
-    el: '#app',
+    // el: '#app',
     data(){
         return {
             ItemName: "",
