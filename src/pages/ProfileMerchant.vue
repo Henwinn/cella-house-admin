@@ -126,6 +126,12 @@ import axios from "axios";
   created(){
     this.getMerchantProfileById();
     this.getProducts();
+    this.doSearch = _.debounce(this.doSearch, 400);
+  },
+  watch: {
+    search(value){
+        this.doSearch(value); 
+      }
   },
   methods: {
     async getMerchantProfileById(id){
@@ -147,6 +153,11 @@ import axios from "axios";
           console.log(err);
           alert('err: ' + err)
         }
+      },
+      doSearch(value) { //ini bagian dari untuk search
+        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value))
+        .then((response) => {this.products = response.data.rows})
+        .catch(e => console.log(e));
       },
   }
   }
