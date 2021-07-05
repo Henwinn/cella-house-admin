@@ -49,12 +49,11 @@
                         <button class="btn"
                         
                           >Update Status</button >
-                        <!-- <a
-                          class="button is-danger is-small"
-                          @click="deleteProduct(product.id)"
-                          >Delete</a> -->
-                            <button class="btn">Tracking</button>
                         
+                            <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
+
+                          <button tag="a"  class="btn" >Tracking</button >
+                          <!-- </router-link> -->
                       </td>
                     </tr>
                 </tbody>
