@@ -1,13 +1,49 @@
 <template>
-  <div class="row">
-    <div class="col-md-4">
-      <user-card :user="user"></user-card>
-    </div>
+<div class="profile-admin">
+  <div class="col-md-4">
+    <card type="user">
+      <p class="card-text">
+      </p>
+      <div class="author">
+        <div class="block block-one"></div>
+        <div class="block block-two"></div>
+        <div class="block block-three"></div>
+        <div class="block block-four"></div>
+        <a href="#">
+          <img class="avatar" src="img/anime6.png" alt="...">
+          
+
+          <h5 class="title">{{ user.fullName }}</h5>
+          <h5 class="title">{{ user.username }} </h5>
+          <label> Halo, Admin {{ user.fullName }} </label>
+        </a>
+      </div>
+      <p></p>
+
+      <center>
+        <router-link :to="{ path: 'editProfileAdmin', query: { id: user.id }}">
+              <button tag="a"  class="btn" >Edit</button >
+          </router-link>
+      </center>
+      <div slot="footer" class="button-container">
+        <base-button icon round class="btn-facebook">
+          <i class="fab fa-facebook"></i>
+        </base-button>
+        <base-button icon round class="btn-twitter">
+          <i class="fab fa-twitter"></i>
+        </base-button>
+        <base-button icon round class="btn-google">
+          <i class="fab fa-google-plus"></i>
+        </base-button>
+      </div>
+    </card>
+  </div>
     <div class="col-md-7">
        <card>
-      <h5 slot="header" class="title">Admin Profile</h5>
-      <h6>Contact Information</h6>
-      <form>     
+      <h5 slot="header" class="title">{{ user.fullName }} </h5>
+      <h6>Information</h6>
+      <form>    
+       
         <div class="information">
           <div class="contact-info">
             <table>
@@ -19,8 +55,19 @@
                 </td>
                 <td>
                    <div class="coninformation col-md-10">
-                 
-                
+                     <label>{{ user.dob }} </label>
+                  </div>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="coninformation">
+                    <label> Gender</label>
+                  </div>
+                </td>
+                <td>
+                   <div class="coninformation col-md-10">
+                     <label>{{ user.gender }} </label>
                   </div>
                 </td>
               </tr>
@@ -32,8 +79,7 @@
                 </td>
                 <td>
                    <div class="coninformation col-md-10">
-              
-                  
+                      <label>{{ user.email}} </label>
                   </div>
                 </td>
               </tr>
@@ -45,8 +91,7 @@
                 </td>
                 <td>
                   <div class="coninformation col-md-10">
-                  
-                 
+                    <label> {{ user.phone }} </label>
                   </div>
                 </td>
               </tr>
@@ -58,8 +103,7 @@
                 </td>
                 <td>
                   <div class="coninformation col-md-10">
-                   
-                
+                    <label> {{ user.address }} </label>
                   </div>
                 </td>
               </tr>
@@ -67,41 +111,54 @@
             </table>
           </div>
         </div>
-      </form>
+      </form> 
     </card>
     </div>
-  </div>
-  
+</div>
 </template>
 <script>
-  import axios from "axios";
-  import EditProfileForm from './Profile/EditProfileForm';
-  import UserCard from './Profile/UserCard'
+import axios from "axios";
+import Card from '../components/Cards/Card.vue';
   export default {
-    components: {
-      EditProfileForm,
-      UserCard
-    },
-    data() {
-      return {
+     components: { Card },
+    props: {
+      user: {
+        type: Object,
+        default: () => {
+          return {};
+        }
       }
     },
-    created(){
-      this.getUsers();
-    },
-    methods: {
-      async getUsers() {
+  data() {
+    return {
+      
+    };
+  },
+  created(){
+    this.getUsers();
+  },
+  methods: {
+    async getUsers(id) {
         try {
-          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
-          this.users = response.data.rows;
+          const response = await axios.get(`http://localhost:3000/users/1`); //sementara gini dlu
+          this.user = response.data;
+          
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
         }
       }
-    }
+  }
   }
 </script>
 <style>
-
+button {
+    background-color: #344675;
+    color: white;
+    border: none;
+    margin-bottom: 20px;
+}
+.profile-admin {
+    display: flex;
+}
 </style>
