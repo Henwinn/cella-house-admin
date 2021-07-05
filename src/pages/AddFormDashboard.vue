@@ -19,12 +19,12 @@
                                 </div>
                                 <div class="col-md-4 pl-md-1">
                                     <div class="form-group" >
-                                        <input  type="text" placeholder="Quantity" v-model="qty" name="qty" class="form-control"  />
+                                        <input  type="number" placeholder="Quantity" v-model="qty" name="qty" class="form-control"  />
                                     </div>
                                 </div>
                                 <div class="col-md-3 px-md-1">
                                     <div class="form-group" >
-                                        <input  type="text" placeholder="Price" v-model="price" name="price" class="form-control"  />
+                                        <input  type="number" placeholder="Price" v-model="price" name="price" class="form-control"  />
                                     </div>
                                 </div>
                                 
