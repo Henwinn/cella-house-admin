@@ -152,7 +152,7 @@ export default {
         },
         async getCities() {
             try {
-                const response = await axios.get(`http://localhost:3000/city/province/${this.selectedProvinces.id}`); //cara ngambil id province yang dipilih gimana ya?
+                const response = await axios.get(`http://localhost:3000/city/province/${this.selectedProvinces.id}`); 
                 this.cities = response.data;
             } catch (err) {
                 console.log(err);
