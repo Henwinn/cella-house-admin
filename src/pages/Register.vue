@@ -37,16 +37,23 @@
                                 <div class="form-group" >
                                     <input type="text" placeholder="Store name" v-model="storeName" name="store_name" class="form-control"  />
                                 </div>
+                                
+                                <div class="row" v-if="hideStorename">
+                                    <div class="col-sm-12"><small style="color: red; padding-left: 4%;"><i>Store name already exist, please choose another store name!</i></small></div>
+                                </div>
 
                                 <div class="form-group" >
                                     <input type="text" placeholder="Username" v-model="userName" name="username" class="form-control"  />
+                                </div>
+
+                                <div class="row" v-if="hideUsername">
+                                    <div class="col-sm-12"><small style="color: red; padding-left: 4%;"><i>Username already exist, please choose another username!</i></small></div>
                                 </div>
 
                                  <div class="dob">
                                     <date-picker v-model="dob"  valueType="format"  name="dob" placeholder="Date of Birth"></date-picker>
                                     <!-- <input type="date" v-model="birthdate" value="date" name="dob" placeholder="Date Of Birth"/> -->
                                     <br><br>
-                                     
                                 </div>
 
                                  <div class="gender">
@@ -170,6 +177,7 @@
 </template>
 <script>
 import axios from "axios";
+import _ from "lodash";
 import DatePicker from 'vue2-datepicker';
 import 'vue2-datepicker/index.css';
 
@@ -190,8 +198,22 @@ export default {
             password: "",
             confpassword: "", 
             errors: [],
-            success: []
+            success: [],
+            hideUsername: false,
+            hideStorename: false
         };
+    },
+    watch: {
+        userName(){
+            this.getUsername()
+        },
+        storeName(){
+            this.getStorename()
+        }
+    },
+    created() {
+        this.getUsername = _.debounce(this.getUsername, 600),
+        this.getStorename = _.debounce(this.getStorename, 600)
     },
     methods: {
         handleSubmit: function(e){
@@ -275,11 +297,30 @@ export default {
             }
             e.preventDefault();
         },
-
-            validEmail: function(storeEmail){
-                var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                return re.test(storeEmail);
-            }
+        validEmail: function(storeEmail){
+            var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(storeEmail);
+        },
+        async getUsername(){
+            if(this.userName != ''){
+                const response = await axios.get(`http://localhost:3000/users/validation/check-username-storename?username=${this.userName}`)
+                if(response.data == 'not exist'){
+                    this.hideUsername = false
+                } else {
+                    this.hideUsername = true
+                }
+            }            
+        },
+        async getStorename(){
+            if(this.storeName != ''){
+                const response = await axios.get(`http://localhost:3000/users/validation/check-username-storename?storename=${this.storeName}`)
+                if(response.data == 'not exist'){
+                    this.hideStorename = false
+                } else {
+                    this.hideStorename = true
+                }
+            } 
+        }
     }
 };
 </script>
