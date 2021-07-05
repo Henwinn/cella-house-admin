@@ -22,7 +22,6 @@ const Dashboard = () => import("@/pages/Dashboard.vue");
 const AdminDashboard = () => import("@/pages/AdminDashboard.vue");
 const Profile = () => import("@/pages/Profile.vue");
 const Notifications = () => import("@/pages/Notifications.vue");
-const Dropships = () => import("@/pages/Dropships.vue");
 const Typography = () => import("@/pages/Typography.vue");
 const History = () => import("@/pages/History.vue");
 
