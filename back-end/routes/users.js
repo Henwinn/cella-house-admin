@@ -7,8 +7,17 @@ const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
 
+var storage = multer.diskStorage({
+  destination: function(req, file, cb){
+    cb(null, path.join(__dirname, `../public/images`))
+  },
+   filename: function(req, file, cb){
+     cb(null, file.originalname)
+   }
+})
+
 const upload = multer({
-  dest: "../public/images"
+  storage: storage
 })
 
 const pay = multer({
@@ -206,53 +215,54 @@ router.get('/:id', (req, res, next) => {
 })
 
 /* UPDATE USER PROFILE */
-router.post('/profile', upload.single("flProfilePic"), (req,res) => {
-  const target = ''
-  const temp = ''
-  if(!req.file){
-    temp = req.file.path
-    const mimetype = path.extname(req.file.originalname)
-    if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
-      target = path.join(__dirname, `../public/images/${req.session.storeName-Date.now()}${mimetype}`) //rename profilePic file
-    } else {
-      return res.send(`file must be picture`)
+router.post('/profile', upload.single("file"), (req, res, next) => {
+  var target = ''
+  var temp = ''
+
+  try{
+    if(req.file != ''){
+      temp = req.file.path
+      const mimetype = path.extname(req.file.originalname)
+      if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
+        target = path.join(__dirname, `../public/images/${req.file.originalname}`) //${req.session.username}${mimetype}
+      } else {
+        return res.send(`file must be picture`)
+      }
     }
+  } catch(err) {
+    console.log(err)
   }
 
   users.update({
     fullName: req.body.fullName,
     storeName: req.body.storeName,
     username: req.body.username,
-    dob: req.body.dob,
-    gender: req.body.gender,
+    // dob: req.body.dob,
+    // gender: req.body.gender,
     email: req.body.email,
     phone: req.body.phone,
     address: req.body.address,
     profilePic: target
   }, {
     where: {
-      username: req.query.username
+      id: req.query.id
     }
   })
   .then(async (user) => {
-    if(!req.session.profilePic && target != ''){
-      fs.rename(temp, target, err => {
-        if(err) return res.send(err)
-      })
-      req.session.profilePic = user.profilePic
-    } else if(req.session.profilePic != '' && target != '') {
-      
-      await fs.unlink(req.session.profilePic, err => {
-        if(err) {
-          return res.send(err)
-        }
-      })
+    // req.session.profilePice = user.profilePic
+    
+    // if(req.session.profilePic != '' && target != '') {
+    //   await fs.unlink(req.session.profilePic, err => {
+    //     if(err) {
+    //       return res.send(err)
+    //     }
+    //   })
 
-      fs.rename(temp, target, err => {
-        if(err) return res.send(err)
-      })
-      req.session.profilePic = user.profilePic
-    }
+    //   fs.rename(temp, target, err => {
+    //     if(err) return res.send(err)
+    //   })
+    //   req.session.profilePic = user.profilePic
+    // }
     return res.send('success')
   })
   .catch(err => {
@@ -298,7 +308,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
 })
 
 //USER UPLOAD PAYMENT RECEIPT
-router.post('/dropship/upload-payment', pay.single('flPayment') , (req, res) => {
+router.post('/dropship/upload-payment', pay.single('file') , (req, res) => {
   var temp = ''
   var target = ''
 
