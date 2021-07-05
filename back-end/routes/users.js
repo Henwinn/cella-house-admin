@@ -103,24 +103,38 @@ router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD IT
 })
 
 router.get('/validation/check-username-storename', (req, res, next) => {
-  users.findOne({
-    attributes: ['username', 'storeName'],
-    where: {
-      [op.or]: [
-        { username: req.query.username },
-        { storeName: req.query.storeName }
-      ]
-    }
-  })
-  .then(user => {
-    if(user.username){
-      return res.send('Username already exists')
-    } else if(user.storeName) {
-      return res.send('Store name already exists')
-    } else {
-      return
-    }
-  })
+  if(!req.query.username){
+    users.findOne({
+      attributes: ['storeName'],
+      where: {
+        storeName: req.query.storename
+      }
+    })
+    .then((user) => {
+      if(user) {
+        return res.send(`exist`)
+      } else {
+        return res.send(`not exist`)
+      }
+    })
+    .catch(err => next(err))
+  } else {
+    users.findOne({
+      attributes: ['username'],
+      where: {
+        username: req.query.username
+      }
+    })
+    .then((user) => {
+      if(user) {
+        return res.send(`exist`)
+      } else {
+        return res.send(`not exist`)
+      }
+    })
+    .catch(err => next(err))
+  }
+  
 })
 
 /* USER REGISTER */
