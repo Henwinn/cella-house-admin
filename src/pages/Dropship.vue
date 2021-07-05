@@ -45,11 +45,11 @@
                                 </div>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Item Weight(gr)" v-model="ItemWeight" name="ItemWeight" class="form-control"  />
+                                    <input type="number" placeholder="Item Weight(gr)" v-model="ItemWeight" name="ItemWeight" class="form-control"  />
                                 </div>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
+                                    <input type="number" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
                                 </div>
 
                                 <div class="form-group" >
