@@ -15,12 +15,13 @@
 
           <h5 class="title">{{ user.fullName }}</h5>
           <h5 class="title">{{ user.username }} </h5>
+          <label> Halo, Admin {{ user.fullName }} </label>
         </a>
       </div>
       <p></p>
 
       <center>
-        <router-link :to="{ path: 'editProfile', query: { id: user.id }}">
+        <router-link :to="{ path: 'editProfileAdmin', query: { id: user.id }}">
               <button tag="a"  class="btn" >Edit</button >
           </router-link>
       </center>
