@@ -44,8 +44,10 @@
                        
                           <router-link :to="{ path: 'formUpdateItem', query: { id: product.id }}">
 
-                          <button tag="a"  class="btn" @click="updateItem(product.id)">Edit</button >
+                          <button tag="a"  class="btn" >Edit</button >
                           </router-link>
+
+                            
                         
                        
                         <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
@@ -113,7 +115,7 @@ export default {
       },
       withdrawProduct(id){
         try {
-          axios.post(`http://localhost:3000/products/withdraw?prodId=${id}`);
+          axios.post(`http://localhost:3000/products/withdraw/${id}`);
           this.getProducts();
         }catch (err) {
           console.log(err);
