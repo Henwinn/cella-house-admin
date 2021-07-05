@@ -1,5 +1,5 @@
 <template>
-<div class="profile">
+<div class="profile-admin">
   <div class="col-md-4">
     <card type="user">
       <p class="card-text">
@@ -158,7 +158,7 @@ button {
     border: none;
     margin-bottom: 20px;
 }
-.profile {
-  display: flex;
+.profile-admin {
+    display: flex;
 }
 </style>
