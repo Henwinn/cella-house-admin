@@ -19,10 +19,10 @@
       </div>
      
     </div>
-     <select v-model="categoryName" name="categoryName">
-                                    <option disabled>Please Select One</option>
-                                    <option v-for="category in categories" :key="category.name" :value="category.name"> {{category.name}} </option>
-                                </select>  gak kedetect ini category nya, gak tau kenapa
+      <select v-model="categoryName">
+        <option disabled>Please Select One</option>
+        <option v-for="category in categories" :key="category.name" :value="category.name"> {{category.name}} </option>
+      </select>
     <div class="row">
       <div class="col-md-6 pr-md-1">
         <div class="form-group" >
@@ -31,105 +31,96 @@
       </div>
       <div class="col-md-6 pl-md-1">
         <div class="form-group" >
-            <input  type="text" placeholder="Variant" v-model="variant" name="variant" class="form-control"  />
+          <input  type="text" placeholder="Variant" v-model="variant" name="variant" class="form-control"  />
         </div>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
-  <div class="form-group" >
-            <input  type="text" placeholder="Note" v-model="note" name="note" class="form-control"  />
+        <div class="form-group" >
+          <input  type="text" placeholder="Note" v-model="note" name="note" class="form-control"  />
         </div>
       </div>
     </div>
     
-    <div class="row">
+    <!-- <div class="row">
       <div class="col-md-8">
         <base-input>
-          <label>Description</label>
+          <label>Note</label>
           <textarea rows="4" cols="80"
                     class="form-control"
                     placeholder="Here can be your description"
-                    v-model="model.about">
-
-              </textarea>
+                    v-model="model.note"
+                    name="note"
+          >
+          </textarea>
         </base-input>
       </div>
-    </div>
-    <button class="btn" type="submit" @change="updateProfile">Save</button>
+    </div> -->
+    <button class="btn" type="submit" @click="updateItem()">Save</button>
   </card>
 </template>
 <script>
 import axios from "axios";
 export default {
-   
-
-     props: {
+    props: {
       model: {
         type: Object,
         default: () => {
           return {
-
           };
         }
       }
     },
     data() {
-        return {
-            
-            name:"",
-            qty:"",
-            price:"",
-            categoryName: "",
-            variant: "",
-            note: "",
-            status: "",
-            errors: [],
-            success: []
-        };
+      return {
+        name:"",
+        qty:"",
+        price:"",
+        categoryName: "",
+        variant: "",
+        note: "",
+        status: "",
+        errors: [],
+        success: [],
+        categories: []
+      };
     },
-    created: function () {
-        this.getProductById();
+    created() {
+      this.getProductById()
     },
     methods: {
-        async getProductById() { //getbyid
+      async getProductById() { //getbyid
         try {
-          const response = await axios.get (`http://localhost:3000/products/id/12`); //sementara gini dlu, API nya masih blm bisa get ID secara dinamis
+          const response = await axios.get (`http://localhost:3000/products/id/${this.$route.query.id}`);
+          const resp = await axios.get(`http://localhost:3000/categories`)
+          this.categories = resp.data
           this.name = response.data.name;
           this.qty = response.data.qty;
           this.price = response.data.price;
           this.categoryName = response.data.categoryName;
           this.variant = response.data.variant;
           this.note = response.data.note;
-          
-           
         }catch (err) {
           console.log(err);
         }
       },
-         
-
-        async updateItem(val){
-            try {
-                await axios.post(`http://localhost:3000/products/update?prodId=${val}`, {
-                    name: this.name,
-                    qty: this.qty,
-                    price: this.price,
-                    categoryName: this.categoryName,
-                    variant: this.variant,
-                    note: this.note,
-                });
-                this.itemName = "";
-                this.qty = "";
-                this.price = "";
-                this.category = "";
-                this.variant = "";
-                this.note = "";
-                
-            }catch (err) {
-                console.log(err);
-            }
-        },
+      async updateItem(){
+        let data = {
+          name: this.name,
+          qty: this.qty,
+          price: this.price,
+          categoryName: this.categoryName,
+          variant: this.variant,
+          note: this.note,
+        }
+        try {
+          await axios.post(`http://localhost:3000/products/update?prodId=${this.$route.query.id}`, data);
+          this.$router.push('dashboard')
+        }catch (err) {
+          console.log(err);
+        }
+      },
     },
     //  saveItem: function(e){
         //     this.errors = [];
