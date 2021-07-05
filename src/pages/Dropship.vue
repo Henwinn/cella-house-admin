@@ -30,7 +30,7 @@
 
 
 
-                            <form id="app" @submit.prevent="handleSubmit" method="post">
+                            <form @submit.prevent="handleSubmit" method="post">
                                 
                                     <p v-if="errors.length">
                                     <b>Please correct the following error(s):</b>
@@ -45,11 +45,11 @@
                                 </div>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Item Weight(gr)" v-model="ItemWeight" name="ItemWeight" class="form-control"  />
+                                    <input type="number" placeholder="Item Weight(gr)" v-model="ItemWeight" name="ItemWeight" class="form-control"  />
                                 </div>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
+                                    <input type="number" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
                                 </div>
 
                                 <div class="form-group" >
@@ -111,7 +111,7 @@ import _ from "lodash";
 
 export default {
     name:'Dropship',
-    el: '#app',
+    // el: '#app',
     data(){
         return {
             ItemName: "",
@@ -152,7 +152,7 @@ export default {
         },
         async getCities() {
             try {
-                const response = await axios.get(`http://localhost:3000/city/province/${this.selectedProvinces.id}`); //cara ngambil id province yang dipilih gimana ya?
+                const response = await axios.get(`http://localhost:3000/city/province/${this.selectedProvinces.id}`); 
                 this.cities = response.data;
             } catch (err) {
                 console.log(err);

@@ -9,25 +9,23 @@
       </div>
        <div class="col-md-4 pl-md-1">
         <div class="form-group" >
-            <input  type="text" placeholder="Quantity" v-model="qty" name="qty" class="form-control"  />
+            <input  type="number" placeholder="Quantity" v-model="qty" name="qty" class="form-control"  />
         </div>
       </div>
       <div class="col-md-3 px-md-1">
         <div class="form-group" >
-            <input  type="text" placeholder="Price" v-model="price" name="price" class="form-control"  />
+            <input  type="number" placeholder="Price" v-model="price" name="price" class="form-control"  />
         </div>
       </div>
      
     </div>
-      <select v-model="categoryName">
-        <option disabled>Please Select One</option>
-        <option v-for="category in categories" :key="category.name" :value="category.name"> {{category.name}} </option>
-      </select>
+      
     <div class="row">
-      <div class="col-md-6 pr-md-1">
-        <div class="form-group" >
-            <input  type="text" placeholder="Category" v-model="categoryName" name="categoryName" class="form-control"  />
-        </div>
+      <div class="categories-dropdown">
+          <select v-model="categoryName">
+            <option disabled>Please Select One</option>
+            <option v-for="category in categories" :key="category.name" :value="category.name"> {{category.name}} </option>
+          </select>
       </div>
       <div class="col-md-6 pl-md-1">
         <div class="form-group" >
@@ -174,3 +172,15 @@ export default {
 };
 </script>
 
+<style>
+.categories-dropdown > select{
+    background-color: #26293D;
+     border: 1px solid #273553;
+    color:aliceblue;
+    padding: 6.5px;
+    margin-left: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    
+}
+</style>
