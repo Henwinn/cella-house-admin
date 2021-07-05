@@ -10,16 +10,7 @@
       <div class="block block-four"></div>
       <a href="#">
         <img class="avatar" src="img/anime6.png" alt="...">
-          
-     <el-upload
-        class="upload-demo"
-        ref="upload"
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :auto-upload="false">
-        <el-button class="btn" slot="trigger"  type="primary">select file</el-button>
-        <el-button class="btn" style="margin-left: 10px;" size="small" type="success" @click="submitUpload">upload to server</el-button>
-        <div class="el-upload__tip" slot="tip">jpg/png files with a size less than 500kb</div>
-      </el-upload>
+        
 
         <h5 class="title">{{ user.storeName }}</h5>
         <h5 class="title">{{ user.fullName }}</h5>
@@ -86,11 +77,7 @@ import Card from '../components/Cards/Card.vue';
           console.log(err);
           alert('err: ' + err)
         }
-      },
-      submitUpload() {
-        this.$refs.upload.submit();
       }
-    
   }
   }
 </script>
