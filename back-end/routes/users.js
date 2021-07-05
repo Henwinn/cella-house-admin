@@ -275,30 +275,51 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
   products.findOne({
     where: {
       id: req.params.prodId
-    }
+    },
+    attributes: ['qty']
   })
-  .then(product => {
+  .then(async product => {
     if(product.qty < req.body.qty){
       return res.send(`qty exceeds product qty: ${product.qty}`)
     } else {
+      var customer
+      customer = await sequelize.customers.findOne({
+        where: {
+          phone: req.body.customerPhone
+        },
+        attirbute: ['id', 'phone']
+      })
+
+      if(!customer){
+        customer = sequelize.customers.create({
+          name: req.body.customerName,
+          phone: req.body.customerPhone
+        })
+        .then(customer => {
+          sequelize.customers_users.create({
+            customerId: customer.id,
+            userId: 7 //req.session.storeId
+          })
+        })        
+      }
       dropships.create({
         storeId: 7, //req.session.storeId
-        productId: 1,
         qty: req.body.qty,
         itemWeight: req.body.itemWeight,
-        customerName: req.body.customerName,
-        customerPhone: req.body.customerPhone,
-        province: req.body.city,
-        city: req.body.kecamatan,
-        kelurahan: req.body.kelurahan,
-        postalCode: req.body.postalCode,
+        customerId: customer.id,
+        provinceIdOrigin: 6,
+        cityIdOrigin: 151,
+        provinceIdDestination: req.body.provinceIdDestination,
+        cityIdDestination: req.body.cityIdDestination,
         address: req.body.address,
         courier: req.body.courier,
         shipmentPrice: req.body.shipmentPrice,
         status: 'PENDING PAYMENT'
       })
-      .then(dropship => {
-          return res.send(dropship)
+      .then(async dropship => {
+        await dropship.addProducts(req.params.prodId)
+
+        return res.send(`success`)
       })
     }
   })
