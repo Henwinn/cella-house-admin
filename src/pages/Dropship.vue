@@ -53,7 +53,7 @@
                                 </div>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
+                                    <input type="number" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
                                 </div>
 
                                 <div class="form-group" >
@@ -119,8 +119,8 @@ export default {
     data(){
         return {
             ItemName: "",
-            ItemWeight: 0,
-            qty: 0,
+            ItemWeight: "",
+            qty: "",
             custName: "",
             custAddress: "",
             custPhone: "",
