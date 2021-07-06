@@ -396,12 +396,16 @@ router.get('/get/dropship', (req, res, next) => {
         },
         include: [
           {
-            model: sequelize.customers,
+            model: customers,
             attributes: ['name', 'phone'],
           },
           {
             model: sequelize.cities,
             attributes: ['province_name', 'city_name', 'postal_code']
+          },
+          {
+            model: products,
+            attributes:['name']
           }
         ],
         limit: 5,
