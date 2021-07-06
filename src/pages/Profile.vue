@@ -9,9 +9,9 @@
       <div class="block block-three"></div>
       <div class="block block-four"></div>
       <a href="#">
-        <img class="avatar" src="img/anime6.png" alt="...">
+        <img class="avatar" src="user.profilePict" alt="...">
         
-
+        
         <h5 class="title">{{ user.storeName }}</h5>
         <h5 class="title">{{ user.fullName }}</h5>
         <h5 class="title">{{ user.username }} </h5>
@@ -70,7 +70,7 @@ import Card from '../components/Cards/Card.vue';
   methods: {
     async getUsers(id) {
         try {
-          const response = await axios.get(`http://localhost:3000/users/7`); //sementara gini dlu
+          const response = await axios.get(`http://localhost:3000/users/2`); //sementara gini dlu
           this.user = response.data;
           
         } catch (err) {
