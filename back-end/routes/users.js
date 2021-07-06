@@ -282,7 +282,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
   .then(async product => {
     console.log(req.body.qty)
     if(product.qty < req.body.qty){
-      return res.send(`qty exceeds product qty: ${product.qty}`)
+      return res.send(`quantity exceeds your product quantity`)
     } else {
       var customer, data
       customer = await customers.findOne({
@@ -352,13 +352,15 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
       .then(async dropship => {
         await dropship.addProducts(req.params.prodId)
 
-        products.update({
-          qty: qty - req.body.qty
+        console.log(req.body.qty + " " + req.params.prodId)
+        await products.update({
+          qty: (product.qty - req.body.qty)
         }, {
           where: {
             id: req.params.prodId
           }
         })
+        .catch(err => next(err))
 
         return res.send(`success`)
       })

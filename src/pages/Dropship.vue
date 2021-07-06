@@ -235,19 +235,7 @@ export default {
             //     this.errors.push("Select City required");
                 
             // }
-            alert(
-                `
-                    qty: ${this.qty},
-                    itemWeight: ${this.ItemWeight},
-                    custPhone: ${this.custPhone},
-                    custName: ${this.custName},
-                    address: ${this.custAddress},
-                    provinceIdDestination: ${this.selectedProvinces.id},
-                    cityIdDestination: ${this.selectedCities.id},
-                    courier: ${this.courier},
-                    shipmentPrice: ${this.price}
-                `
-            )
+            
             if (!this.errors.length) {
                 let data = {
                     qty: this.qty,
@@ -260,22 +248,18 @@ export default {
                     courier: this.courier,
                     shipmentPrice: this.price
                 }
-                axios.post(`http://localhost:3000/users/dropship/submission/8`, data) //harusnya id product
+                axios.post(`http://localhost:3000/users/dropship/submission/${this.$route.query.id}`, data) //harusnya id product
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success')
+                        this.$router.push('dashboard')
                     } else {
-                        alert('fail')
+                        alert(respond.data)
                     }
                 })
             }
             e.preventDefault();
         },
-
-
-
-
-
     }
 };
 </script>
