@@ -51,7 +51,8 @@
                         
                        
                         <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
-                        <button class="btn" type="submit" @click="withdrawProduct(product.id)">Withdraw Product</button>
+                        <button class="btn" type="submit" @click="withdrawProduct(product.id)">Withdraw</button>
+                        <button class="btn" type="submit" @click="withdrawProduct(product.id)">Dropship</button>
                       </td>
                     </tr>
                 </tbody>
@@ -65,6 +66,7 @@
         
           background
           layout="prev, pager, next"
+          v-model="pagination"
           :total="total"
           :page-size="pageSize"
           @current-change="page">
@@ -140,6 +142,10 @@ export default {
 </script>
 
 <style>
+.btn {
+  padding: 10px;
+  margin-right: 20px;
 
+}
 
 </style>
