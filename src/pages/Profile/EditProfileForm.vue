@@ -94,7 +94,7 @@ import axios from 'axios';
       },
       async getUserById() { //getbyid
         try {
-          const response = await axios.get (`http://localhost:3000/users/7`); //sementara kyk gini dlu, biar keliatan
+          const response = await axios.get (`http://localhost:3000/users/${this.$route.query.id}`); 
           this.storeName = response.data.storeName;
           this.fullName = response.data.fullName;
           this.username = response.data.username;
