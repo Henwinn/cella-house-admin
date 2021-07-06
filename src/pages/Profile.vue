@@ -9,7 +9,7 @@
       <div class="block block-three"></div>
       <div class="block block-four"></div>
       <a href="#">
-        <img class="avatar" src="user.profilePict" alt="...">
+        <img :src="user.profilePict" class="avatar" alt="...">
         
         
         <h5 class="title">{{ user.storeName }}</h5>
