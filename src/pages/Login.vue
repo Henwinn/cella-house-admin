@@ -34,9 +34,7 @@
                                          >
                                 </base-input> -->
                                 <input type="password" class="form-control" v-model="password" name="password"  placeholder="Password">
-                                <base-checkbox>
-                                    Remember me
-                                </base-checkbox>
+                                
                                 <div class="text-center">
                                     <button type="submit" class="btn" value="Login">submit</button>
                                     
@@ -46,9 +44,7 @@
                     </card>
                     <div class="row mt-3">
                         <div class="col-6">
-                            <a href="#/forgot" class="text-light">
-                                <small>Forgot password?</small>
-                            </a>
+                           
                         </div>
                         <div class="col-6 text-right">
                             <a href="#/register" class="text-light">
