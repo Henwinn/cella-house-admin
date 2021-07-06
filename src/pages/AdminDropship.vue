@@ -14,6 +14,7 @@
                <thead>
                   <tr>
                     <th>Qty</th>
+                    <th>Product Name</th>
                     <th>Customer Name</th>
                     <th>Customer Phone</th>
                     <th>Province</th>
@@ -32,7 +33,8 @@
 
                     <tr v-for="dropship in dropships" :key="dropship.id">
                       
-                       <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.products[0].name ? dropship.products[0].name : ""}}</td>
                       <td>{{ dropship.customer.name }}</td>
                       <td>{{ dropship.customer.phone }}</td>
                       <td>{{ dropship.city.province_name }}</td>
