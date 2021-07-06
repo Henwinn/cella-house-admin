@@ -219,8 +219,9 @@ router.get('/:id', (req, res, next) => {
 router.post('/profile', upload.single("file"), (req, res, next) => {
   var target = ''
   var temp = ''
-
+  console.log('tes')
   try{
+    console.log('tes')
     if(req.file != ''){
       temp = req.file.path
       const mimetype = path.extname(req.file.originalname)
