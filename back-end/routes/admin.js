@@ -15,6 +15,10 @@ router.get('/product/approve', (req, res) => {
         where: {
             status: 'N'
         },
+        include: {
+            model: users,
+            attributes: ['storeName']
+        },
         limit: 5,
         offset: (req.query.page ? req.query.page : 0) * 5
     })
