@@ -63,13 +63,13 @@
 
 
         <el-pagination
-        
           background
           layout="prev, pager, next"
           v-model="pagination"
           :total="total"
           :page-size="pageSize"
-          @current-change="page">
+          @current-change="page"
+          >
         </el-pagination>
     </div>
 </template>
@@ -85,7 +85,8 @@ export default {
         products: [],
         search: '',
         pageSize:'',
-        total:''
+        total:'',
+        currPage: 0
       };
     },
     created() {
@@ -100,7 +101,7 @@ export default {
     methods: {
       async getProducts() {
         try {
-          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get(`http://localhost:3000/users?page=${this.currPage}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.products = response.data.rows;
         } catch (err) {
           console.log(err);
@@ -128,13 +129,16 @@ export default {
         .then((response) => {this.products = response.data.rows})
         .catch(e => console.log(e));
       },
-      page(){
-        axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //diganti dengan current page tapi gw gatau cara ambil current page
-        .then((response) => {
-          this.products = response.data.rows
-          this.total = response.data.count
-          })
-        .catch(e => console.log(e));
+      page(val){
+        this.currPage = val
+        this.getProducts(val)
+        // alert(this.currPage)
+        // axios.get(`http://localhost:3000/users?page=${this.currPage}` + encodeURIComponent(value)) //diganti dengan current page tapi gw gatau cara ambil current page
+        // .then((response) => {
+        //   this.products = response.data.rows
+        //   this.total = response.data.count
+        //   })
+        // .catch(e => console.log(e));
       },
     }
     
