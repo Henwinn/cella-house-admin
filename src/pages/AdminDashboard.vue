@@ -33,13 +33,13 @@
         </card>
       </div>
 
-      <!-- <el-pagination 
+      <el-pagination 
         background
         layout="prev, pager, next"
         :total="total"
         :page-size="pageSize"
         @current-change="page">
-      </el-pagination> -->
+      </el-pagination>
     </div>
 </template>
 <script>
@@ -54,7 +54,9 @@ export default {
       return {
         users: [],
         search: '',
-        pageSize: '',
+        pageSize:'',
+        total:'',
+        currPage: 0,
         showModal: false
       };
     },
@@ -70,8 +72,10 @@ export default {
     methods: {
       async getMerchants() {
         try {
-          const response = await axios.get("http://localhost:3000/admin/user/active");
+          const response = await axios.get(`http://localhost:3000/admin/user/active?page=${this.currPage}`);
           this.users = response.data.rows;
+          this.total = response.data.count
+          this.pageSize = 5
         } catch (err) {
           console.log(err);
         }
@@ -116,15 +120,10 @@ export default {
           console.log(err)
         }
       },
-      // page(){
-      //   axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //Gw gatau get url nya
-      //   .then((response) => {
-      //     this.users = response.data.rows
-      //     this.pageSize = response.data
-      //     this.total = response.data.count
-      //     })
-      //   .catch(e => console.log(e));
-      // }
+      page(){
+        this.currPage = val-1
+        this.getMerchants(val)
+      }
     }
     
 };

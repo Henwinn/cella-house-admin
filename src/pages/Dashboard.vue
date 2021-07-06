@@ -63,17 +63,15 @@
           </div>
         </card>
       </div>
-
-
-        <el-pagination
-          background
-          layout="prev, pager, next"
-          v-model="pagination"
-          :total="total"
-          :page-size="pageSize"
-          @current-change="page"
-          >
-        </el-pagination>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        v-model="pagination"
+        :total="total"
+        :page-size="pageSize"
+        @current-change="page"
+        >
+      </el-pagination>
     </div>
 </template>
 <script>
@@ -106,6 +104,8 @@ export default {
         try {
           const response = await axios.get(`http://localhost:3000/users?page=${this.currPage}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.products = response.data.rows;
+          this.total = response.data.count
+          this.pageSize = 5
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -133,18 +133,10 @@ export default {
         .catch(e => console.log(e));
       },
       page(val){
-        this.currPage = val
+        this.currPage = val-1
         this.getProducts(val)
-        // alert(this.currPage)
-        // axios.get(`http://localhost:3000/users?page=${this.currPage}` + encodeURIComponent(value)) //diganti dengan current page tapi gw gatau cara ambil current page
-        // .then((response) => {
-        //   this.products = response.data.rows
-        //   this.total = response.data.count
-        //   })
-        // .catch(e => console.log(e));
       },
     }
-    
 };
 </script>
 

@@ -58,14 +58,13 @@
         </card>
       </div>
 
-           <!-- <el-pagination
-        
-          background
-          layout="prev, pager, next"
-          :total="total"
-          :page-size="pageSize"
-          @current-change="page">
-        </el-pagination> -->
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="total"
+        :page-size="pageSize"
+        @current-change="page">
+      </el-pagination>
     </div>
 
 </template>
@@ -81,8 +80,9 @@ export default {
         dropships: [],
         users:[],
         search: '',
-        // pageSize:'',
-        // total:''
+        pageSize:'',
+        total:'',
+        currPage: 0
       };
     },
     created() {
@@ -97,8 +97,10 @@ export default {
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get("http://localhost:3000/users/get/dropship"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get(`http://localhost:3000/users/get/dropship?page=${this.currPage}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.dropships = response.data.rows;
+          this.total = response.data.count
+          this.pageSize = 5
         } catch (err) {
           console.log(err);
         }
@@ -134,17 +136,10 @@ export default {
     //     });
     // },
 
-
-
-    // page(){
-    //     axios.get('http://localhost:3000/users/get/dropship?page=' + encodeURIComponent(value)) //Gw gatau get url nya
-    //     .then((response) => {
-    //       this.dropships = response.data
-    //       this.pageSize = response.data
-    //       this.total = resp.data
-    //       })
-    //     .catch(e => console.log(e));
-    //   }
+    page(val){
+      this.currPage = val - 1
+      this.getDropships(val)
+    }
   }
 }
     
