@@ -70,7 +70,7 @@ import Card from '../components/Cards/Card.vue';
   methods: {
     async getUsers(id) {
         try {
-          const response = await axios.get(`http://localhost:3000/users/2`); //sementara gini dlu
+          const response = await axios.get(`http://localhost:3000/users/7`); //sementara gini dlu
           this.user = response.data;
           
         } catch (err) {
