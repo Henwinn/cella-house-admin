@@ -352,6 +352,14 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
       .then(async dropship => {
         await dropship.addProducts(req.params.prodId)
 
+        products.update({
+          qty: qty - req.body.qty
+        }, {
+          where: {
+            id: req.params.prodId
+          }
+        })
+
         return res.send(`success`)
       })
       .catch(err => next(err))
