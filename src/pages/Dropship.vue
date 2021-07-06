@@ -41,7 +41,7 @@
 
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Item Name" v-model="ItemName" name="ItemName" class="form-control"  />
+                                    <input type="text" placeholder="Item Name" v-model="ItemName" name="ItemName" class="form-control" disabled />
                                 </div>
 
                                 <div class="form-group" >
@@ -139,6 +139,7 @@ export default {
     },
     created() {
         this.getProvinces();
+        this.getProdData();
         this.getCustomer = _.debounce(this.getCustomer, 550)
     },
     watch: {
@@ -147,6 +148,10 @@ export default {
         }
     },
     methods: {
+        async getProdData(){
+            const response = await axios.get(`http://localhost:3000/products/id/${this.$route.query.id}`)
+            this.ItemName = response.data.name
+        },
         async getProvinces() {
             try {
                 const response = await axios.get("http://localhost:3000/province/all"); //route ini untuk testing aja karena perlu login kalau pakai route asli

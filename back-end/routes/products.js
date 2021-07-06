@@ -30,7 +30,7 @@ router.get('/', (req,res) => {
 router.get('/id/:id', (req, res, next) => {
     products.findOne({
         where: {
-            //storeId
+            //storeId: req.session.storeId
             id: req.params.id,
             status: 'A'
         }
