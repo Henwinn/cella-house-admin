@@ -27,6 +27,7 @@ const pay = multer({
 const users = sequelize.users
 const dropships = sequelize.dropships
 const products = sequelize.products
+const customers = sequelize.customers
 
 require('dotenv').config();
 
@@ -279,29 +280,61 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
     attributes: ['qty']
   })
   .then(async product => {
+    console.log(req.body.qty)
     if(product.qty < req.body.qty){
       return res.send(`qty exceeds product qty: ${product.qty}`)
     } else {
-      var customer
-      customer = await sequelize.customers.findOne({
+      var customer, data
+      customer = await customers.findOne({
         where: {
-          phone: req.body.customerPhone
+          phone: req.body.custPhone
         },
-        attirbute: ['id', 'phone']
+        include: {
+          model: users,
+          attributes: ['id']
+          // required: true
+        },
+        attirbutes: ['id', 'phone']
       })
 
       if(!customer){
-        customer = sequelize.customers.create({
-          name: req.body.customerName,
-          phone: req.body.customerPhone
+        // data = await customers.findOne({
+        //   where: {
+        //     phone: req.body.custPhone
+        //   }
+        // })
+        data = await customers.create({
+          name: req.body.custName,
+          phone: req.body.custPhone
         })
-        .then(customer => {
-          sequelize.customers_users.create({
-            customerId: customer.id,
-            userId: 7 //req.session.storeId
-          })
-        })        
+
+        sequelize.customers_users.create({
+          customerId: data.id,
+          userId: 7 //req.session.storeId
+        })
+
+        // if(!data){
+        //   data = customers.create({
+        //     name: req.body.custName,
+        //     phone: req.body.custPhone
+        //   }) 
+        // } else {
+        //   sequelize.customers_users.create({
+        //     customerId: data.id,
+        //     userId: 7 //req.session.storeId
+        //   })
+        //   .catch(err => next(err))
+        // }
       }
+
+      if(customer.users == ''){
+        console.log('customer: ' + customer)
+        sequelize.customers_users.create({
+          customerId: customer.id,
+          userId: 7 //req.session.storeId
+        })
+      }
+
       dropships.create({
         storeId: 7, //req.session.storeId
         qty: req.body.qty,
@@ -321,6 +354,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
 
         return res.send(`success`)
       })
+      .catch(err => next(err))
     }
   })
   .catch(err => {

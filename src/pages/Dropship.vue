@@ -98,7 +98,7 @@
                                 </base-input>
 
                                 <div class="text-center">
-                                    <button class="btn" type="submit" @click="handleSubmit()">Create Dropship</button>
+                                    <button class="btn" type="submit">Create Dropship</button>
                                 </div>
                                 
                             </form>
@@ -168,7 +168,7 @@ export default {
         },
         async getCustomer(){
             try {
-                const response = await axios.get(`http://localhost:3000/customers/${this.custPhone}/7`) //should be storeId from session
+                const response = await axios.get(`http://localhost:3000/customers/${this.custPhone}`) //should be storeId from session
                 this.custName = response.data.name
             } catch(err) {
                 console.log(err)
@@ -230,14 +230,26 @@ export default {
             //     this.errors.push("Select City required");
                 
             // }
-
+            alert(
+                `
+                    qty: ${this.qty},
+                    itemWeight: ${this.ItemWeight},
+                    custPhone: ${this.custPhone},
+                    custName: ${this.custName},
+                    address: ${this.custAddress},
+                    provinceIdDestination: ${this.selectedProvinces.id},
+                    cityIdDestination: ${this.selectedCities.id},
+                    courier: ${this.courier},
+                    shipmentPrice: ${this.price}
+                `
+            )
             if (!this.errors.length) {
                 let data = {
                     qty: this.qty,
                     itemWeight: this.ItemWeight,
                     custPhone: this.custPhone,
                     custName: this.custName,
-                    custAddress: this.custAddress,
+                    address: this.custAddress,
                     provinceIdDestination: this.selectedProvinces.id,
                     cityIdDestination: this.selectedCities.id,
                     courier: this.courier,
