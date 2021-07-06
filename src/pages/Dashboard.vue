@@ -54,7 +54,7 @@
                         <button class="btn" type="submit" @click="withdrawProduct(product.id)">Withdraw</button>
                           <router-link :to="{ path: 'dropship', query: { id: product.id }}">
 
-                          <button tag="a"  class="btn" >Dropship</button >
+                          <button tag="a"  class="btn" v-if="product.qty != 0">Dropship</button >
                           </router-link>
                       </td>
                     </tr>

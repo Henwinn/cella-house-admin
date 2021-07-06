@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const sequelize = require('../models')
+const sequelize = require('../models');
 const products = sequelize.products
 
-router.get('/', (req,res) => {
+router.get('/', (req, res, next) => {
     products.findAndCountAll({
         where: {
             storeId: req.session.storeId,
@@ -23,7 +23,7 @@ router.get('/', (req,res) => {
         res.send(product)
     })
     .catch(err => {
-        console.log(err)
+        next(err)
     })
 })
 

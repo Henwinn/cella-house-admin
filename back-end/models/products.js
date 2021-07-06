@@ -12,6 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       products.belongsTo(models.categories)
       products.belongsTo(models.users, {foreignKey: 'storeId'})
+      products.belongsToMany(models.dropships, {through: models.products_dropships})
       //UNFINISHED
     }
   };

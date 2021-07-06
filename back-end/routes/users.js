@@ -282,7 +282,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
   .then(async product => {
     console.log(req.body.qty)
     if(product.qty < req.body.qty){
-      return res.send(`quantity exceeds your product quantity`)
+      return res.send(`quantity can't be 0 or exceeds your product quantity`)
     } else {
       var customer, data
       customer = await customers.findOne({
@@ -292,17 +292,11 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
         include: {
           model: users,
           attributes: ['id']
-          // required: true
         },
         attirbutes: ['id', 'phone']
       })
 
       if(!customer){
-        // data = await customers.findOne({
-        //   where: {
-        //     phone: req.body.custPhone
-        //   }
-        // })
         data = await customers.create({
           name: req.body.custName,
           phone: req.body.custPhone
@@ -312,19 +306,6 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
           customerId: data.id,
           userId: 7 //req.session.storeId
         })
-
-        // if(!data){
-        //   data = customers.create({
-        //     name: req.body.custName,
-        //     phone: req.body.custPhone
-        //   }) 
-        // } else {
-        //   sequelize.customers_users.create({
-        //     customerId: data.id,
-        //     userId: 7 //req.session.storeId
-        //   })
-        //   .catch(err => next(err))
-        // }
       }
 
       if(customer.users == ''){
@@ -517,14 +498,14 @@ router.post('/dropship', (req, res) => {
 })
 
 //CANCEL DROPSHIP REQUEST
-router.post('/dropship/cancel/:prodId', (req, res) => {
+router.post('/dropship/cancel/:dropshipId', async (req, res) => {
   dropships.update({
     status: 'CANCELED'
   }, {
     where: {
       //storeId: req.session.storeId
-      productId: req.params.productId,
-      status: 'ON PROCESS'
+      id: req.params.dropshipId,
+      status: 'PENDING PAYMENT'
     }
   })
   .then(() => {

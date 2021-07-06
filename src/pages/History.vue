@@ -41,7 +41,7 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td>
                       <td class="has-text-centered">
-                        <button class="btn" @click="cancelDropship(dropship.id)">Cancel Dropship</button >
+                        <button class="btn" @click="cancelDropship(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Cancel Dropship</button >
                       
                           <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
@@ -101,15 +101,15 @@ export default {
           console.log(err);
         }
       },
-      cancelDropship(id) {
+      async cancelDropship(id) {
         // try {
         //   await axios.delete(`http://localhost:3000/users/${id}`); //Gw gatau get url nya
         //   this.getDropships();
         // }catch (err) {
         //   console.log(err);
         // }
-         try {
-          axios.post(`http://localhost:3000/users/dropship/cancel/${id}`);
+        try {
+          await axios.post(`http://localhost:3000/users/dropship/cancel/${id}`);
           this.getDropships();
         }catch (err) {
           console.log(err);
