@@ -90,7 +90,7 @@ router.get('/dropship/approve', (req, res) => {
 
 
 //ADMIN APPROVE OR REJECT DROPSHIPS
-router.post('/dropship/:action/:prodId', (req, res) => {
+router.post('/dropship/:action/:dropshipId', (req, res) => {
     var status
     if(req.params.action == 'approve'){
         status = 'ON PACKAGING'
@@ -103,7 +103,7 @@ router.post('/dropship/:action/:prodId', (req, res) => {
         note: req.body.note
     }, {
         where: {
-            productId: req.params.productId
+            id: req.params.dropshipId
         }
     })
     .then(() => {
