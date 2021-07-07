@@ -9,9 +9,8 @@
       <div class="block block-three"></div>
       <div class="block block-four"></div>
       <a href="#">
-        <img class="avatar" src="img/anime6.png" alt="...">
-        
-
+        <img v-bind:src="user.profilePic" class="avatar" alt=""/>
+        <h5 class="title">{{ user.profilePic }}</h5>
         <h5 class="title">{{ user.storeName }}</h5>
         <h5 class="title">{{ user.fullName }}</h5>
         <h5 class="title">{{ user.username }} </h5>

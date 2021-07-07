@@ -15,6 +15,10 @@ router.get('/product/approve', (req, res) => {
         where: {
             status: 'N'
         },
+        include: {
+            model: users,
+            attributes: ['storeName']
+        },
         limit: 5,
         offset: (req.query.page ? req.query.page : 0) * 5
     })
@@ -86,11 +90,11 @@ router.get('/dropship/approve', (req, res) => {
 
 
 //ADMIN APPROVE OR REJECT DROPSHIPS
-router.post('/dropship/:action', (req, res) => {
+router.post('/dropship/:action/:prodId', (req, res) => {
     var status
-    if(req.params.action = 'approve'){
+    if(req.params.action == 'approve'){
         status = 'ON PACKAGING'
-    } else {
+    } else if(req.params.action == 'reject') {
         status = 'REJECTED'
     }
 
@@ -99,7 +103,7 @@ router.post('/dropship/:action', (req, res) => {
         note: req.body.note
     }, {
         where: {
-            productId: req.body.productId
+            productId: req.params.productId
         }
     })
     .then(() => {

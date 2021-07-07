@@ -14,8 +14,20 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
   products_dropships.init({
-    dropshipId: DataTypes.INTEGER,
-    productId: DataTypes.INTEGER
+    dropshipId: {
+      type: DataTypes.INTEGER(5),
+      references: {
+        model: 'dropships',
+        key: 'id'
+      }
+    },
+    productId: {
+      type: DataTypes.INTEGER(5),
+      references: {
+        model: 'products',
+        key: 'id'
+      }
+    }
   }, {
     sequelize,
     modelName: 'products_dropships',

@@ -14,6 +14,7 @@
                <thead>
                   <tr>
                     <th>Qty</th>
+                    <th>Product Name</th>
                     <th>Customer Name</th>
                     <th>Customer Phone</th>
                     <th>Province</th>
@@ -21,6 +22,9 @@
                     <th>Postal Code</th>
                     <th>Address</th>
                     <th>Shipment Price</th>
+                    <th>Payment Invoice</th>
+                    <th>Note</th>
+                    <th>Status</th>
                 
                     <th class="has-text-centered">Actions</th>
                   </tr>
@@ -29,7 +33,8 @@
 
                     <tr v-for="dropship in dropships" :key="dropship.id">
                       
-                       <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.products[0].name ? dropship.products[0].name : ""}}</td>
                       <td>{{ dropship.customer.name }}</td>
                       <td>{{ dropship.customer.phone }}</td>
                       <td>{{ dropship.city.province_name }}</td>
@@ -81,7 +86,10 @@ export default {
     data() {
       return {
         dropships: [],
-        search: ''
+        search: '',
+        pageSize:'',
+        total:'',
+        currPage: 0
       };
     },
     created() {
@@ -96,10 +104,10 @@ export default {
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get("http://localhost:3000/users/get/dropship");
+          const response = await axios.get(`http://localhost:3000/users/get/dropship?page=${this.currPage}`);
           this.dropships = response.data.rows;
-           
-          
+          this.total = response.data.count
+          this.pageSize = 5         
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -110,16 +118,10 @@ export default {
         .then((response) => {this.dropships = response.data.rows})
         .catch(e => console.log(e));
       },
-      
-      page(){
-        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value)) //Gw gatau get url nya
-        .then((response) => {
-          this.users = response.data
-          this.pageSize = response.data
-          this.total = resp.data
-          })
-        .catch(e => console.log(e));
-      }
+      page(val){
+        this.currPage = val-1
+        this.getDropships(val)
+      },
     }
 };
 </script>

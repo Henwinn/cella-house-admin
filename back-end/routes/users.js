@@ -27,6 +27,7 @@ const pay = multer({
 const users = sequelize.users
 const dropships = sequelize.dropships
 const products = sequelize.products
+const customers = sequelize.customers
 
 require('dotenv').config();
 
@@ -279,29 +280,42 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
     attributes: ['qty']
   })
   .then(async product => {
+    console.log(req.body.qty)
     if(product.qty < req.body.qty){
-      return res.send(`qty exceeds product qty: ${product.qty}`)
+      return res.send(`quantity can't be 0 or exceeds your product quantity`)
     } else {
-      var customer
-      customer = await sequelize.customers.findOne({
+      var customer, data
+      customer = await customers.findOne({
         where: {
-          phone: req.body.customerPhone
+          phone: req.body.custPhone
         },
-        attirbute: ['id', 'phone']
+        include: {
+          model: users,
+          attributes: ['id']
+        },
+        attirbutes: ['id', 'phone']
       })
 
       if(!customer){
-        customer = sequelize.customers.create({
-          name: req.body.customerName,
-          phone: req.body.customerPhone
+        data = await customers.create({
+          name: req.body.custName,
+          phone: req.body.custPhone
         })
-        .then(customer => {
-          sequelize.customers_users.create({
-            customerId: customer.id,
-            userId: 7 //req.session.storeId
-          })
-        })        
+
+        sequelize.customers_users.create({
+          customerId: data.id,
+          userId: 7 //req.session.storeId
+        })
       }
+
+      if(customer.users == ''){
+        console.log('customer: ' + customer)
+        sequelize.customers_users.create({
+          customerId: customer.id,
+          userId: 7 //req.session.storeId
+        })
+      }
+
       dropships.create({
         storeId: 7, //req.session.storeId
         qty: req.body.qty,
@@ -319,8 +333,19 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
       .then(async dropship => {
         await dropship.addProducts(req.params.prodId)
 
+        console.log(req.body.qty + " " + req.params.prodId)
+        await products.update({
+          qty: (product.qty - req.body.qty)
+        }, {
+          where: {
+            id: req.params.prodId
+          }
+        })
+        .catch(err => next(err))
+
         return res.send(`success`)
       })
+      .catch(err => next(err))
     }
   })
   .catch(err => {
@@ -371,12 +396,16 @@ router.get('/get/dropship', (req, res, next) => {
         },
         include: [
           {
-            model: sequelize.customers,
+            model: customers,
             attributes: ['name', 'phone'],
           },
           {
             model: sequelize.cities,
             attributes: ['province_name', 'city_name', 'postal_code']
+          },
+          {
+            model: products,
+            attributes:['name']
           }
         ],
         limit: 5,
@@ -473,14 +502,14 @@ router.post('/dropship', (req, res) => {
 })
 
 //CANCEL DROPSHIP REQUEST
-router.post('/dropship/cancel/:prodId', (req, res) => {
+router.post('/dropship/cancel/:dropshipId', async (req, res) => {
   dropships.update({
     status: 'CANCELED'
   }, {
     where: {
       //storeId: req.session.storeId
-      productId: req.params.productId,
-      status: 'ON PROCESS'
+      id: req.params.dropshipId,
+      status: 'PENDING PAYMENT'
     }
   })
   .then(() => {

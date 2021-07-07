@@ -26,7 +26,7 @@
                <tbody>
 
                     <tr v-for="product in products" :key="product.id">
-                      <td>{{ product.storeId}}</td>
+                      <td>{{ product.user.storeName}}</td>
                       <td>{{ product.name }}</td>
                       <td>{{ product.qty }}</td>
                       <td>{{ product.price }}</td>
@@ -47,13 +47,14 @@
           
         </card>
       </div>
-            <el-pagination
-        
+      <el-pagination
           background
           layout="prev, pager, next"
+          v-model="pagination"
           :total="total"
           :page-size="pageSize"
-          @current-change="page">
+          @current-change="page"
+          >
         </el-pagination>
     </div>
 </template>
@@ -71,8 +72,9 @@ export default {
   data() {
     return {
       products: [],
-       pageSize:'',
-        total:''
+      pageSize:'',
+      total:'',
+      currPage: 0,
     };
   },
   created() {
@@ -81,8 +83,10 @@ export default {
   methods: {
     async getProducts() {
       try {
-        const response = await axios.get("http://localhost:3000/admin/product/approve"); //ini api benernya, nanti klo ada item masuk, bakal masuk ke sini
+        const response = await axios.get(`http://localhost:3000/admin/product/approve?page=${this.currPage}`); //ini api benernya, nanti klo ada item masuk, bakal masuk ke sini
         this.products = response.data.rows;
+        this.total = response.data.count
+        this.pageSize = 5
       } catch (err) {
         console.log(err);
         alert('err: ' + err)
@@ -106,14 +110,9 @@ export default {
         console.log(err);
       }
     },
-    page(){
-      axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //Cara dapetin current page gimana
-      .then((response) => {
-        this.products = response.data.rows
-        this.pageSize = response.data
-        this.total = response.data.count
-        })
-      .catch(e => console.log(e));
+    page(val){
+      this.currPage = val - 1
+      this.getProducts(val)
     }
   }
 };

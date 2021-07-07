@@ -51,7 +51,11 @@
                         
                        
                         <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
-                        <button class="btn" type="submit" @click="withdrawProduct(product.id)">Withdraw Product</button>
+                        <button class="btn" type="submit" @click="withdrawProduct(product.id)">Withdraw</button>
+                          <router-link :to="{ path: 'dropship', query: { id: product.id }}">
+
+                          <button tag="a"  class="btn" v-if="product.qty != 0">Dropship</button >
+                          </router-link>
                       </td>
                     </tr>
                 </tbody>
@@ -59,16 +63,15 @@
           </div>
         </card>
       </div>
-
-
-        <el-pagination
-        
-          background
-          layout="prev, pager, next"
-          :total="total"
-          :page-size="pageSize"
-          @current-change="page">
-        </el-pagination>
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        v-model="pagination"
+        :total="total"
+        :page-size="pageSize"
+        @current-change="page"
+        >
+      </el-pagination>
     </div>
 </template>
 <script>
@@ -83,7 +86,8 @@ export default {
         products: [],
         search: '',
         pageSize:'',
-        total:''
+        total:'',
+        currPage: 0
       };
     },
     created() {
@@ -98,8 +102,10 @@ export default {
     methods: {
       async getProducts() {
         try {
-          const response = await axios.get("http://localhost:3000/users"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get(`http://localhost:3000/users?page=${this.currPage}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.products = response.data.rows;
+          this.total = response.data.count
+          this.pageSize = 5
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -126,20 +132,19 @@ export default {
         .then((response) => {this.products = response.data.rows})
         .catch(e => console.log(e));
       },
-      page(){
-        axios.get('http://localhost:3000/users?page=' + encodeURIComponent(value)) //diganti dengan current page tapi gw gatau cara ambil current page
-        .then((response) => {
-          this.products = response.data.rows
-          this.total = response.data.count
-          })
-        .catch(e => console.log(e));
+      page(val){
+        this.currPage = val-1
+        this.getProducts(val)
       },
     }
-    
 };
 </script>
 
 <style>
+.btn {
+  padding: 10px;
+  margin-right: 20px;
 
+}
 
 </style>

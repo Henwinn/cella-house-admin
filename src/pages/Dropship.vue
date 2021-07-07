@@ -41,7 +41,7 @@
 
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Item Name" v-model="ItemName" name="ItemName" class="form-control"  />
+                                    <input type="text" placeholder="Item Name" v-model="ItemName" name="ItemName" class="form-control" disabled />
                                 </div>
 
                                 <div class="form-group" >
@@ -53,7 +53,7 @@
                                 </div>
 
                                 <div class="form-group" >
-                                    <input type="text" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
+                                    <input type="number" placeholder="Customer Phone" v-model="custPhone" name="custPhone" class="form-control" />
                                 </div>
 
                                 <div class="form-group" >
@@ -98,7 +98,7 @@
                                 </base-input>
 
                                 <div class="text-center">
-                                    <button class="btn" type="submit" @click="handleSubmit()">Create Dropship</button>
+                                    <button class="btn" type="submit">Create Dropship</button>
                                 </div>
                                 
                             </form>
@@ -119,8 +119,8 @@ export default {
     data(){
         return {
             ItemName: "",
-            ItemWeight: 0,
-            qty: 0,
+            ItemWeight: "",
+            qty: "",
             custName: "",
             custAddress: "",
             custPhone: "",
@@ -139,6 +139,7 @@ export default {
     },
     created() {
         this.getProvinces();
+        this.getProdData();
         this.getCustomer = _.debounce(this.getCustomer, 550)
     },
     watch: {
@@ -147,6 +148,10 @@ export default {
         }
     },
     methods: {
+        async getProdData(){
+            const response = await axios.get(`http://localhost:3000/products/id/${this.$route.query.id}`)
+            this.ItemName = response.data.name
+        },
         async getProvinces() {
             try {
                 const response = await axios.get("http://localhost:3000/province/all"); //route ini untuk testing aja karena perlu login kalau pakai route asli
@@ -168,7 +173,7 @@ export default {
         },
         async getCustomer(){
             try {
-                const response = await axios.get(`http://localhost:3000/customers/${this.custPhone}/7`) //should be storeId from session
+                const response = await axios.get(`http://localhost:3000/customers/${this.custPhone}`) //should be storeId from session
                 this.custName = response.data.name
             } catch(err) {
                 console.log(err)
@@ -230,35 +235,31 @@ export default {
             //     this.errors.push("Select City required");
                 
             // }
-
+            
             if (!this.errors.length) {
                 let data = {
                     qty: this.qty,
                     itemWeight: this.ItemWeight,
                     custPhone: this.custPhone,
                     custName: this.custName,
-                    custAddress: this.custAddress,
+                    address: this.custAddress,
                     provinceIdDestination: this.selectedProvinces.id,
                     cityIdDestination: this.selectedCities.id,
                     courier: this.courier,
                     shipmentPrice: this.price
                 }
-                axios.post(`http://localhost:3000/users/dropship/submission/8`, data) //harusnya id product
+                axios.post(`http://localhost:3000/users/dropship/submission/${this.$route.query.id}`, data) //harusnya id product
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success')
+                        this.$router.push('dashboard')
                     } else {
-                        alert('fail')
+                        alert(respond.data)
                     }
                 })
             }
             e.preventDefault();
         },
-
-
-
-
-
     }
 };
 </script>

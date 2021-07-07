@@ -13,6 +13,7 @@
                <thead>
                   <tr>
                     <th>Qty</th>
+                    <th>Product Name</th>
                     <th>Customer Name</th>
                     <th>Customer Phone</th>
                     <th>Province</th>
@@ -30,6 +31,7 @@
 
                     <tr v-for="dropship in dropships" :key="dropship.id">
                       <td>{{ dropship.qty }}</td>
+                      <td>{{ dropship.products[0].name }}</td>
                       <td>{{ dropship.customer.name }}</td>
                       <td>{{ dropship.customer.phone }}</td>
                       <td>{{ dropship.city.province_name }}</td>
@@ -41,7 +43,7 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td>
                       <td class="has-text-centered">
-                        <button class="btn" @click="cancelDropship(dropship.id)">Cancel Dropship</button >
+                        <button class="btn" @click="cancelDropship(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Cancel Dropship</button >
                       
                           <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
@@ -56,14 +58,13 @@
         </card>
       </div>
 
-           <!-- <el-pagination
-        
-          background
-          layout="prev, pager, next"
-          :total="total"
-          :page-size="pageSize"
-          @current-change="page">
-        </el-pagination> -->
+      <el-pagination
+        background
+        layout="prev, pager, next"
+        :total="total"
+        :page-size="pageSize"
+        @current-change="page">
+      </el-pagination>
     </div>
 
 </template>
@@ -79,8 +80,9 @@ export default {
         dropships: [],
         users:[],
         search: '',
-        // pageSize:'',
-        // total:''
+        pageSize:'',
+        total:'',
+        currPage: 0
       };
     },
     created() {
@@ -95,21 +97,23 @@ export default {
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get("http://localhost:3000/users/get/dropship"); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get(`http://localhost:3000/users/get/dropship?page=${this.currPage}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.dropships = response.data.rows;
+          this.total = response.data.count
+          this.pageSize = 5
         } catch (err) {
           console.log(err);
         }
       },
-      cancelDropship(id) {
+      async cancelDropship(id) {
         // try {
         //   await axios.delete(`http://localhost:3000/users/${id}`); //Gw gatau get url nya
         //   this.getDropships();
         // }catch (err) {
         //   console.log(err);
         // }
-         try {
-          axios.post(`http://localhost:3000/users/dropship/cancel/${id}`);
+        try {
+          await axios.post(`http://localhost:3000/users/dropship/cancel/${id}`);
           this.getDropships();
         }catch (err) {
           console.log(err);
@@ -132,17 +136,10 @@ export default {
     //     });
     // },
 
-
-
-    // page(){
-    //     axios.get('http://localhost:3000/users/get/dropship?page=' + encodeURIComponent(value)) //Gw gatau get url nya
-    //     .then((response) => {
-    //       this.dropships = response.data
-    //       this.pageSize = response.data
-    //       this.total = resp.data
-    //       })
-    //     .catch(e => console.log(e));
-    //   }
+    page(val){
+      this.currPage = val - 1
+      this.getDropships(val)
+    }
   }
 }
     

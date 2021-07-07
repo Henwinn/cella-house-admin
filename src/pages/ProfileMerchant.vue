@@ -6,7 +6,7 @@
     <div class="author">
 
 
-      <img class="avatar" src="img/anime6.png" alt="...">
+      <img class="avatar" :src="user.profilePic" alt="...">
       <!-- <h5 class="title">*Store Name</h5>
       <h5 class="title">*Store Owner</h5>
       <h5 class="title">*Store Address</h5>
@@ -105,36 +105,37 @@ import Card from '../components/Cards/Card.vue';
 import axios from "axios";
 
   export default {
-  components: { Card },
-  props: {
-    user: {
-      type: Object,
-      default: () => {
-        return {};
+    components: { Card },
+    props: {
+      user: {
+        type: Object,
+        default: () => {
+          return {};
+        }
       }
-    }
-  },
-  data() {
-    return {
-      users: [],
-      products: [],
-      search: '',
-      total: '',
-      // pageSize: '',
-    }
-  },
-  created(){
-    this.getMerchantProfileById();
-    this.getProducts();
-    this.doSearch = _.debounce(this.doSearch, 400);
-  },
-  watch: {
-    search(value){
-        this.doSearch(value); 
+    },
+    data() {
+      return {
+        users: [],
+        products: [],
+        search: '',
+        total: '',
+        pageSize: '',
+        currPage: 0
       }
-  },
-  methods: {
-    async getMerchantProfileById(id){
+    },
+    created(){
+      this.getMerchantProfileById();
+      this.getProducts();
+      this.doSearch = _.debounce(this.doSearch, 400);
+    },
+    watch: {
+      search(value){
+          this.doSearch(value); 
+        }
+    },
+    methods: {
+      async getMerchantProfileById(id){
         try{
           const response = await axios.get(`http://localhost:3000/admin/user?id=${this.$route.query.id}`) //get user id nya
           this.user = response.data;
@@ -144,11 +145,12 @@ import axios from "axios";
           console.log(err)
         }
       },
-     async getProducts(id) {
+      async getProducts() {
         try {
-          const response = await axios.get(`http://localhost:3000/products/user?id=${this.$route.query.id}`); //get table nya berdasarkan user nya
+          const response = await axios.get(`http://localhost:3000/products/user?id=${this.$route.query.id}&page=${this.currPage}`); //get table nya berdasarkan user nya
           this.products = response.data.rows;
-          // alert(response.data.rows)
+          this.total = response.data.count
+          this.pageSize = 5
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -159,7 +161,11 @@ import axios from "axios";
         .then((response) => {this.products = response.data.rows})
         .catch(e => console.log(e));
       },
-  }
+      page(val){
+        this.currPage = val - 1
+        this.getProducts(val)
+      }
+    }
   }
 </script>
 <style>

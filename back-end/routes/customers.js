@@ -24,7 +24,7 @@ router.get('/all/:id', (req, res, next) => {
     .catch(err => next(err))
 })
 
-router.get('/:phone/:id', (req, res, next) => {
+router.get('/:phone', (req, res, next) => {
     customers.findOne({
         where: {
             phone: req.params.phone
@@ -33,10 +33,7 @@ router.get('/:phone/:id', (req, res, next) => {
         include: [
             {
                 model: users,
-                where: {
-                    id: req.params.id //req.session.storeId
-                },
-                attributes: []
+                attributes: ['id']
             }
         ]
     })
