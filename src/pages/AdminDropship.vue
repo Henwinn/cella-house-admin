@@ -59,6 +59,8 @@
 
                           <button tag="a"  class="btn" >Tracking</button >
                           <!-- </router-link> -->
+
+                          <button class="btn" @click="rejectProduct(dropship.id)">Reject</button>
                       </td>
                     </tr>
                 </tbody>
