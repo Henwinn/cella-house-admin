@@ -86,9 +86,9 @@ router.get('/dropship/approve', (req, res) => {
 
 
 //ADMIN APPROVE OR REJECT DROPSHIPS
-router.post('/dropship/approve', (req, res) => {
+router.post('/dropship/:action', (req, res) => {
     var status
-    if(req.body.status = 'Approve'){
+    if(req.params.action = 'approve'){
         status = 'ON PACKAGING'
     } else {
         status = 'REJECTED'
