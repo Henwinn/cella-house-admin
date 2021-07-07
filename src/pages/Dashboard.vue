@@ -85,27 +85,26 @@ export default {
       return {
         products: [],
         search: '',
-        pageSize:'',
+        pageSize: 5,
         total:'',
         currPage: 0
       };
     },
     created() {
       this.getProducts();
-      this.doSearch = _.debounce(this.doSearch, 400);
+      this.getProducts = _.debounce(this.getProducts, 400);
     },
     watch: { //ini bagian dari untuk search
       search(value){
-        this.doSearch(value); 
+        this.getProducts(value); 
       }
     },
     methods: {
       async getProducts() {
         try {
-          const response = await axios.get(`http://localhost:3000/users?page=${this.currPage}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get(`http://localhost:3000/users?page=${this.currPage}&search=${this.search}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.products = response.data.rows;
           this.total = response.data.count
-          this.pageSize = 5
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -126,11 +125,6 @@ export default {
         }catch (err) {
           console.log(err);
         }
-      },
-      doSearch(value) { //ini bagian dari untuk search
-        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value))
-        .then((response) => {this.products = response.data.rows})
-        .catch(e => console.log(e));
       },
       page(val){
         this.currPage = val-1
