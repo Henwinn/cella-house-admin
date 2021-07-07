@@ -51,16 +51,16 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td> -->
                       <td class="has-text-centered">
-                        <button class="btn" @click="updateStatus(dropship.id)"
+                        <button class="btn" v-if="dropship.status != 'ON PACKAGING'  && dropship.status != 'REJECTED' && dropship.status != 'CANCELED'" @click="updateStatus(dropship.id)"
                         
                           >Update Status</button >
                         
                             <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
-                          <button tag="a"  class="btn" >Tracking</button >
+                          <button tag="a"  class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'PENDING PAYMENT' && dropship.status != 'CANCELED'" >Tracking</button >
                           <!-- </router-link> -->
 
-                          <button class="btn" @click="rejectProduct(dropship.id)">Reject</button>
+                          <button class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' " @click="rejectProduct(dropship.id)">Reject</button>
                       </td>
                     </tr>
                 </tbody>
