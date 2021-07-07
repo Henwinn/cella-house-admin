@@ -47,7 +47,7 @@
                       
                           <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
-                          <button tag="a"  class="btn" >Tracking</button >
+                          <button tag="a"  class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.status != 'PENDING PAYMENT' " >Tracking</button >
                           <!-- </router-link> -->
                        
                       </td>
