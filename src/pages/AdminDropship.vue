@@ -51,7 +51,7 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td> -->
                       <td class="has-text-centered">
-                        <button class="btn"
+                        <button class="btn" @click="updateStatus(dropship.id)"
                         
                           >Update Status</button >
                         
@@ -113,6 +113,24 @@ export default {
           alert('err: ' + err)
         }
       },
+      async updateStatus(val) {
+      try {
+        await axios.post(`http://localhost:3000/admin/dropship/approve/${val}`);
+        alert('Product Approved')
+        this.getDropships();
+      }catch (err) {
+        console.log(err);
+      }
+    },
+      async rejectProduct(val) {
+      try {
+        await axios.post(`http://localhost:3000/admin/dropship/reject/${val}`);
+        alert('Product Rejected')
+        this.getDropships();
+      }catch (err) {
+        console.log(err);
+      }
+    },
        doSearch(value) { //ini bagian dari untuk search
         axios.get('http://localhost:3000/users/get/dropship?search=' + encodeURIComponent(value))
         .then((response) => {this.dropships = response.data.rows})
