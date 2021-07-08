@@ -84,7 +84,11 @@
                                     <input type="number" placeholder="Phone Number" v-model="storePhoneNum" name="phone" class="form-control"  />
                                 </div>
 
-                                 <div class="form-group" >
+                                <div class="row" v-if="hidePhone">
+                                    <div class="col-sm-12"><small style="color: red; padding-left: 4%;"><i>This phone number has been used!</i></small></div>
+                                </div>
+
+                                <div class="form-group" >
                                     <input type="text" placeholder="Store Address" v-model="storeAddress" name="address" class="form-control"  />
                                 </div>
 
@@ -205,7 +209,9 @@ export default {
             success: [],
             hideUsername: false,
             hideStorename: false,
-            hideStoreemail: false
+            hideStoreemail: false,
+            hidePhone: false,
+            error: false
         };
     },
     watch: {
@@ -217,12 +223,16 @@ export default {
         },
         storeEmail(){
             this.getEmail()
+        },
+        storePhoneNum(){
+            this.getPhone()
         }
     },
     created() {
         this.getUsername = _.debounce(this.getUsername, 600),
         this.getStorename = _.debounce(this.getStorename, 600)
         this.getEmail = _.debounce(this.getEmail, 600)
+        this.getPhone = _.debounce(this.getPhone, 600)
     },
     methods: {
         handleSubmit: function(e){
@@ -287,7 +297,7 @@ export default {
                     address: e.target.elements.address.value,
                     password: e.target.elements.password.value,
                 }
-                if(this.hideUsername || this.hideStorename || this.hideStoreemail){
+                if(this.error){
                     return
                 } else {
                     let answer = window.confirm('Are you sure all the data are correct?')
@@ -317,11 +327,14 @@ export default {
                 const response = await axios.get(`http://localhost:3000/users/validation/username?search=${this.userName}`)
                 if(response.data == 'not exist'){
                     this.hideUsername = false
+                    this.error = false
                 } else {
                     this.hideUsername = true
+                    this.error = true
                 }
             } else {
                 this.hideUsername = false
+                this.error = false
             }
         },
         async getStorename(){
@@ -329,11 +342,14 @@ export default {
                 const response = await axios.get(`http://localhost:3000/users/validation/storeName?search=${this.storeName}`)
                 if(response.data == 'not exist'){
                     this.hideStorename = false
+                    this.error = false
                 } else {
                     this.hideStorename = true
+                    this.error = true
                 }
             } else {
                 this.hideStorename = false
+                this.error = false
             }
         },
         async getEmail(){
@@ -341,11 +357,29 @@ export default {
                 const response = await axios.get(`http://localhost:3000/users/validation/email?search=${this.storeEmail}`)
                 if(response.data == 'not exist'){
                     this.hideStoreemail = false
+                    this.error = false
                 } else {
                     this.hideStoreemail = true
+                    this.error = true
                 }
             } else {
                 this.hideStoreemail = false
+                this.error = false
+            }
+        },
+        async getPhone(){
+            if(this.storePhoneNum != ''){
+                const response = await axios.get(`http://localhost:3000/users/validation/phone?search=${this.storePhoneNum}`)
+                if(response.data == 'not exist'){
+                    this.hidePhone = false
+                    this.error = false
+                } else {
+                    this.hidePhone = true
+                    this.error = true
+                }
+            } else {
+                this.hidePhone = false
+                this.error = false
             }
         }
     }
