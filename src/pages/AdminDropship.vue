@@ -51,7 +51,7 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td> -->
                       <td class="has-text-centered">
-                        <button class="btn" v-if="dropship.status != 'ON PACKAGING'  && dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.paymentInvoice == ''" @click="updateStatus(dropship.id)"
+                        <button class="btn" v-if="dropship.status == 'PENDING APPROVAL' || dropship.status == 'PENDING PAYMENT' && dropship.paymentInvoice == ''" @click="updateStatus(dropship.id)"
                         
                           >Approve</button >
                         
@@ -60,7 +60,7 @@
                           <button tag="a"  class="btn" v-if="dropship.status == 'ON PACKAGING'" @click="donePackaging(dropship.id)">Done Packaging</button >
                           <!-- </router-link> -->
 
-                          <button class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' " @click="rejectProduct(dropship.id)">Reject</button>
+                          <button class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.status != 'COMPLETE' && !dropship.status.includes('ON SHIPMENT')" @click="rejectProduct(dropship.id)">Reject</button>
                       </td>
                     </tr>
                 </tbody>

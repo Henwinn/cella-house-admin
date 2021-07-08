@@ -46,7 +46,7 @@
                         <button class="btn" @click="insertInvoice(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Insert Invoice Number</button >
                         <button class="btn" @click="cancelDropship(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Cancel Dropship</button >
                           <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
-                        <button class="btn" v-if="dropship.status.includes('ON SHIPMENT')" @click="dropshipFinished(dropship.id)" >DROPSHIP FINISHED</button >
+                        <button class="btn" v-if="dropship.status.includes('ON SHIPMENT')" @click="dropshipFinished(dropship.id)" >Dropship Finished</button >
                           <!-- </router-link> -->
                        
                       </td>
