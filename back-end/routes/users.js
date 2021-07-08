@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const sequelize = require('../models')
 const {Op} = require('sequelize')
 const multer = require('multer')
