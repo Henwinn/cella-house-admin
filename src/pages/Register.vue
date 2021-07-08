@@ -290,15 +290,20 @@ export default {
                 if(this.hideUsername || this.hideStorename || this.hideStoreemail){
                     return
                 } else {
-                    axios.post('http://localhost:3000/users/register', data)
-                    .then(respond => {
-                        if(respond.data == 'success'){
-                            alert('success')
-                            this.$router.push('login')
-                        } else {
-                            alert('fail')
-                        }
-                    })
+                    let answer = window.confirm('Are you sure all the data are correct?')
+                    if(answer){
+                        axios.post('http://localhost:3000/users/register', data)
+                        .then(respond => {
+                            if(respond.data == 'success'){
+                                alert('success')
+                                this.$router.push('login')
+                            } else {
+                                alert('fail')
+                            }
+                        })
+                    } else {
+                        return
+                    }
                 }
             }
             e.preventDefault();
