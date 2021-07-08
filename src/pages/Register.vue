@@ -72,8 +72,12 @@
                                      </div>
                                  </div>
 
-                                   <div class="form-group" >
+                                <div class="form-group" >
                                     <input type="email" placeholder="Store Email" v-model="storeEmail" name="email" class="form-control"  />
+                                </div>
+
+                                <div class="row" v-if="hideStoreemail">
+                                    <div class="col-sm-12"><small style="color: red; padding-left: 4%;"><i>This email has been used!</i></small></div>
                                 </div>
 
                                  <div class="form-group" >
@@ -200,7 +204,8 @@ export default {
             errors: [],
             success: [],
             hideUsername: false,
-            hideStorename: false
+            hideStorename: false,
+            hideStoreemail: false
         };
     },
     watch: {
@@ -209,11 +214,15 @@ export default {
         },
         storeName(){
             this.getStorename()
+        },
+        storeEmail(){
+            this.getEmail()
         }
     },
     created() {
         this.getUsername = _.debounce(this.getUsername, 600),
         this.getStorename = _.debounce(this.getStorename, 600)
+        this.getEmail = _.debounce(this.getEmail, 600)
     },
     methods: {
         handleSubmit: function(e){
@@ -260,11 +269,11 @@ export default {
             //     this.errors.push("password required");
             // }
 
-            // if (!this.confpassword) {
-            //     this.errors.push("confirm password required");
-            // }else if(this.confpassword != password){
-            //     this.errors.push("Confirm password and password must be same");
-            // }
+            if (!this.confpassword) {
+                this.errors.push("confirm password required");
+            }else if(this.confpassword != this.password){
+                this.errors.push("Confirm password and password must be same");
+            }
             
 
 
@@ -282,18 +291,21 @@ export default {
                     email: e.target.elements.email.value,
                     phone: e.target.elements.phone.value,
                     address: e.target.elements.address.value,
-                    password: e.target.elements.password.value
+                    password: e.target.elements.password.value,
                 }
-                axios.post('http://localhost:3000/users/register', data)
-                .then(respond => {
-                    if(respond.data == 'success'){
-                        alert('success')
-                        this.$router.push('login')
-                       
-                    } else {
-                        alert('fail')
-                    }
-                })
+                if(this.hideUsername || this.hideStorename){
+                    return
+                } else {
+                    axios.post('http://localhost:3000/users/register', data)
+                    .then(respond => {
+                        if(respond.data == 'success'){
+                            alert('success')
+                            this.$router.push('login')
+                        } else {
+                            alert('fail')
+                        }
+                    })
+                }
             }
             e.preventDefault();
         },
@@ -303,23 +315,39 @@ export default {
         },
         async getUsername(){
             if(this.userName != ''){
-                const response = await axios.get(`http://localhost:3000/users/validation/check-username-storename?username=${this.userName}`)
+                const response = await axios.get(`http://localhost:3000/users/validation/username?search=${this.userName}`)
                 if(response.data == 'not exist'){
                     this.hideUsername = false
                 } else {
                     this.hideUsername = true
                 }
-            }            
+            } else {
+                this.hideUsername = false
+            }
         },
         async getStorename(){
             if(this.storeName != ''){
-                const response = await axios.get(`http://localhost:3000/users/validation/check-username-storename?storename=${this.storeName}`)
+                const response = await axios.get(`http://localhost:3000/users/validation/storeName?search=${this.storeName}`)
                 if(response.data == 'not exist'){
                     this.hideStorename = false
                 } else {
                     this.hideStorename = true
                 }
-            } 
+            } else {
+                this.hideStorename = false
+            }
+        },
+        async getEmail(){
+            if(this.storeEmail != ''){
+                const response = await axios.get(`http://localhost:3000/users/validation/email?search=${this.storeEmail}`)
+                if(response.data == 'not exist'){
+                    this.hideStoreemail = false
+                } else {
+                    this.hideStoreemail = true
+                }
+            } else {
+                this.hideStoreemail = false
+            }
         }
     }
 };

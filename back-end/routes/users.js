@@ -112,44 +112,27 @@ router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD IT
   })
 })
 
-router.get('/validation/check-username-storename', (req, res, next) => {
-  if(!req.query.username){
-    users.findOne({
-      attributes: ['storeName'],
-      where: {
-        storeName: req.query.storename
-      }
-    })
-    .then((user) => {
-      if(user) {
-        return res.send(`exist`)
-      } else {
-        return res.send(`not exist`)
-      }
-    })
-    .catch(err => next(err))
-  } else {
-    users.findOne({
-      attributes: ['username'],
-      where: {
-        username: req.query.username
-      }
-    })
-    .then((user) => {
-      if(user) {
-        return res.send(`exist`)
-      } else {
-        return res.send(`not exist`)
-      }
-    })
-    .catch(err => next(err))
-  }
-  
+router.get('/validation/:attribute', (req, res, next) => {
+  let attribute = req.params.attribute
+  users.findOne({
+    attributes: [`${attribute}`],
+    where: {
+      [attribute]: req.query.search
+    }
+  })
+  .then(user => {
+    if(user){
+      return res.send(`exist`)
+    } else {
+      return res.send(`not exist`)
+    }
+  })
+  .catch(err => next(err))
 })
 
 /* USER REGISTER */
 router.post('/register', (req,res, next)=>{
-  bcrypt.hash(req.body.password, 12, (err, result)=>{
+  // bcrypt.hash(req.body.password, 12, (err, result)=>{
     users.create({
       fullName: req.body.full_name,
       storeName: req.body.store_name,
@@ -159,7 +142,7 @@ router.post('/register', (req,res, next)=>{
       email: req.body.email,
       phone: req.body.phone,
       address: req.body.address,
-      password: result,
+      password: req.body.password,
       roleId: 2
     })
     .then(() => {
@@ -169,7 +152,7 @@ router.post('/register', (req,res, next)=>{
       res.send("fail")
       next(err)
     })
-  })
+  // })
 })
 
 /* USER LOGIN */
