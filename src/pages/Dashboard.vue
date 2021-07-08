@@ -102,7 +102,7 @@ export default {
     methods: {
       async getProducts() {
         try {
-          const response = await axios.get(`http://localhost:3000/users?page=${this.currPage}&search=${this.search}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get(`http://localhost:3000/products?page=${this.currPage}&search=${this.search}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.products = response.data.rows;
           this.total = response.data.count
         } catch (err) {

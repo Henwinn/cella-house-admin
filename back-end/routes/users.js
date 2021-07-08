@@ -33,7 +33,7 @@ router.get('/', function(req, res, next) {
   if(!req.query.search){
     products.findAndCountAll({
       where: {
-          storeId: 7,
+          storeId: req.session.storeId,
           status: 'A'
       },
       include: {
@@ -55,7 +55,7 @@ router.get('/', function(req, res, next) {
   } else {
     products.findAndCountAll({
       where: {
-        storeId: 7,
+        storeId: req.session.storeId,
         status: 'A',
         [Op.or]: [
           {
@@ -97,7 +97,7 @@ router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD IT
     categoryName: req.body.categoryName,
     variant: req.body.variant,
     note: req.body.note,
-    storeId: 7,
+    storeId: req.session.storeId,
     status: 'N'
   })
   .then(product => {
@@ -128,7 +128,7 @@ router.get('/validation/:attribute', (req, res, next) => {
 
 /* USER REGISTER */
 router.post('/register', (req,res, next)=>{
-  // bcrypt.hash(req.body.password, 12, (err, result)=>{
+  bcrypt.hash(req.body.password, 12, (err, result)=>{
     users.create({
       fullName: req.body.full_name,
       storeName: req.body.store_name,
@@ -148,7 +148,7 @@ router.post('/register', (req,res, next)=>{
       res.send("fail")
       next(err)
     })
-  // })
+  })
 })
 
 /* USER LOGIN */
@@ -162,8 +162,8 @@ router.post('/login', (req,res)=>{
     if(!user){
       return res.send('fail')
     } else {
-      // bcrypt.compare(req.body.password, user.password, (err,result)=>{
-      //   if(result){
+      bcrypt.compare(req.body.password, user.password, (err,result)=>{
+        if(result){
           req.session.storeId = user.id
           req.session.username = user.username
           req.session.storeName = user.storeName
@@ -171,17 +171,17 @@ router.post('/login', (req,res)=>{
           req.session.roleId = user.roleId
           // return res.redirect('http://localhost:8081/#/dashboard')
           return res.send('success')
-      //   } else {
-      //     return res.send('fail')
-      //   }
-      // })
+        } else {
+          return res.send('fail')
+        }
+      })
     }
   })  
 })
 
 /* GET USER PROFILE */
 router.get('/:id', (req, res, next) => {
-  // if(req.session.storeId == req.params.id){
+  if(req.session.storeId == req.params.id){
     users.findOne({
       where: {
         id: req.params.id
@@ -189,9 +189,9 @@ router.get('/:id', (req, res, next) => {
     })
     .then(user => res.send(user))
     .catch(err => next(err))
-  // } else {
-    // return res.status(404).send('user doesn\'t exist')
-  // }
+  } else {
+    return res.status(404).send('user doesn\'t exist')
+  }
 })
 
 /* UPDATE USER PROFILE */
@@ -239,7 +239,7 @@ router.post('/profile', upload.single("file"), (req, res, next) => {
       temp = req.file.path
       const mimetype = path.extname(req.file.originalname)
       if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
-        target = `/img/${req.file.originalname}` //${req.session.username}${mimetype}
+        target = `/img/${req.session.username}${mimetype}`
       } else {
         return res.send(`wrong file`)
       }
@@ -318,7 +318,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
 
         sequelize.customers_users.create({
           customerId: data.id,
-          userId: 7 //req.session.storeId
+          userId: req.session.storeId
         })
         .catch(err => console.log(`error: ${err}`))
       } else if(customer.users == ''){
@@ -329,7 +329,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
         }
         sequelize.customers_users.create({
           customerId: customer.id,
-          userId: 7 //req.session.storeId
+          userId: req.session.storeId
         })
       }
 
@@ -339,7 +339,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
         console.log(err)
       }
       dropships.create({
-        storeId: 7, //req.session.storeId
+        storeId: req.session.storeId,
         qty: req.body.qty,
         itemWeight: req.body.itemWeight,
         customerId: customer.id,
@@ -398,7 +398,7 @@ router.get('/get/dropship', (req, res, next) => {
     if(!req.query.search){
       dropships.findAndCountAll({
         where: {
-          storeId: 7 //req.session.storeId
+          storeId: req.session.storeId
         },
         include: [
           {
@@ -426,7 +426,7 @@ router.get('/get/dropship', (req, res, next) => {
     } else { 
       dropships.findAndCountAll({
         where: {
-          storeId: 7, //req.session.storeId
+          storeId: req.session.storeId,
           [Op.or]: [
             {
               address: {
@@ -466,7 +466,7 @@ router.get('/get/dropship', (req, res, next) => {
         if(dropship.count == 0){
           let data = await dropships.findAndCountAll({
             where: {
-              storeId: 7, //req.session.storeId
+              storeId: req.session.storeId,
             },
             include: [
               {
@@ -498,7 +498,7 @@ router.get('/get/dropship', (req, res, next) => {
           if(data.count == 0){
             let data = await dropships.findAndCountAll({
               where: {
-                storeId: 7, //req.session.storeId
+                storeId: req.session.storeId,
               },
               include: [
                 {
@@ -541,7 +541,7 @@ router.get('/get/dropship', (req, res, next) => {
   } else {
     dropships.findOne({
       where: {
-        storeId: 7,//req.session.storeId,
+        storeId: req.session.storeId,
         id: req.query.dropshipId
       }
     })
