@@ -126,7 +126,14 @@ router.get('/user/active', (req, res, next) => {
                 limit: 5,
                 offset: (req.query.page ? req.query.page : 0) * 5,
                 where: {
-                    status: 'A'
+                    status: 'A',
+                    [Op.or]: [
+                        {
+                            storeName: {
+                                [Op.like]: `%${req.query.search}%`
+                            }
+                        }
+                    ]
                 }
             })
             .then(users => {

@@ -89,27 +89,26 @@ export default {
       return {
         dropships: [],
         search: '',
-        pageSize:'',
+        pageSize: 5,
         total:'',
         currPage: 0
       };
     },
     created() {
       this.getDropships();
-       this.doSearch = _.debounce(this.doSearch, 400);
+       this.getDropships = _.debounce(this.getDropships, 400);
     },
      watch: { //ini bagian dari untuk search
       search(value){
-        this.doSearch(value); 
+        this.getDropships(value); 
       }
     },
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get(`http://localhost:3000/users/get/dropship?page=${this.currPage}`);
+          const response = await axios.get(`http://localhost:3000/users/get/dropship?page=${this.currPage}&search=${this.search}`);
           this.dropships = response.data.rows;
           this.total = response.data.count
-          this.pageSize = 5         
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -133,11 +132,6 @@ export default {
         console.log(err);
       }
     },
-       doSearch(value) { //ini bagian dari untuk search
-        axios.get('http://localhost:3000/users/get/dropship?search=' + encodeURIComponent(value))
-        .then((response) => {this.dropships = response.data.rows})
-        .catch(e => console.log(e));
-      },
       page(val){
         this.currPage = val-1
         this.getDropships(val)

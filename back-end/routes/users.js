@@ -355,7 +355,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
       }
 
       try{
-        console.log(data.id)
+        console.log(customer.id)
       } catch(err){
         console.log(err)
       }
@@ -363,7 +363,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
         storeId: 7, //req.session.storeId
         qty: req.body.qty,
         itemWeight: req.body.itemWeight,
-        customerId: data.id,
+        customerId: customer.id,
         provinceIdOrigin: 6,
         cityIdOrigin: 151,
         provinceIdDestination: req.body.provinceIdDestination,

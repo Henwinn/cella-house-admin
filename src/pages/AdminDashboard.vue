@@ -36,6 +36,7 @@
       <el-pagination 
         background
         layout="prev, pager, next"
+        v-model="pagination"
         :total="total"
         :page-size="pageSize"
         @current-change="page">
@@ -54,7 +55,7 @@ export default {
       return {
         users: [],
         search: '',
-        pageSize:'',
+        pageSize: 5,
         total:'',
         currPage: 0,
         showModal: false
@@ -62,20 +63,19 @@ export default {
     },
     created() {
       this.getMerchants();
-      this.searchMerchant = _.debounce(this.searchMerchant, 400)
+      this.getMerchants = _.debounce(this.getMerchants, 400)
     },
     watch: {
       search(value){
-        this.searchMerchant(value);
+        this.getMerchants(value);
       }
     },
     methods: {
       async getMerchants() {
         try {
-          const response = await axios.get(`http://localhost:3000/admin/user/active?page=${this.currPage}`);
+          const response = await axios.get(`http://localhost:3000/admin/user/active?page=${this.currPage}&search=${this.search}`);
           this.users = response.data.rows;
           this.total = response.data.count
-          this.pageSize = 5
         } catch (err) {
           console.log(err);
         }
@@ -120,7 +120,7 @@ export default {
           console.log(err)
         }
       },
-      page(){
+      page(val){
         this.currPage = val-1
         this.getMerchants(val)
       }
