@@ -77,7 +77,7 @@
                            menu-classes="dropdown-navbar">
               <a slot="title" href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true">
                 <div class="photo">
-                  <img :src="user.profilePic" @error="alternativeImg()">
+                  <img :src="user.profilePic">
                 </div>
                 <b class="caret d-none d-lg-block d-xl-block"></b>
                 <p class="d-lg-none">
@@ -146,20 +146,16 @@
       toggleMenu() {
         this.showMenu = !this.showMenu;
       },
-      async getUsers(id) {
+      async getUsers() {
         try {
-          const response = await axios.get(`http://localhost:3000/users/7`); //sementara gini dlu
+          const response = await axios.get(`http://localhost:3000/users`);
           this.user = response.data;
-          
         } catch (err) {
           console.log(err);
         }
       },
-      async alternativeImg(){
-        this.user.profilePic = '/img/default-avatar.png'
-      },
       async logout(){
-        await axios.get('http://localhost:3000/users/logout')
+        await axios.post('http://localhost:3000/users/logout')
         this.$router.push('login')
       }
     }

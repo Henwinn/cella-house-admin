@@ -7,12 +7,19 @@ const multer = require('multer')
 const path = require('path')
 const fs = require('fs')
 
+var msg
 var storage = multer.diskStorage({
   destination: function(req, file, cb){
     cb(null, path.join(__dirname, `../../public/img`))
   },
    filename: function(req, file, cb){
-     cb(null, file.originalname)
+     let mimetype = path.extname(file.originalname)
+     if(mimetype == '.jpg' || mimetype == '.png' || mimetype == '.jpeg'){
+       msg = 'good file'
+       cb(null, `${req.session.storeName}${mimetype}`)
+     } else {
+      msg = 'wrong file'
+     }
    }
 })
 
@@ -28,85 +35,85 @@ const customers = sequelize.customers
 require('dotenv').config();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  // res.send('respond with a resource');
-  if(!req.query.search){
-    products.findAndCountAll({
-      where: {
-          storeId: req.session.storeId,
-          status: 'A'
-      },
-      include: {
-          model: sequelize.categories,
-          attributes: ['name']
-      },
-      attributes: {
-          excldue: ['storeName', 'variant', 'note']
-      },
-      limit: 5,
-      offset: (req.query.page ? req.query.page : 0) * 5
-    })
-    .then(product => {
-      res.send(product)
-    })
-    .catch(err => {
-      res.send(err)
-    })
-  } else {
-    products.findAndCountAll({
-      where: {
-        storeId: req.session.storeId,
-        status: 'A',
-        [Op.or]: [
-          {
-            name: {
-              [Op.like]: `%${req.query.search}%`
-            }
-          },
-          {
-            variant: {
-              [Op.like]: `%${req.query.search}%`
-            }
-          }
-        ]
-      },
-      include: {
-          model: sequelize.categories,
-          attributes: ['name']
-      },
-      attributes: {
-          excldue: ['storeName', 'variant', 'note']
-      },
-      limit: 5,
-      offset: (req.query.page ? req.query.page : 0) * 5
-    })
-    .then(product => {
-      res.send(product)
-    })
-    .catch(err => {
-      res.send(err)
-    })
-  }
-});
+// router.get('/', function(req, res, next) {
+//   // res.send('respond with a resource');
+//   if(!req.query.search){
+//     products.findAndCountAll({
+//       where: {
+//           storeId: req.session.storeId,
+//           status: 'A'
+//       },
+//       include: {
+//           model: sequelize.categories,
+//           attributes: ['name']
+//       },
+//       attributes: {
+//           excldue: ['storeName', 'variant', 'note']
+//       },
+//       limit: 5,
+//       offset: (req.query.page ? req.query.page : 0) * 5
+//     })
+//     .then(product => {
+//       res.send(product)
+//     })
+//     .catch(err => {
+//       res.send(err)
+//     })
+//   } else {
+//     products.findAndCountAll({
+//       where: {
+//         storeId: req.session.storeId,
+//         status: 'A',
+//         [Op.or]: [
+//           {
+//             name: {
+//               [Op.like]: `%${req.query.search}%`
+//             }
+//           },
+//           {
+//             variant: {
+//               [Op.like]: `%${req.query.search}%`
+//             }
+//           }
+//         ]
+//       },
+//       include: {
+//           model: sequelize.categories,
+//           attributes: ['name']
+//       },
+//       attributes: {
+//           excldue: ['storeName', 'variant', 'note']
+//       },
+//       limit: 5,
+//       offset: (req.query.page ? req.query.page : 0) * 5
+//     })
+//     .then(product => {
+//       res.send(product)
+//     })
+//     .catch(err => {
+//       res.send(err)
+//     })
+//   }
+// });
 
-router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD ITEM
-  products.create({
-    name: req.body.name,
-    qty: req.body.qty,
-    price: req.body.price,
-    categoryName: req.body.categoryName,
-    variant: req.body.variant,
-    note: req.body.note,
-    storeId: req.session.storeId,
-    status: 'N'
-  })
-  .then(product => {
-    res.send("success")
-  })
-  .catch(err => {
-    next(err)
-  })
-})
+// router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD ITEM
+//   products.create({
+//     name: req.body.name,
+//     qty: req.body.qty,
+//     price: req.body.price,
+//     categoryName: req.body.categoryName,
+//     variant: req.body.variant,
+//     note: req.body.note,
+//     storeId: req.session.storeId,
+//     status: 'N'
+//   })
+//   .then(product => {
+//     res.send("success")
+//   })
+//   .catch(err => {
+//     next(err)
+//   })
+// })
 
 router.get('/validation/:attribute', (req, res, next) => {
   let attribute = req.params.attribute
@@ -166,8 +173,12 @@ router.post('/login', (req,res)=>{
         if(result){
           req.session.storeId = user.id
           req.session.username = user.username
+          req.session.fullName = user.fullName
           req.session.storeName = user.storeName
-          req.session.profilePic = user.profilePic
+          req.session.email = user.email
+          req.session.address = user.address
+          req.session.profilePic = user.profilePic ? user.profilePic : '/img/default-avatar.png'
+          req.session.phone = user.phone
           req.session.roleId = user.roleId
           // return res.redirect('http://localhost:8081/#/dashboard')
           return res.send('success')
@@ -179,19 +190,26 @@ router.post('/login', (req,res)=>{
   })  
 })
 
+router.post('/logout', (req, res) => {
+  req.session.destroy(err => {
+    if(err) {
+      console.log(err)
+    } else {
+      res.send('logged out')
+    }
+  })
+})
+
 /* GET USER PROFILE */
-router.get('/:id', (req, res, next) => {
-  if(req.session.storeId == req.params.id){
-    users.findOne({
-      where: {
-        id: req.params.id
-      }
-    })
-    .then(user => res.send(user))
-    .catch(err => next(err))
-  } else {
-    return res.status(404).send('user doesn\'t exist')
-  }
+router.get('/', (req, res, next) => {
+  // users.findOne({
+  //   where: {
+  //     storeName: req.session.storeName
+  //   }
+  // })
+  // .then(user => res.send(user))
+  // .catch(err => next(err))
+  res.send(req.session)
 })
 
 /* UPDATE USER PROFILE */
@@ -201,6 +219,7 @@ router.post('/profile', upload.single("file"), (req, res, next) => {
   
   try{
     if(!req.file){
+      console.log('no file')
       users.update({
         fullName: req.body.fullName,
         storeName: req.body.storeName,
@@ -212,73 +231,64 @@ router.post('/profile', upload.single("file"), (req, res, next) => {
         address: req.body.address
       }, {
         where: {
-          id: req.query.id
+          id: req.session.storeId
         }
       })
-      .then(async (user) => {
-        // req.session.profilePice = user.profilePic
-        
-        // if(req.session.profilePic != '' && target != '') {
-        //   await fs.unlink(req.session.profilePic, err => {
-        //     if(err) {
-        //       return res.send(err)
-        //     }
-        //   })
-    
-        //   fs.rename(temp, target, err => {
-        //     if(err) return res.send(err)
-        //   })
-        //   req.session.profilePic = user.profilePic
-        // }
+      .then(() => {
+        req.session.username = req.body.username
+        req.session.fullName = req.body.fullName
+        req.session.storeName = req.body.storeName
+        req.session.email = req.body.email
+        req.session.address = req.body.address
+        req.session.phone = req.body.phone
+
         return res.send('success')
       })
       .catch(err => {
         next(err)
       })
     } else {
+      console.log(req.file.path)
       temp = req.file.path
       const mimetype = path.extname(req.file.originalname)
-      if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
+      if(msg == 'good file') {
         target = `/img/${req.session.username}${mimetype}`
-      } else {
+
+        users.update({
+          fullName: req.body.fullName,
+          storeName: req.body.storeName,
+          username: req.body.username,
+          // dob: req.body.dob,
+          // gender: req.body.gender,
+          email: req.body.email,
+          phone: req.body.phone,
+          address: req.body.address,
+          profilePic: target
+        }, {
+          where: {
+            id: req.session.storeId
+          }
+        })
+        .then(() => {
+          try{
+            req.session.username = req.body.username
+            req.session.fullName = req.body.fullName
+            req.session.storeName = req.body.storeName
+            req.session.email = req.body.email
+            req.session.address = req.body.address
+            req.session.phone = req.body.phone
+            req.session.profilePic = target
+          } catch(err) {
+            console.log(err)
+          }
+          return res.send('success')
+        })
+        .catch(err => {
+          next(err)
+        })
+      } else if(msg == 'wrong file') {
         return res.send(`wrong file`)
       }
-
-      users.update({
-        fullName: req.body.fullName,
-        storeName: req.body.storeName,
-        username: req.body.username,
-        // dob: req.body.dob,
-        // gender: req.body.gender,
-        email: req.body.email,
-        phone: req.body.phone,
-        address: req.body.address,
-        profilePic: target
-      }, {
-        where: {
-          id: req.query.id
-        }
-      })
-      .then(async (user) => {
-        // req.session.profilePice = user.profilePic
-        
-        // if(req.session.profilePic != '' && target != '') {
-        //   await fs.unlink(req.session.profilePic, err => {
-        //     if(err) {
-        //       return res.send(err)
-        //     }
-        //   })
-    
-        //   fs.rename(temp, target, err => {
-        //     if(err) return res.send(err)
-        //   })
-        //   req.session.profilePic = user.profilePic
-        // }
-        return res.send('success')
-      })
-      .catch(err => {
-        next(err)
-      })
     }
   } catch(err) {
     console.log(err)
@@ -596,16 +606,6 @@ router.post('/forgot-password', (req, res) => {
         id: req.query.userid
       }
     })
-  })
-})
-
-router.get('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if(err) {
-      console.log(err)
-    } else {
-      res.send('logged out')
-    }
   })
 })
 

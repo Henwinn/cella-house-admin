@@ -24,7 +24,7 @@
       {{user.description}}
     </p>
     <center>
-       <router-link :to="{ path: 'editProfile', query: { id: user.id }}">
+        <router-link :to="{ path: 'editProfile' }">
             <button tag="a"  class="btn" >Edit</button >
         </router-link>
     </center>
@@ -64,11 +64,10 @@ import Card from '../components/Cards/Card.vue';
       this.getUsers();
     },
     methods: {
-      async getUsers(id) {
+      async getUsers() {
         try {
-          const response = await axios.get(`http://localhost:3000/users/7`); //sementara gini dlu
+          const response = await axios.get(`http://localhost:3000/users`); //sementara gini dlu
           this.user = response.data;
-          
         } catch (err) {
           console.log(err);
           alert('err: ' + err)

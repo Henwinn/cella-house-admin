@@ -94,7 +94,8 @@ import axios from 'axios';
       },
       async getUserById() { //getbyid
         try {
-          const response = await axios.get (`http://localhost:3000/users/${this.$route.query.id}`); 
+          const response = await axios.get (`http://localhost:3000/users`); 
+          console.log(response.data)
           this.storeName = response.data.storeName;
           this.fullName = response.data.fullName;
           this.username = response.data.username;
@@ -116,8 +117,8 @@ import axios from 'axios';
           formData.append("phone", this.storeNumber)
           formData.append("address", this.address)
           formData.append("file", this.file)
-          const resp = await axios.post(`http://localhost:3000/users/profile?id=${this.$route.query.id}`, formData)
-          
+          const resp = await axios.post(`http://localhost:3000/users/profile`, formData)
+
           if(resp.data == 'wrong file'){
             alert('profile picture must be an image')
           } else {

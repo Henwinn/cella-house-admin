@@ -65,24 +65,21 @@ export default {
     methods: {
         login: (e) => {
             e.preventDefault()
-            let login = () => {
-                let data = {
-                    username: e.target.elements.username.value,
-                    password: e.target.elements.password.value
-                }
-                axios.post("http://localhost:3000/users/login", data, {withCredentials: true})
-                .then((response) => {
-                    if(response.data == 'success'){
-                        console.log("logged")
-                        alert('success') //redirect ke dashboard
-                    } else {
-                        console.log("fail")
-                        alert('username or password incorrect!')
-                    }
-                })
-                .catch(err => console.log(err))
+            let data = {
+                username: e.target.elements.username.value,
+                password: e.target.elements.password.value
             }
-            login()
+            axios.post("http://localhost:3000/users/login", data)
+            .then((response) => {
+                if(response.data == 'success'){
+                    console.log("logged")
+                    this.$router.push({name: 'dashboard'})
+                } else {
+                    console.log("fail")
+                    alert('username or password incorrect!')
+                }
+            })
+            .catch(err => console.log(err))
         }
     }
 };
