@@ -43,7 +43,7 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td>
                       <td class="has-text-centered">
-                        <button class="btn" @click="uploadInvoice(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Upload Invoice</button >
+                        <button class="btn" @click="insertInvoice(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Insert Invoice Number</button >
                         <button class="btn" @click="cancelDropship(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Cancel Dropship</button >
                           <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
@@ -82,7 +82,8 @@ export default {
         search: '',
         pageSize: 5,
         total:'',
-        currPage: 0
+        currPage: 0,
+        paymentInvoice: ''
       };
     },
     created() {
@@ -117,16 +118,18 @@ export default {
         }catch (err) {
           console.log(err);
         }
-      },      
-
-       async uploadInvoice(id) {
+      },
+      async insertInvoice(id) {
         
-        try {
-          await axios.post(`http://localhost:3000/users/`);
-          this.getDropships();
-        }catch (err) {
-          console.log(err);
+        this.paymentInvoice = prompt("Enter invoice number")
+        let data = {
+          paymentInvoice: this.paymentInvoice 
         }
+        const response = await axios.post(`http://localhost:3000/users/dropship/insert-invoice/${id}`, data)
+        if(response.data == 'success'){
+          alert(`Thank you for your payment, we will be checking your invoice soon!`)
+        }
+        this.getDropships()
       },      
     // searchData() {
     //   axios.get("http://localhost:3000/users/get/dropship?search=" + this.search)

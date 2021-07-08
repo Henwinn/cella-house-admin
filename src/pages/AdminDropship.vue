@@ -53,7 +53,7 @@
                       <td class="has-text-centered">
                         <button class="btn" v-if="dropship.status != 'ON PACKAGING'  && dropship.status != 'REJECTED' && dropship.status != 'CANCELED'" @click="updateStatus(dropship.id)"
                         
-                          >Update Status</button >
+                          >Approve</button >
                         
                             <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 

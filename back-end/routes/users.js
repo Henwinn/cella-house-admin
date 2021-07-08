@@ -20,10 +20,6 @@ const upload = multer({
   storage: storage
 })
 
-const pay = multer({
-  dest: "../public/images/invoice"
-})
-
 const users = sequelize.users
 const dropships = sequelize.dropships
 const products = sequelize.products
@@ -381,36 +377,19 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
 })
 
 //USER UPLOAD PAYMENT RECEIPT
-router.post('/dropship/upload-payment', pay.single('file') , (req, res) => {
-  var temp = ''
-  var target = ''
-
-  if(req.file){
-    temp = req.file.path
-    const mimetype = path.extname(req.file.originalname)
-    if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
-      target = path.join(__dirname, `../public/images/invoice/${req.session.storeName-Date.now()}_invoice${mimetype}`) //rename profilePic file
-    } else {
-      return res.send('incorrect file')
-    }
-  } else {
-    return res.send("no file")
-  }
-
+router.post('/dropship/insert-invoice/:dropshipId', (req, res) => {
   dropships.update({
-    paymentInvoice: target,
+    paymentInvoice: req.body.paymentInvoice,
     status: 'PENDING APPROVAL'
   }, {
     where: {
-      id: req.query.dropshipId
+      id: req.params.dropshipId
     }
   })
   .then(() => {
-    fs.rename(temp, target, err => {
-      if(err) return res.send(err)
-    })
+    return res.send('success')
   })
-  .catch(err => console.log(err))
+  .catch(err => next(err))
 })
 
 //GET DROPSHIP MADE BY THIS USER
