@@ -51,16 +51,16 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td> -->
                       <td class="has-text-centered">
-                        <button class="btn" v-if="dropship.status != 'ON PACKAGING'  && dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.paymentInvoice != null" @click="updateStatus(dropship.id)"
+                        <button class="btn" v-if="dropship.status == 'PENDING APPROVAL' || dropship.status == 'PENDING PAYMENT' && dropship.paymentInvoice == ''" @click="updateStatus(dropship.id)"
                         
                           >Approve</button >
                         
                             <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
-                          <button tag="a"  class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'PENDING PAYMENT' && dropship.status != 'CANCELED'" >Tracking</button >
+                          <button tag="a"  class="btn" v-if="dropship.status == 'ON PACKAGING'" @click="donePackaging(dropship.id)">Done Packaging</button >
                           <!-- </router-link> -->
 
-                          <button class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' " @click="rejectProduct(dropship.id)">Reject</button>
+                          <button class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.status != 'COMPLETE' && !dropship.status.includes('ON SHIPMENT')" @click="rejectProduct(dropship.id)">Reject</button>
                       </td>
                     </tr>
                 </tbody>
@@ -115,17 +115,17 @@ export default {
         }
       },
       async updateStatus(val) {
-      try {
-        await axios.post(`http://localhost:3000/admin/dropship/approve/${val}`);
-        alert('Product Approved')
-        this.getDropships();
-      }catch (err) {
-        console.log(err);
-      }
-    },
+        try {
+          await axios.post(`http://localhost:3000/admin/dropship/approve/${val}`);
+          alert('Product Approved')
+          this.getDropships();
+        }catch (err) {
+          console.log(err);
+        }
+      },
       async rejectProduct(val) {
-      let answer = window.confirm("Are You Sure ?")
-      if(answer) {
+        let answer = window.confirm("Are You Sure ?")
+        if(answer) {
           try {
             await axios.post(`http://localhost:3000/admin/dropship/reject/${val}`);
             alert('Product Rejected')
@@ -133,10 +133,22 @@ export default {
           }catch (err) {
             console.log(err);
           }
-      }else{
-        return
-      }
-    },
+        }else{
+          return
+        }
+      },
+      async donePackaging(val){
+        let answer = confirm('Are you sure this product has properly packaged')
+
+        if(answer){
+          const resp = await axios.get(`https://tracking.bring.com/api/tracking.json?q=TESTPACKAGE-AT-PICKUPPOINT`)
+          let data = {
+            location: resp.data.consignmentSet[0].packageSet[0].eventSet[0].description
+          }
+          const response = await axios.post(`http://localhost:3000/admin/dropship/ship/${val}`, data)
+          this.getDropships()
+        }
+      },
       page(val){
         this.currPage = val-1
         this.getDropships(val)

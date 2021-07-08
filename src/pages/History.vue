@@ -46,8 +46,7 @@
                         <button class="btn" @click="insertInvoice(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Insert Invoice Number</button >
                         <button class="btn" @click="cancelDropship(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Cancel Dropship</button >
                           <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
-
-                          <button tag="a"  class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.status != 'PENDING PAYMENT' " >Tracking</button >
+                        <button class="btn" v-if="dropship.status.includes('ON SHIPMENT')" @click="dropshipFinished(dropship.id)" >Dropship Finished</button >
                           <!-- </router-link> -->
                        
                       </td>
@@ -125,7 +124,6 @@ export default {
         }
       },
       async insertInvoice(id) {
-        
         this.paymentInvoice = prompt("Enter invoice number")
         let data = {
           paymentInvoice: this.paymentInvoice 
@@ -135,7 +133,18 @@ export default {
           alert(`Thank you for your payment, we will be checking your invoice soon!`)
         }
         this.getDropships()
-      },      
+      },
+      async dropshipFinished(id){
+        let answer = confirm('Are you sure this dropship has finished?')
+
+        if(answer){
+          const response = await axios.post(`http://localhost:3000/users/dropship/${id}`)
+          if(response.data == 'success'){
+            alert('Dropship finished!')
+          }
+        }
+        this.getDropships()
+      },
     // searchData() {
     //   axios.get("http://localhost:3000/users/get/dropship?search=" + this.search)
     //     .then(response => {
@@ -147,10 +156,10 @@ export default {
     //     });
     // },
 
-    page(val){
-      this.currPage = val - 1
-      this.getDropships(val)
-    }
+      page(val){
+        this.currPage = val - 1
+        this.getDropships(val)
+      }
   }
 }
     

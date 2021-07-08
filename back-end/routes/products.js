@@ -4,27 +4,63 @@ const sequelize = require('../models');
 const products = sequelize.products
 
 router.get('/', (req, res, next) => {
-    products.findAndCountAll({
-        where: {
+    if(!req.query.search){
+        products.findAndCountAll({
+          where: {
+              storeId: req.session.storeId,
+              status: 'A'
+          },
+          include: {
+              model: sequelize.categories,
+              attributes: ['name']
+          },
+          attributes: {
+              excldue: ['storeName', 'variant', 'note']
+          },
+          limit: 5,
+          offset: (req.query.page ? req.query.page : 0) * 5
+        })
+        .then(product => {
+          res.send(product)
+        })
+        .catch(err => {
+          res.send(err)
+        })
+      } else {
+        products.findAndCountAll({
+          where: {
             storeId: req.session.storeId,
-            status: 'A'
-        },
-        include: {
-            model: sequelize.categories,
-            attributes: ['name']
-        },
-        attributes: {
-            excldue: ['storeName', 'variant', 'note']
-        },
-        limit: 5,
-        offset: (req.query.page ? req.query.page : 0) * 5
-    })
-    .then(product => {
-        res.send(product)
-    })
-    .catch(err => {
-        next(err)
-    })
+            status: 'A',
+            [Op.or]: [
+              {
+                name: {
+                  [Op.like]: `%${req.query.search}%`
+                }
+              },
+              {
+                variant: {
+                  [Op.like]: `%${req.query.search}%`
+                }
+              }
+            ]
+          },
+          include: {
+              model: sequelize.categories,
+              attributes: ['name']
+          },
+          attributes: {
+              excldue: ['storeName', 'variant', 'note']
+          },
+          limit: 5,
+          offset: (req.query.page ? req.query.page : 0) * 5
+        })
+        .then(product => {
+          res.send(product)
+        })
+        .catch(err => {
+          res.send(err)
+        })
+    }
 })
 
 router.get('/id/:id', (req, res, next) => {

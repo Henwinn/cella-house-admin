@@ -70,7 +70,7 @@ export default {
                     username: e.target.elements.username.value,
                     password: e.target.elements.password.value
                 }
-                axios.post("http://localhost:3000/users/login", data)
+                axios.post("http://localhost:3000/users/login", data, {withCredentials: true})
                 .then((response) => {
                     if(response.data == 'success'){
                         console.log("logged")
