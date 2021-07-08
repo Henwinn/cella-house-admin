@@ -124,12 +124,17 @@ export default {
       }
     },
       async rejectProduct(val) {
-      try {
-        await axios.post(`http://localhost:3000/admin/dropship/reject/${val}`);
-        alert('Product Rejected')
-        this.getDropships();
-      }catch (err) {
-        console.log(err);
+      let answer = window.confirm("Are You Sure ?")
+      if(answer) {
+          try {
+            await axios.post(`http://localhost:3000/admin/dropship/reject/${val}`);
+            alert('Product Rejected')
+            this.getDropships();
+          }catch (err) {
+            console.log(err);
+          }
+      }else{
+        return
       }
     },
       page(val){

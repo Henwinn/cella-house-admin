@@ -102,13 +102,21 @@ export default {
       }
     },
     async rejectProduct(val) {
-      try {
+      let answer = window.confirm("Are You Sure?")
+      if (answer) {
+         try {
         await axios.post(`http://localhost:3000/admin/reject-product/${val}`);
         alert('Product Rejected')
         this.getProducts();
       }catch (err) {
         console.log(err);
       }
+      }else{
+        return
+      }
+
+
+     
     },
     page(val){
       this.currPage = val - 1

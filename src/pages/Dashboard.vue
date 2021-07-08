@@ -111,20 +111,37 @@ export default {
         }
       },
       deleteProduct(id) {
-        try {
+
+        let answer = window.confirm("Are You Sure ?")
+
+        if (answer) {
+          try {
           axios.post(`http://localhost:3000/products/delete/${id}`);
           this.getProducts();
         }catch (err) {
           console.log(err);
         }
+        }else{
+          return
+        }
+        
       },
       withdrawProduct(id){
-        try {
-          axios.post(`http://localhost:3000/products/withdraw/${id}`);
-          this.getProducts();
-        }catch (err) {
-          console.log(err);
+        let answer = window.confirm("Withdraw Item")
+
+        if (answer) {
+          try {
+            axios.post(`http://localhost:3000/products/withdraw/${id}`);
+            this.getProducts();
+          }catch (err) {
+            console.log(err);
+          }
+        }else{
+          return
         }
+
+
+        
       },
       page(val){
         this.currPage = val-1
