@@ -77,7 +77,7 @@
                            menu-classes="dropdown-navbar">
               <a slot="title" href="#" class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="true">
                 <div class="photo">
-                  <img src="img/anime3.png">
+                  <img :src="user.profilePic" @error="alternativeImg()">
                 </div>
                 <b class="caret d-none d-lg-block d-xl-block"></b>
                 <p class="d-lg-none">
@@ -87,7 +87,7 @@
           
              
               <li class="nav-link">
-                <a href="#" class="nav-item dropdown-item">Log out</a>
+                <a class="nav-item dropdown-item" @click="logout()" style="color: black;">Log out</a>
               </li>
             </base-dropdown>
           </ul>
@@ -99,6 +99,7 @@
 <script>
   import { CollapseTransition } from 'vue2-transitions';
   import Modal from '@/components/Modal';
+  import axios from 'axios'
 
   export default {
     components: {
@@ -119,8 +120,12 @@
         activeNotifications: false,
         showMenu: false,
         searchModalVisible: false,
-        searchQuery: ''
+        searchQuery: '',
+        user: []
       };
+    },
+    created(){
+      this.getUsers()
     },
     methods: {
       capitalizeFirstLetter(string) {
@@ -140,6 +145,22 @@
       },
       toggleMenu() {
         this.showMenu = !this.showMenu;
+      },
+      async getUsers(id) {
+        try {
+          const response = await axios.get(`http://localhost:3000/users/7`); //sementara gini dlu
+          this.user = response.data;
+          
+        } catch (err) {
+          console.log(err);
+        }
+      },
+      async alternativeImg(){
+        this.user.profilePic = '/img/default-avatar.png'
+      },
+      async logout(){
+        await axios.get('http://localhost:3000/users/logout')
+        this.$router.push('login')
       }
     }
   };
