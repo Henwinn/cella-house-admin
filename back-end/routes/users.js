@@ -461,7 +461,7 @@ router.get('/get/dropship', (req, res, next) => {
       .catch(err => {
         next(err)
       })
-    } else {
+    } else { 
       dropships.findAndCountAll({
         where: {
           storeId: 7, //req.session.storeId
@@ -487,26 +487,90 @@ router.get('/get/dropship', (req, res, next) => {
           {
             model: sequelize.customers,
             attributes: ['name', 'phone']
-            // where: {
-            //   [Op.or]: [
-            //     {
-            //       name: {
-            //         [Op.like]: `%${req.query.search}%`
-            //       }
-            //     }
-            //   ]
-            // }
           },
           {
             model: sequelize.cities,
             attributes: ['province_name', 'city_name', 'postal_code']
+          },
+          {
+            model: products,
+            attributes:['name']
           }
         ],
         limit: 5,
         offset: (req.query.page ? req.query.page : 0) * 5
       })
-      .then(dropship => {
-        return res.send(dropship)
+      .then(async dropship => {
+        if(dropship.count == 0){
+          let data = await dropships.findAndCountAll({
+            where: {
+              storeId: 7, //req.session.storeId
+            },
+            include: [
+              {
+                model: sequelize.customers,
+                attributes: ['name', 'phone'],
+                where: {
+                  [Op.or]: [
+                    {
+                      name: {
+                        [Op.like]: `%${req.query.search}%`
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                model: sequelize.cities,
+                attributes: ['province_name', 'city_name', 'postal_code']
+              },
+              {
+                model: products,
+                attributes:['name']
+              }
+            ],
+            limit: 5,
+            offset: (req.query.page ? req.query.page : 0) * 5
+          })
+          
+          if(data.count == 0){
+            let data = await dropships.findAndCountAll({
+              where: {
+                storeId: 7, //req.session.storeId
+              },
+              include: [
+                {
+                  model: sequelize.customers,
+                  attributes: ['name', 'phone']
+                },
+                {
+                  model: sequelize.cities,
+                  attributes: ['province_name', 'city_name', 'postal_code']
+                },
+                {
+                  model: products,
+                  attributes:['name'],
+                  where: {
+                    [Op.or]: [
+                      {
+                        name: {
+                          [Op.like]: `%${req.query.search}%`
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              limit: 5,
+              offset: (req.query.page ? req.query.page : 0) * 5
+            })
+            return res.send(data)
+          } else {
+            return res.send(data)
+          }
+        } else {
+          return res.send(dropship)
+        }
       })
       .catch(err => {
         next(err)
