@@ -51,14 +51,16 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td> -->
                       <td class="has-text-centered">
-                        <button class="btn"
+                        <button class="btn" v-if="dropship.status != 'ON PACKAGING'  && dropship.status != 'REJECTED' && dropship.status != 'CANCELED'" @click="updateStatus(dropship.id)"
                         
                           >Update Status</button >
                         
                             <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
-                          <button tag="a"  class="btn" >Tracking</button >
+                          <button tag="a"  class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'PENDING PAYMENT' && dropship.status != 'CANCELED'" >Tracking</button >
                           <!-- </router-link> -->
+
+                          <button class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' " @click="rejectProduct(dropship.id)">Reject</button>
                       </td>
                     </tr>
                 </tbody>
@@ -113,6 +115,24 @@ export default {
           alert('err: ' + err)
         }
       },
+      async updateStatus(val) {
+      try {
+        await axios.post(`http://localhost:3000/admin/dropship/approve/${val}`);
+        alert('Product Approved')
+        this.getDropships();
+      }catch (err) {
+        console.log(err);
+      }
+    },
+      async rejectProduct(val) {
+      try {
+        await axios.post(`http://localhost:3000/admin/dropship/reject/${val}`);
+        alert('Product Rejected')
+        this.getDropships();
+      }catch (err) {
+        console.log(err);
+      }
+    },
        doSearch(value) { //ini bagian dari untuk search
         axios.get('http://localhost:3000/users/get/dropship?search=' + encodeURIComponent(value))
         .then((response) => {this.dropships = response.data.rows})

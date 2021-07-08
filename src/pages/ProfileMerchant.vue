@@ -6,7 +6,7 @@
     <div class="author">
 
 
-      <img class="avatar" src="img/anime6.png" alt="...">
+      <img class="avatar" :src="user.profilePic" alt="...">
       <!-- <h5 class="title">*Store Name</h5>
       <h5 class="title">*Store Owner</h5>
       <h5 class="title">*Store Address</h5>

@@ -47,7 +47,7 @@
                       
                           <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
-                          <button tag="a"  class="btn" >Tracking</button >
+                          <button tag="a"  class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.status != 'PENDING PAYMENT' " >Tracking</button >
                           <!-- </router-link> -->
                        
                       </td>
@@ -80,27 +80,26 @@ export default {
         dropships: [],
         users:[],
         search: '',
-        pageSize:'',
+        pageSize: 5,
         total:'',
         currPage: 0
       };
     },
     created() {
       this.getDropships();
-       this.doSearch = _.debounce(this.doSearch, 400);
+      this.getDropships = _.debounce(this.getDropships, 400);
     },
     watch: { //ini bagian dari untuk search
       search(value){
-        this.doSearch(value); 
+        this.getDropships(value); 
       }
     },
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get(`http://localhost:3000/users/get/dropship?page=${this.currPage}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          const response = await axios.get(`http://localhost:3000/users/get/dropship?page=${this.currPage}&search=${this.search}`); //route ini untuk testing aja karena perlu login kalau pakai route asli
           this.dropships = response.data.rows;
           this.total = response.data.count
-          this.pageSize = 5
         } catch (err) {
           console.log(err);
         }
@@ -118,13 +117,7 @@ export default {
         }catch (err) {
           console.log(err);
         }
-      },
-       doSearch(value) { //ini bagian dari untuk search
-        axios.get('http://localhost:3000/users/get/dropship?search=' + encodeURIComponent(value))
-        .then((response) => {this.dropships = response.data.rows})
-        .catch(e => console.log(e));
-      },
-      
+      },      
     // searchData() {
     //   axios.get("http://localhost:3000/users/get/dropship?search=" + this.search)
     //     .then(response => {

@@ -81,8 +81,8 @@ router.get('/', function(req, res, next) {
       attributes: {
           excldue: ['storeName', 'variant', 'note']
       },
-      limit: 3,
-      offset: (req.query.page ? req.query.page : 0) * 3
+      limit: 5,
+      offset: (req.query.page ? req.query.page : 0) * 5
     })
     .then(product => {
       res.send(product)
@@ -219,57 +219,91 @@ router.get('/:id', (req, res, next) => {
 router.post('/profile', upload.single("file"), (req, res, next) => {
   var target = ''
   var temp = ''
-  console.log('tes')
+
   try{
-    console.log('tes')
-    if(req.file != ''){
+    if(!req.file){
+      users.update({
+        fullName: req.body.fullName,
+        storeName: req.body.storeName,
+        username: req.body.username,
+        // dob: req.body.dob,
+        // gender: req.body.gender,
+        email: req.body.email,
+        phone: req.body.phone,
+        address: req.body.address
+      }, {
+        where: {
+          id: req.query.id
+        }
+      })
+      .then(async (user) => {
+        // req.session.profilePice = user.profilePic
+        
+        // if(req.session.profilePic != '' && target != '') {
+        //   await fs.unlink(req.session.profilePic, err => {
+        //     if(err) {
+        //       return res.send(err)
+        //     }
+        //   })
+    
+        //   fs.rename(temp, target, err => {
+        //     if(err) return res.send(err)
+        //   })
+        //   req.session.profilePic = user.profilePic
+        // }
+        return res.send('success')
+      })
+      .catch(err => {
+        next(err)
+      })
+    } else {
       temp = req.file.path
       const mimetype = path.extname(req.file.originalname)
       if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
         target = path.join(__dirname, `../public/images/${req.file.originalname}`) //${req.session.username}${mimetype}
       } else {
-        return res.send(`file must be picture`)
+        return res.send(`wrong file`)
       }
+
+      users.update({
+        fullName: req.body.fullName,
+        storeName: req.body.storeName,
+        username: req.body.username,
+        // dob: req.body.dob,
+        // gender: req.body.gender,
+        email: req.body.email,
+        phone: req.body.phone,
+        address: req.body.address,
+        profilePic: target
+      }, {
+        where: {
+          id: req.query.id
+        }
+      })
+      .then(async (user) => {
+        // req.session.profilePice = user.profilePic
+        
+        // if(req.session.profilePic != '' && target != '') {
+        //   await fs.unlink(req.session.profilePic, err => {
+        //     if(err) {
+        //       return res.send(err)
+        //     }
+        //   })
+    
+        //   fs.rename(temp, target, err => {
+        //     if(err) return res.send(err)
+        //   })
+        //   req.session.profilePic = user.profilePic
+        // }
+        return res.send('success')
+      })
+      .catch(err => {
+        next(err)
+      })
     }
   } catch(err) {
     console.log(err)
   }
-
-  users.update({
-    fullName: req.body.fullName,
-    storeName: req.body.storeName,
-    username: req.body.username,
-    // dob: req.body.dob,
-    // gender: req.body.gender,
-    email: req.body.email,
-    phone: req.body.phone,
-    address: req.body.address,
-    profilePic: target
-  }, {
-    where: {
-      id: req.query.id
-    }
-  })
-  .then(async (user) => {
-    // req.session.profilePice = user.profilePic
-    
-    // if(req.session.profilePic != '' && target != '') {
-    //   await fs.unlink(req.session.profilePic, err => {
-    //     if(err) {
-    //       return res.send(err)
-    //     }
-    //   })
-
-    //   fs.rename(temp, target, err => {
-    //     if(err) return res.send(err)
-    //   })
-    //   req.session.profilePic = user.profilePic
-    // }
-    return res.send('success')
-  })
-  .catch(err => {
-    next(err)
-  })
 })
 
 /* USER CREATE DROPSHIP REQUEST */
@@ -307,21 +341,29 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
           customerId: data.id,
           userId: 7 //req.session.storeId
         })
-      }
-
-      if(customer.users == ''){
-        console.log('customer: ' + customer)
+        .catch(err => console.log(`error: ${err}`))
+      } else if(customer.users == ''){
+        try{
+          console.log(customer.users)
+        } catch(err){
+          console.log(err)
+        }
         sequelize.customers_users.create({
           customerId: customer.id,
           userId: 7 //req.session.storeId
         })
       }
 
+      try{
+        console.log(data.id)
+      } catch(err){
+        console.log(err)
+      }
       dropships.create({
         storeId: 7, //req.session.storeId
         qty: req.body.qty,
         itemWeight: req.body.itemWeight,
-        customerId: customer.id,
+        customerId: data.id,
         provinceIdOrigin: 6,
         cityIdOrigin: 151,
         provinceIdDestination: req.body.provinceIdDestination,
@@ -332,6 +374,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
         status: 'PENDING PAYMENT'
       })
       .then(async dropship => {
+        console.log('final block')
         await dropship.addProducts(req.params.prodId)
 
         console.log(req.body.qty + " " + req.params.prodId)
