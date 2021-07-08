@@ -91,26 +91,19 @@ export default {
 
       
       async deleteMerchant(val) {
-        // try {
-        //   await axios.delete(`http://localhost:3000/admin/user/:id?id=${id}`);
-        //   this.getMerchants();
-        // }catch (err) {
-        //   console.log(err);
-        // }
-
-        //  axios
-        //   .delete(`http://localhost:3000/admin/user/:id?id=${id}`)
-        //   .then(response => {
-        //     this.result.splice(id, 1);
-        //     console.log(this.result);
-        //   });
-
-        try {
-          await axios.delete(`http://localhost:3000/admin/user/${val}`);
-          this.getMerchants();
-        }catch (err) {
-          console.log(err);
+        let answer = window.confirm("Are You Sure?")
+        if (answer) {
+          try {
+           await axios.delete(`http://localhost:3000/admin/user/${val}`);
+            this.getMerchants();
+          }catch (err) {
+            console.log(err);
+          }
+        }else{
+          return
         }
+
+        
       },
       async searchMerchant(value){
         try{
