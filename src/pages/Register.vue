@@ -275,12 +275,6 @@ export default {
                 this.errors.push("Confirm password and password must be same");
             }
             
-
-
-            //yang password ini gimana ya bkin nya? sama username nya itu cek di database biar gak name is choosen gmna?
-
-           
-
             if (!this.errors.length) {
                 let data = {
                     full_name: e.target.elements.full_name.value,
@@ -293,7 +287,7 @@ export default {
                     address: e.target.elements.address.value,
                     password: e.target.elements.password.value,
                 }
-                if(this.hideUsername || this.hideStorename){
+                if(this.hideUsername || this.hideStorename || this.hideStoreemail){
                     return
                 } else {
                     axios.post('http://localhost:3000/users/register', data)
