@@ -20,7 +20,7 @@
                             </div>
 
 
-                            <form id="app" @submit.prevent="handleSubmit" method="post">
+                            <form @submit.prevent="handleSubmit" method="post">
 
                                  <p v-if="errors.length">
                                     <b>Please correct the following error(s):</b>
@@ -183,7 +183,7 @@ import 'vue2-datepicker/index.css';
 
 export default {
     name:'Register',
-    el: '#app',
+    
     components: { DatePicker },
     data() {
         return {
