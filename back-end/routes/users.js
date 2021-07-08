@@ -138,7 +138,7 @@ router.post('/register', (req,res, next)=>{
       email: req.body.email,
       phone: req.body.phone,
       address: req.body.address,
-      password: req.body.password,
+      password: result,
       roleId: 2
     })
     .then(() => {
