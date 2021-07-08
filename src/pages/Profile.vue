@@ -9,8 +9,7 @@
       <div class="block block-three"></div>
       <div class="block block-four"></div>
       <a href="#">
-        <img v-bind:src="user.profilePic" class="avatar" alt=""/>
-        <h5 class="title">{{ user.profilePic }}</h5>
+        <img v-bind:src="user.profilePic" class="avatar" @error='alternativeImg()' />
         <h5 class="title">{{ user.storeName }}</h5>
         <h5 class="title">{{ user.fullName }}</h5>
         <h5 class="title">{{ user.username }} </h5>
@@ -18,9 +17,7 @@
         <h5 class="title">{{ user.address }}</h5>
         <h5 class="title">{{ user.number }}</h5>
       </a>
-      <p class="description">
-        *Store Description
-      </p>
+      
     </div>
     <p></p>
     <p class="card-description">
@@ -49,7 +46,7 @@
 import axios from "axios";
 import Card from '../components/Cards/Card.vue';
   export default {
-     components: { Card },
+    components: { Card },
     props: {
       user: {
         type: Object,
@@ -58,16 +55,16 @@ import Card from '../components/Cards/Card.vue';
         }
       }
     },
-  data() {
-    return {
-      
-    };
-  },
-  created(){
-    this.getUsers();
-  },
-  methods: {
-    async getUsers(id) {
+    data() {
+      return {
+        
+      };
+    },
+    created(){
+      this.getUsers();
+    },
+    methods: {
+      async getUsers(id) {
         try {
           const response = await axios.get(`http://localhost:3000/users/7`); //sementara gini dlu
           this.user = response.data;
@@ -76,8 +73,11 @@ import Card from '../components/Cards/Card.vue';
           console.log(err);
           alert('err: ' + err)
         }
+      },
+      async alternativeImg(){
+        this.user.profilePic = '/img/default-avatar.png'
       }
-  }
+    }
   }
 </script>
 <style>

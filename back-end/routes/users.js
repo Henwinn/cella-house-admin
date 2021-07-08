@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const bcrypt = require('bcrypt');
+// const bcrypt = require('bcrypt');
 const sequelize = require('../models')
 const {Op} = require('sequelize')
 const multer = require('multer')
@@ -9,7 +9,7 @@ const fs = require('fs')
 
 var storage = multer.diskStorage({
   destination: function(req, file, cb){
-    cb(null, path.join(__dirname, `../public/images`))
+    cb(null, path.join(__dirname, `../../public/img`))
   },
    filename: function(req, file, cb){
      cb(null, file.originalname)
@@ -202,7 +202,7 @@ router.get('/:id', (req, res, next) => {
 router.post('/profile', upload.single("file"), (req, res, next) => {
   var target = ''
   var temp = ''
-
+  
   try{
     if(!req.file){
       users.update({
@@ -243,7 +243,7 @@ router.post('/profile', upload.single("file"), (req, res, next) => {
       temp = req.file.path
       const mimetype = path.extname(req.file.originalname)
       if(mimetype == ".png" || mimetype == ".jpg" || mimetype == ".jpeg") {
-        target = path.join(__dirname, `../public/images/${req.file.originalname}`) //${req.session.username}${mimetype}
+        target = `/img/${req.file.originalname}` //${req.session.username}${mimetype}
       } else {
         return res.send(`wrong file`)
       }
