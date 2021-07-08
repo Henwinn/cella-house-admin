@@ -111,11 +111,16 @@ export default {
         // }catch (err) {
         //   console.log(err);
         // }
-        try {
-          await axios.post(`http://localhost:3000/users/dropship/cancel/${id}`);
-          this.getDropships();
-        }catch (err) {
-          console.log(err);
+        let answer = window.confirm("Are You Sure ?")
+        if(answer) {
+          try {
+            await axios.post(`http://localhost:3000/users/dropship/cancel/${id}`);
+            this.getDropships();
+          }catch (err) {
+            console.log(err);
+          }
+        }else{
+          return
         }
       },      
 
