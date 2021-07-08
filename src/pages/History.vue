@@ -43,8 +43,8 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td>
                       <td class="has-text-centered">
+                        <button class="btn" @click="uploadInvoice(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Upload Invoice</button >
                         <button class="btn" @click="cancelDropship(dropship.id)" v-if="dropship.status == 'PENDING PAYMENT'">Cancel Dropship</button >
-                      
                           <!-- <router-link :to="{ path: 'tracking', query: { id: user.id }}"> -->
 
                           <button tag="a"  class="btn" v-if="dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.status != 'PENDING PAYMENT' " >Tracking</button >
@@ -113,6 +113,16 @@ export default {
         // }
         try {
           await axios.post(`http://localhost:3000/users/dropship/cancel/${id}`);
+          this.getDropships();
+        }catch (err) {
+          console.log(err);
+        }
+      },      
+
+       async uploadInvoice(id) {
+        
+        try {
+          await axios.post(`http://localhost:3000/users/`);
           this.getDropships();
         }catch (err) {
           console.log(err);
