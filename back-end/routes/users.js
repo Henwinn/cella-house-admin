@@ -555,12 +555,12 @@ router.get('/get/dropship', (req, res, next) => {
 })
 
 //DROPSHIP COMPLETION
-router.post('/dropship', (req, res) => {
+router.post('/dropship/:dropshipId', (req, res) => {
   dropships.update({
     status: 'COMPLETE'
   }, {
     where: {
-      id: req.query.dropshipId,
+      id: req.params.dropshipId,
     }
   })
   .then(() => {

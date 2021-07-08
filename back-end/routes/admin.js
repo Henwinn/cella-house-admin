@@ -96,6 +96,8 @@ router.post('/dropship/:action/:dropshipId', (req, res) => {
         status = 'ON PACKAGING'
     } else if(req.params.action == 'reject') {
         status = 'REJECTED'
+    } else if(req.params.action == 'ship') {
+        status = 'ON SHIPMENT: ' + req.body.location
     }
 
     dropships.update({
