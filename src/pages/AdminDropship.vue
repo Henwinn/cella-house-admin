@@ -51,7 +51,7 @@
                       <td>{{ dropship.note }}</td>
                       <td>{{ dropship.status }}</td> -->
                       <td class="has-text-centered">
-                        <button class="btn" v-if="dropship.status != 'ON PACKAGING'  && dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.paymentInvoice == ''" @click="updateStatus(dropship.id)"
+                        <button class="btn" v-if="dropship.status != 'ON PACKAGING'  && dropship.status != 'REJECTED' && dropship.status != 'CANCELED' && dropship.paymentInvoice != null" @click="updateStatus(dropship.id)"
                         
                           >Approve</button >
                         
