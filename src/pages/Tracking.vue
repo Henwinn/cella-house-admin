@@ -12,7 +12,7 @@
                 </div>
               </td>
              <div class="merchantName">
-                  <!-- <label>{{ user.storeName }}</label> -->
+                  <label>{{ dropship.storeName }}</label>
                 </div>
             </tr>
             <tr>
@@ -22,9 +22,9 @@
                 </div>
               </td>
               <td>
-                <!-- <div class="custName">
-                  <label>Customer Name</label>
-                </div> -->
+                <div class="custName">
+                  <label>{{ dropship.customer.name }}</label>
+                </div>
               </td>
             </tr>
             <tr>
@@ -33,11 +33,11 @@
                   <label>Address</label>
                 </div>
               </td>
-               <!-- <td>
+               <td>
                 <div class="address">
-                  <label>{{ user.address }}</label>
+                  <label>{{ dropship.address }}</label>
                 </div>
-              </td> -->
+              </td>
             </tr>
             <tr>
               <td>
@@ -107,7 +107,7 @@ export default {
       async getMerchant(){
          try {
           const response = await axios.get(`http://localhost:3000/users`); 
-          this.user = response.data;
+          this.dropship = response.data;
           
         } catch (err) {
           console.log(err);
