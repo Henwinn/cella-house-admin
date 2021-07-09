@@ -11,12 +11,20 @@
                   <label>Merchant Name</label>
                 </div>
               </td>
+             <div class="merchantName">
+                  <!-- <label>{{ user.storeName }}</label> -->
+                </div>
             </tr>
             <tr>
               <td>
                 <div class="custName">
                   <label>Customer Name</label>
                 </div>
+              </td>
+              <td>
+                <!-- <div class="custName">
+                  <label>Customer Name</label>
+                </div> -->
               </td>
             </tr>
             <tr>
@@ -25,6 +33,11 @@
                   <label>Address</label>
                 </div>
               </td>
+               <!-- <td>
+                <div class="address">
+                  <label>{{ user.address }}</label>
+                </div>
+              </td> -->
             </tr>
             <tr>
               <td>
@@ -77,7 +90,7 @@
     </div>
 </template>
 <script>
-
+import axios from "axios";
 export default {
 
   data() {
@@ -86,10 +99,22 @@ export default {
       }
     },
   created() {
-        this.getTracking();
+      this.getMerchant();
+      this.getTracking();
       
     },
     methods: {
+      async getMerchant(){
+         try {
+          const response = await axios.get(`http://localhost:3000/users`); 
+          this.user = response.data;
+          
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
+        }
+      },
+      
        async getTracking() {
         try {
           const response = await axios.get(`https://tracking.bring.com/api/tracking.json?q=TESTPACKAGE-AT-PICKUPPOINT`); //route ini untuk testing aja karena perlu login kalau pakai route asli
