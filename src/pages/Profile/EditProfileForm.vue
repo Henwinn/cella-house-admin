@@ -117,7 +117,8 @@ import axios from 'axios';
           formData.append("phone", this.storeNumber)
           formData.append("address", this.address)
           formData.append("file", this.file)
-          const resp = await axios.post(`http://localhost:3000/users/profile`, formData)
+          // const resp = await axios.post(`http://localhost:3000/users/profile`, formData)
+         const resp = await axios.post(`http://localhost:3000/users/profile?id=${this.$route.query.id}`, formData)
 
           if(resp.data == 'wrong file'){
             alert('profile picture must be an image')
