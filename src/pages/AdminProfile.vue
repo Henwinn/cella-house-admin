@@ -10,7 +10,8 @@
         <div class="block block-three"></div>
         <div class="block block-four"></div>
         <a href="#">
-          <img class="avatar" src="img/anime6.png" alt="...">
+          
+          <img v-bind:src="user.profilePic" class="avatar" @error='alternativeImg()' />
           
 
           <h5 class="title">{{ user.fullName }}</h5>
@@ -140,13 +141,16 @@ import Card from '../components/Cards/Card.vue';
   methods: {
     async getUsers(id) {
         try {
-          const response = await axios.get(`http://localhost:3000/users/1`); //sementara gini dlu
+          const response = await axios.get(`http://localhost:3000/users/`); 
           this.user = response.data;
           
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
         }
+      },
+      async alternativeImg(){
+        this.user.profilePic = '/img/default-avatar.png'
       }
   }
   }
