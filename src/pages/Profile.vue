@@ -24,9 +24,10 @@
       {{user.description}}
     </p>
     <center>
-        <router-link :to="{ path: 'editProfile' }">
+        <router-link :to="{ path: 'editProfile', query: { id: user.id } }">
             <button tag="a"  class="btn" >Edit</button >
         </router-link>
+      
     </center>
     <div slot="footer" class="button-container">
       <base-button icon round class="btn-facebook">
@@ -64,7 +65,7 @@ import Card from '../components/Cards/Card.vue';
       this.getUsers();
     },
     methods: {
-      async getUsers() {
+      async getUsers(id) {
         try {
           const response = await axios.get(`http://localhost:3000/users`); //sementara gini dlu
           this.user = response.data;
