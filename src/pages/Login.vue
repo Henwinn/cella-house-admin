@@ -63,7 +63,8 @@ import axios from "axios";
 export default {
     name: "Login",
     methods: {
-        login: (e) => {
+        login(e) {
+            let self = this;
             e.preventDefault()
             let data = {
                 username: e.target.elements.username.value,
