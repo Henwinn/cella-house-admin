@@ -1,8 +1,40 @@
 <template>
     <div class="row">
-      <div class="col-12">
+      <div class="col-md-10">
         <card >
-          asdas
+        <h1>Tracking</h1>
+        <form class="track">
+          <table>
+            <tr>
+              <td>
+                <div class="merchantName">
+                  <label>Merchant Name</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="custName">
+                  <label>Customer Name</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="address">
+                  <label>Address</label>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="evenSet">
+                  <label>Event Set</label>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </form>
              <!-- <div class="table-responsive">
             <h1>Tracking</h1>
             
@@ -56,4 +88,8 @@ export default {
   }
 </script>
 <style>
+
+.track  {
+  padding-bottom: 700px;
+}
 </style>
