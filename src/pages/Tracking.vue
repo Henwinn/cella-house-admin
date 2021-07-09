@@ -84,7 +84,26 @@ export default {
     return {
     
       }
+    },
+  created() {
+        this.getTracking();
+      
+    },
+    methods: {
+       async getTracking() {
+        try {
+          const response = await axios.get(`https://tracking.bring.com/api/tracking.json?q=TESTPACKAGE-AT-PICKUPPOINT`); //route ini untuk testing aja karena perlu login kalau pakai route asli
+          // this.products = response.data.rows; masih bingung ini gimana 
+          // this.total = response.data.count
+        } catch (err) {
+          console.log(err);
+          alert('err: ' + err)
+        }
+      },
+
     }
+
+
   }
 </script>
 <style>
