@@ -89,7 +89,7 @@ import axios from 'axios';
       },
       async getUserById() { //getbyid
         try {
-          const response = await axios.get (`http://localhost:3000/users/${this.$route.query.id}`);
+          const response = await axios.get (`http://localhost:3000/users/`);
           this.storeName = response.data.storeName;
           this.fullName = response.data.fullName;
           this.username = response.data.username;
