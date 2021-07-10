@@ -16,7 +16,7 @@ var storage = multer.diskStorage({
      let mimetype = path.extname(file.originalname)
      if(mimetype == '.jpg' || mimetype == '.png' || mimetype == '.jpeg'){
        msg = 'good file'
-       cb(null, `${req.session.storeName}${mimetype}`)
+       cb(null, `${req.session.username}${mimetype}`)
      } else {
       msg = 'wrong file'
      }
@@ -304,7 +304,6 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
     attributes: ['qty']
   })
   .then(async product => {
-    console.log(req.body.qty)
     if(product.qty < req.body.qty){
       return res.send(`quantity can't be 0 or exceeds your product quantity`)
     } else {
@@ -332,22 +331,13 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
         })
         .catch(err => console.log(`error: ${err}`))
       } else if(customer.users == ''){
-        try{
-          console.log(customer.users)
-        } catch(err){
-          console.log(err)
-        }
+        
         sequelize.customers_users.create({
           customerId: customer.id,
           userId: req.session.storeId
         })
       }
 
-      try{
-        console.log(customer.id)
-      } catch(err){
-        console.log(err)
-      }
       dropships.create({
         storeId: req.session.storeId,
         qty: req.body.qty,
@@ -363,10 +353,8 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
         status: 'PENDING PAYMENT'
       })
       .then(async dropship => {
-        console.log('final block')
         await dropship.addProducts(req.params.prodId)
 
-        console.log(req.body.qty + " " + req.params.prodId)
         await products.update({
           qty: (product.qty - req.body.qty)
         }, {
