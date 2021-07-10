@@ -125,7 +125,7 @@ export default {
                     note: e.target.elements.note.value,
                     
                 }
-                axios.post('http://localhost:3000/users/products/add', data) //ini untuk testing add product, nanti diubah ke route aslinya
+                axios.post('http://localhost:3000/products/add', data) //ini untuk testing add product, nanti diubah ke route aslinya
                 .then(respond => {
                     if(respond.data == 'success'){
                         alert('success add item')

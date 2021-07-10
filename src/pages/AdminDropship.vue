@@ -141,11 +141,7 @@ export default {
         let answer = confirm('Are you sure this product has properly packaged')
 
         if(answer){
-          const resp = await axios.get(`https://tracking.bring.com/api/tracking.json?q=TESTPACKAGE-AT-PICKUPPOINT`)
-          let data = {
-            location: resp.data.consignmentSet[0].packageSet[0].eventSet[0].description
-          }
-          const response = await axios.post(`http://localhost:3000/admin/dropship/ship/${val}`, data)
+          await axios.post(`http://localhost:3000/admin/dropship/ship/${val}`)
           this.getDropships()
         }
       },

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const sequelize = require('../models');
 const products = sequelize.products
+const {Op} = require('sequelize')
 
 router.get('/', (req, res, next) => {
     if(!req.query.search){
