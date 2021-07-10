@@ -34,87 +34,6 @@ const customers = sequelize.customers
 
 require('dotenv').config();
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//   // res.send('respond with a resource');
-//   if(!req.query.search){
-//     products.findAndCountAll({
-//       where: {
-//           storeId: req.session.storeId,
-//           status: 'A'
-//       },
-//       include: {
-//           model: sequelize.categories,
-//           attributes: ['name']
-//       },
-//       attributes: {
-//           excldue: ['storeName', 'variant', 'note']
-//       },
-//       limit: 5,
-//       offset: (req.query.page ? req.query.page : 0) * 5
-//     })
-//     .then(product => {
-//       res.send(product)
-//     })
-//     .catch(err => {
-//       res.send(err)
-//     })
-//   } else {
-//     products.findAndCountAll({
-//       where: {
-//         storeId: req.session.storeId,
-//         status: 'A',
-//         [Op.or]: [
-//           {
-//             name: {
-//               [Op.like]: `%${req.query.search}%`
-//             }
-//           },
-//           {
-//             variant: {
-//               [Op.like]: `%${req.query.search}%`
-//             }
-//           }
-//         ]
-//       },
-//       include: {
-//           model: sequelize.categories,
-//           attributes: ['name']
-//       },
-//       attributes: {
-//           excldue: ['storeName', 'variant', 'note']
-//       },
-//       limit: 5,
-//       offset: (req.query.page ? req.query.page : 0) * 5
-//     })
-//     .then(product => {
-//       res.send(product)
-//     })
-//     .catch(err => {
-//       res.send(err)
-//     })
-//   }
-// });
-
-// router.post('/products/add', (req,res, next) => { //API INI UNTUK TESTING ADD ITEM
-//   products.create({
-//     name: req.body.name,
-//     qty: req.body.qty,
-//     price: req.body.price,
-//     categoryName: req.body.categoryName,
-//     variant: req.body.variant,
-//     note: req.body.note,
-//     storeId: req.session.storeId,
-//     status: 'N'
-//   })
-//   .then(product => {
-//     res.send("success")
-//   })
-//   .catch(err => {
-//     next(err)
-//   })
-// })
-
 router.get('/validation/:attribute', (req, res, next) => {
   let attribute = req.params.attribute
   users.findOne({
@@ -202,13 +121,6 @@ router.post('/logout', (req, res) => {
 
 /* GET USER PROFILE */
 router.get('/', (req, res, next) => {
-  // users.findOne({
-  //   where: {
-  //     storeName: req.session.storeName
-  //   }
-  // })
-  // .then(user => res.send(user))
-  // .catch(err => next(err))
   res.send(req.session)
 })
 
@@ -270,17 +182,14 @@ router.post('/profile', upload.single("file"), (req, res, next) => {
           }
         })
         .then(() => {
-          try{
-            req.session.username = req.body.username
-            req.session.fullName = req.body.fullName
-            req.session.storeName = req.body.storeName
-            req.session.email = req.body.email
-            req.session.address = req.body.address
-            req.session.phone = req.body.phone
-            req.session.profilePic = target
-          } catch(err) {
-            console.log(err)
-          }
+          req.session.username = req.body.username
+          req.session.fullName = req.body.fullName
+          req.session.storeName = req.body.storeName
+          req.session.email = req.body.email
+          req.session.address = req.body.address
+          req.session.phone = req.body.phone
+          req.session.profilePic = target
+          
           return res.send('success')
         })
         .catch(err => {
@@ -374,7 +283,7 @@ router.post('/dropship/submission/:prodId', (req, res, next) => {
   })
 })
 
-//USER UPLOAD PAYMENT RECEIPT
+//USER INSERT INVOICE NUMBER
 router.post('/dropship/insert-invoice/:dropshipId', (req, res) => {
   dropships.update({
     paymentInvoice: req.body.paymentInvoice,
@@ -559,6 +468,7 @@ router.post('/dropship/:dropshipId', (req, res) => {
   }, {
     where: {
       id: req.params.dropshipId,
+      storeId: req.session.storeId
     }
   })
   .then(() => {
@@ -575,7 +485,7 @@ router.post('/dropship/cancel/:dropshipId', async (req, res) => {
     status: 'CANCELED'
   }, {
     where: {
-      //storeId: req.session.storeId
+      storeId: req.session.storeId,
       id: req.params.dropshipId,
       status: 'PENDING PAYMENT'
     }

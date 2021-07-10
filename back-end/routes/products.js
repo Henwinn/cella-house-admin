@@ -67,7 +67,7 @@ router.get('/', (req, res, next) => {
 router.get('/id/:id', (req, res, next) => {
     products.findOne({
         where: {
-            //storeId: req.session.storeId
+            storeId: req.session.storeId,
             id: req.params.id,
             status: 'A'
         }
@@ -116,7 +116,7 @@ router.post('/update', (req,res) => {
         note: req.body.note
     }, {
         where: {
-            // storeName: req.session.storeName,
+            storeId: req.session.storeId,
             id: req.query.prodId,
             status: 'A'
         }
@@ -134,7 +134,7 @@ router.post('/delete/:prodId', (req, res) => {
         status: 'D'
     }, {
         where: {
-            // storeId: req.session.storeId,
+            storeId: req.session.storeId,
             id: req.params.prodId
         }
     })
@@ -152,7 +152,7 @@ router.post('/withdraw/:prodId', (req, res, next) => {
         status: 'W'
     }, {
         where: {
-            //storeId: req.session.storeId
+            storeId: req.session.storeId,
             id: req.params.prodId
         }
     })
