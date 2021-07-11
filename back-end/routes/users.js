@@ -5,7 +5,8 @@ const sequelize = require('../models')
 const {Op} = require('sequelize')
 const multer = require('multer')
 const path = require('path')
-const fs = require('fs')
+const fs = require('fs');
+const axios = require('axios')
 
 var msg
 var storage = multer.diskStorage({
@@ -33,6 +34,12 @@ const products = sequelize.products
 const customers = sequelize.customers
 
 require('dotenv').config();
+
+router.get('/tracking', (req, res, next) => {
+  axios.get('https://tracking.bring.com/api/tracking.json?q=TESTPACKAGE-AT-PICKUPPOINT')
+  .then(resp => res.send(resp.data))
+  .catch(err => next(err))
+})
 
 router.get('/validation/:attribute', (req, res, next) => {
   let attribute = req.params.attribute
@@ -319,6 +326,10 @@ router.get('/get/dropship', (req, res, next) => {
           {
             model: products,
             attributes:['name']
+          },
+          {
+            model: users,
+            attributes:['storeName']
           }
         ],
         limit: 5,
@@ -330,7 +341,7 @@ router.get('/get/dropship', (req, res, next) => {
       .catch(err => {
         next(err)
       })
-    } else { 
+    } else {
       dropships.findAndCountAll({
         where: {
           storeId: req.session.storeId,
@@ -364,6 +375,10 @@ router.get('/get/dropship', (req, res, next) => {
           {
             model: products,
             attributes:['name']
+          },
+          {
+            model: users,
+            attributes:['storeName']
           }
         ],
         limit: 5,
@@ -396,6 +411,10 @@ router.get('/get/dropship', (req, res, next) => {
               {
                 model: products,
                 attributes:['name']
+              },
+              {
+                model: users,
+                attributes:['storeName']
               }
             ],
             limit: 5,
@@ -428,6 +447,10 @@ router.get('/get/dropship', (req, res, next) => {
                       }
                     ]
                   }
+                },
+                {
+                  model: users,
+                  attributes:['storeName']
                 }
               ],
               limit: 5,
@@ -450,7 +473,25 @@ router.get('/get/dropship', (req, res, next) => {
       where: {
         storeId: req.session.storeId,
         id: req.query.dropshipId
-      }
+      },
+      include: [
+        {
+          model: customers,
+          attributes: ['name', 'phone'],
+        },
+        {
+          model: sequelize.cities,
+          attributes: ['province_name', 'city_name', 'postal_code']
+        },
+        {
+          model: products,
+          attributes:['name']
+        },
+        {
+          model: users,
+          attributes:['storeName']
+        }
+      ]
     })
     .then(dropship => {
       return res.send(dropship)

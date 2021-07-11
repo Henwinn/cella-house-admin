@@ -50,7 +50,7 @@
                         
 
                           <router-link :to="{ path: 'tracking', query: { id: dropship.id }}">
-                        <button class="btn" v-if="dropship.status == 'ON PACKAGING'" >Tracking</button >
+                        <button class="btn" v-if="dropship.status == 'ON SHIPMENT'" >Tracking</button >
                           </router-link>
                        
                       </td>

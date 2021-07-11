@@ -12,7 +12,7 @@
                 </div>
               </td>
              <div class="merchantName">
-                  <label>{{ dropship.storeName }}</label>
+                  <label>{{ dropship.user.storeName }}</label>
                 </div>
             </tr>
             <tr>
@@ -43,6 +43,9 @@
               <td>
                 <div class="evenSet">
                   <label>Event Set</label>
+                  <ul>
+                    <li v-for="(event, idx) in tracking" :key="idx">{{event}}</li>
+                  </ul>
                 </div>
               </td>
             </tr>
@@ -95,31 +98,28 @@ export default {
 
   data() {
     return {
-    
+        tracking: [],
+        dropship: []
       }
     },
   created() {
       this.getMerchant();
       this.getTracking();
-      
     },
     methods: {
       async getMerchant(){
          try {
-          const response = await axios.get(`http://localhost:3000/users`); 
+          const response = await axios.get(`http://localhost:3000/users/get/dropship?dropshipId=${this.$route.query.id}`); 
           this.dropship = response.data;
-          
         } catch (err) {
           console.log(err);
-          alert('err: ' + err)
         }
       },
       
        async getTracking() {
         try {
-          const response = await axios.get(`https://tracking.bring.com/api/tracking.json?q=TESTPACKAGE-AT-PICKUPPOINT`); //route ini untuk testing aja karena perlu login kalau pakai route asli
-          // this.products = response.data.rows; masih bingung ini gimana 
-          // this.total = response.data.count
+          const response = await axios.get(`http://localhost:3000/users/tracking`);
+          this.tracking = response.data.consignmentSet[0].packageSet[0].eventSet.map(a => a.description)
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
@@ -127,8 +127,6 @@ export default {
       },
 
     }
-
-
   }
 </script>
 <style>
