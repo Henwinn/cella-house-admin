@@ -13,7 +13,7 @@
              class="mb-3 mb-sm-0">
              Add
              </base-button>
-             <base-button tag="a"
+             <base-button tag="a" @click="exportData()"
              class="mb-3 mb-sm-0">
              Export Data
              </base-button>
@@ -139,9 +139,9 @@ export default {
         }else{
           return
         }
-
-
-        
+      },
+      async exportData(){
+        await axios.get(`http://localhost:3000/products/export`)
       },
       page(val){
         this.currPage = val-1

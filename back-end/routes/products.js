@@ -3,65 +3,94 @@ var router = express.Router();
 const sequelize = require('../models');
 const products = sequelize.products
 const {Op} = require('sequelize')
+const fs = require('fs')
+const json2xls = require('json2xls')
+const path = require('path')
 
 router.get('/', (req, res, next) => {
     if(!req.query.search){
         products.findAndCountAll({
-          where: {
-              storeId: req.session.storeId,
-              status: 'A'
-          },
-          include: {
-              model: sequelize.categories,
-              attributes: ['name']
-          },
-          attributes: {
-              excldue: ['storeName', 'variant', 'note']
-          },
-          limit: 5,
-          offset: (req.query.page ? req.query.page : 0) * 5
+            where: {
+                storeId: req.session.storeId,
+                status: 'A'
+            },
+            include: {
+                model: sequelize.categories,
+                attributes: ['name']
+            },
+            attributes: {
+                excldue: ['storeName', 'variant', 'note']
+            },
+            limit: 5,
+            offset: (req.query.page ? req.query.page : 0) * 5
         })
         .then(product => {
-          res.send(product)
+            res.send(product)
         })
         .catch(err => {
-          res.send(err)
+            res.send(err)
         })
-      } else {
+        } else {
         products.findAndCountAll({
-          where: {
+            where: {
             storeId: req.session.storeId,
             status: 'A',
             [Op.or]: [
-              {
+                {
                 name: {
-                  [Op.like]: `%${req.query.search}%`
+                    [Op.like]: `%${req.query.search}%`
                 }
-              },
-              {
+                },
+                {
                 variant: {
-                  [Op.like]: `%${req.query.search}%`
+                    [Op.like]: `%${req.query.search}%`
                 }
-              }
+                }
             ]
-          },
-          include: {
-              model: sequelize.categories,
-              attributes: ['name']
-          },
-          attributes: {
-              excldue: ['storeName', 'variant', 'note']
-          },
-          limit: 5,
-          offset: (req.query.page ? req.query.page : 0) * 5
+            },
+            include: {
+                model: sequelize.categories,
+                attributes: ['name']
+            },
+            attributes: {
+                excldue: ['storeName', 'variant', 'note']
+            },
+            limit: 5,
+            offset: (req.query.page ? req.query.page : 0) * 5
         })
         .then(product => {
-          res.send(product)
+            res.send(product)
         })
         .catch(err => {
-          res.send(err)
+            res.send(err)
         })
     }
+})
+
+router.get('/export', (req, res, next) => {
+    products.findAll({
+        where: {
+            storeId: req.session.storeId,
+            status: 'A'
+        },
+        attributes: {
+            exclude: ['storeId', 'status']
+        }
+    })
+    .then((data) => {
+        let arr = data.map(a => a.dataValues)
+        // let k = 0
+        // arr.map(a => {
+        //     arr[k].category = a.category.name
+        //     k++
+        // })
+        let xls = json2xls(arr)
+        fs.writeFileSync('data.xlsx', xls, 'binary')
+        const file = path.join(__dirname, `../data.xlsx`)
+        res.setHeader('Content-Disposition', 'attachment: filename="' + file + '"')
+        res.sendFile(file)
+    })
+    .catch(err => next(err))
 })
 
 router.get('/id/:id', (req, res, next) => {
