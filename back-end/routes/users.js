@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const sequelize = require('../models')
 const {Op} = require('sequelize')
 const multer = require('multer')
@@ -95,8 +95,8 @@ router.post('/login', (req,res)=>{
     if(!user){
       return res.send('fail')
     } else {
-      // bcrypt.compare(req.body.password, user.password, (err,result)=>{
-      //   if(result){
+      bcrypt.compare(req.body.password, user.password, (err,result)=>{
+        if(result){
           req.session.storeId = user.id
           req.session.username = user.username
           req.session.fullName = user.fullName
@@ -106,12 +106,12 @@ router.post('/login', (req,res)=>{
           req.session.profilePic = user.profilePic ? user.profilePic : '/img/default-avatar.png'
           req.session.phone = user.phone
           req.session.roleId = user.roleId
-          // return res.redirect('http://localhost:8081/#/dashboard')
+          return res.redirect('http://localhost:8081/#/dashboard')
           return res.send('success')
-      //   } else {
-      //     return res.send('fail')
-      //   }
-      // })
+        } else {
+          return res.send('fail')
+        }
+      })
     }
   })  
 })
