@@ -8,6 +8,11 @@
                <input type="text" class="form-control" placeholder="Search by Item & Name" v-model="search">
               
             </div>
+
+            <base-button tag="a" @click="exportData()"
+             class="mb-3 mb-sm-0">
+             Export Data
+             </base-button>
             
              <table class="table is-striped is-bordered mt-2 is-fullwidth">
                <thead>
@@ -149,6 +154,9 @@ export default {
         }
         this.getDropships()
       },
+      //  async exportData(){
+      //   await axios.get(`http://localhost:3000/products/export`)
+      // },
     // searchData() {
     //   axios.get("http://localhost:3000/users/get/dropship?search=" + this.search)
     //     .then(response => {
