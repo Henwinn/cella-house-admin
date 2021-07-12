@@ -106,7 +106,7 @@ router.post('/login', (req,res)=>{
           req.session.profilePic = user.profilePic ? user.profilePic : '/img/default-avatar.png'
           req.session.phone = user.phone
           req.session.roleId = user.roleId
-          return res.redirect('http://localhost:8081/#/dashboard')
+          // return res.redirect('http://localhost:8081/#/dashboard')
           return res.send('success')
         } else {
           return res.send('fail')
