@@ -72,11 +72,8 @@ router.post('/reject-product/:id', (req, res, next) => {
 
 
 //GET DROPSHIP REQUEST NEEDED TO BE APPROVED
-router.get('/dropship/approve', (req, res) => {
+router.get('/dropship/all', (req, res) => {
     dropships.findAndCountAll({
-        where: {
-            status: 'PENDING APPROVAL'
-        },
         limit: 5,
         offset: (req.query.page ? req.query.page : 0) * 5
     })

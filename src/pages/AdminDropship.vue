@@ -106,7 +106,7 @@ export default {
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get(`http://localhost:3000/users/get/dropship?page=${this.currPage}&search=${this.search}`);
+          const response = await axios.get(`http://localhost:3000/admin/dropship/all`);
           this.dropships = response.data.rows;
           this.total = response.data.count
         } catch (err) {
