@@ -79,18 +79,26 @@ router.get('/export', (req, res, next) => {
     })
     .then((data) => {
         let arr = data.map(a => a.dataValues)
-        // let k = 0
-        // arr.map(a => {
-        //     arr[k].category = a.category.name
-        //     k++
-        // })
+        let k = 0
+        arr.map(a => {
+            delete a.id
+            delete a.createdAt
+            delete a.updatedAt
+        })
         let xls = json2xls(arr)
-        var fl = fs.writeFileSync('data.xlsx', xls, 'binary')
-        const file = path.join(__dirname, `../data.xlsx`)
-        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        res.setHeader('Content-Disposition', `attachment; filename=data.xlsx`);
-        // res.write(fl, 'binary')
-        return res.end()
+        var date = new Date()
+        var fileName = `products-report-${date.toDateString()}.xlsx`
+        var fl = fs.writeFileSync(fileName, xls, 'binary')
+        const file = path.join(__dirname, `../${fileName}`)
+        res.download(file, (err) => {
+            if(err){
+                console.log(err)
+            } else {
+                fs.unlink(file, () => {
+                    console.log(`success`)
+                })
+            }
+        })
     })
     .catch(err => next(err))
 })

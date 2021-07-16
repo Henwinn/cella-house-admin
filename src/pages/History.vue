@@ -154,9 +154,17 @@ export default {
         }
         this.getDropships()
       },
-      //  async exportData(){
-      //   await axios.get(`http://localhost:3000/products/export`)
-      // },
+       async exportData(){
+        const response = await axios.get(`http://localhost:3000/users/export/dropship`, {
+          responseType: 'arraybuffer'
+        })
+        var blob = new Blob([response.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
+        var link = document.createElement('a')
+        var date = new Date()
+        link.href = window.URL.createObjectURL(blob)
+        link.download = `dropship-report-${date.toDateString()}.xlsx`
+        link.click()
+      },
     // searchData() {
     //   axios.get("http://localhost:3000/users/get/dropship?search=" + this.search)
     //     .then(response => {
