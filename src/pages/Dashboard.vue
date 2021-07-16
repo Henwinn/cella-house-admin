@@ -146,8 +146,9 @@ export default {
         })
         var blob = new Blob([response.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
         var link = document.createElement('a')
+        var date = new Date()
         link.href = window.URL.createObjectURL(blob)
-        link.download = 'data.xlsx'
+        link.download = `products-report-${date.toDateString()}.xlsx`
         link.click()
       },
       page(val){
