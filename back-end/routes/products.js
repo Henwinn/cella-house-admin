@@ -85,10 +85,12 @@ router.get('/export', (req, res, next) => {
         //     k++
         // })
         let xls = json2xls(arr)
-        fs.writeFileSync('data.xlsx', xls, 'binary')
+        var fl = fs.writeFileSync('data.xlsx', xls, 'binary')
         const file = path.join(__dirname, `../data.xlsx`)
-        res.setHeader('Content-Disposition', 'attachment: filename="' + file + '"')
-        res.sendFile(file)
+        res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        res.setHeader('Content-Disposition', `attachment; filename=data.xlsx`);
+        // res.write(fl, 'binary')
+        return res.end()
     })
     .catch(err => next(err))
 })

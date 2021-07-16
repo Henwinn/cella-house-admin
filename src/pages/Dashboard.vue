@@ -141,7 +141,14 @@ export default {
         }
       },
       async exportData(){
-        await axios.get(`http://localhost:3000/products/export`)
+        const response = await axios.get(`http://localhost:3000/products/export`, {
+          responseType: 'arraybuffer'
+        })
+        var blob = new Blob([response.data], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'})
+        var link = document.createElement('a')
+        link.href = window.URL.createObjectURL(blob)
+        link.download = 'data.xlsx'
+        link.click()
       },
       page(val){
         this.currPage = val-1
