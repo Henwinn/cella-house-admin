@@ -72,11 +72,15 @@ export default {
             }
             axios.post("http://localhost:3000/users/login", data)
             .then((response) => {
-                if(response.data == 'success'){
-                    console.log("logged")
+                if(response.data == 2){
+                    window.isLoggedIn = true
+                    window.isUser = true
                     self.$router.push('dashboard')
+                } else if(response.data == 1){
+                    window.isLoggedIn = true
+                    window.isAdmin = true
+                    self.$router.push('admin/dashboard')
                 } else {
-                    console.log("fail")
                     alert('username or password incorrect!')
                 }
             })

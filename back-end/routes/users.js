@@ -108,7 +108,7 @@ router.post('/login', (req,res)=>{
           req.session.phone = user.phone
           req.session.roleId = user.roleId
           // return res.redirect('http://localhost:8081/#/dashboard')
-          return res.send('success')
+          return res.json(req.session.roleId)
         } else {
           return res.send('fail')
         }
