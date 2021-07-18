@@ -537,6 +537,21 @@ router.post('/dropship/cancel/:dropshipId', async (req, res) => {
   })
 })
 
+router.post('/dropship/get/shipment-price', async (req, res, next) => {
+  let data = {
+    origin: 501,
+    destination: req.query.dest,
+    weight: req.query.weight,
+    courier: req.query.courier
+  }
+  const response = await axios.post('https://api.rajaongkir.com/starter/cost', data, {
+    headers: {
+      key: '86fd1b1d861933d64c01dbf67235569e'
+    }
+  })
+  res.send(response.data)
+})
+
 router.get('/export/dropship', (req, res, next) => {
   dropships.findAll({
     where: {

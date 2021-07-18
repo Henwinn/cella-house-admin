@@ -52,14 +52,19 @@ app.use(session({
   }
 }))
 
-function checkSessionAdmin(req, res, next){
-  if(!req.session.username){
-    return res.send('log in first')
+function checkSession(req, res, next){
+  if(req.protocol + '://' + req.get('host') + req.originalUrl == `http://localhost:3000/users/login`){
+    next()
   } else {
-    if(req.session.roleId != 1){
-      return res.send('unauthorized')
+    console.log('else block ' + process.env.API_KEY)
+    if(process.env.API_KEY != '86fd1b1d861933d64c01dbf67235568e'){
+      return res.status(401).send('unauthorized')
     } else {
-      return next()
+      if(!req.session.username){
+        return res.status(400).send('log in first')
+      } else {
+        next()
+      }
     }
   }
 }
@@ -74,14 +79,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter); //checkSession
-app.use('/products', productsRouter); //checkSession
-app.use('/categories', categoriesRouter); //checkSession
-app.use('/admin', checkSessionAdmin, adminRouter) //checkSession
-app.use('/province', provinceRouter) //checkSession
-app.use('/city', cityRouter) //checkSession
-app.use('/customers', customerRouter) //checkSession
+app.use('/', checkSession, indexRouter);
+app.use('/users', checkSession, usersRouter); //checkSession
+app.use('/products', checkSession, productsRouter); //checkSession
+app.use('/categories', checkSession, categoriesRouter); //checkSession
+app.use('/admin', checkSession, adminRouter) //checkSession
+app.use('/province', checkSession, provinceRouter) //checkSession
+app.use('/city', checkSession, cityRouter) //checkSession
+app.use('/customers', checkSession, customerRouter) //checkSession
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

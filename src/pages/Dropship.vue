@@ -89,13 +89,10 @@
                                         <option value="tiki"> TIKI </option>
                                     </select>
                                 </div>
-                                    
-                                <base-input alternative
-                                            class="mb-3"
-                                            placeholder="Shipment Price"
-                                            v-model="price"
-                                            >
-                                </base-input>
+
+                                <div class="form-group" >
+                                    <input type="text" placeholder="Shipment Price" v-model="price" name="price" class="form-control" disabled />
+                                </div>
 
                                 <div class="text-center">
                                     <button class="btn" type="submit">Create Dropship</button>
@@ -179,34 +176,16 @@ export default {
                 console.log(err)
             }
         },
-        // async getPrice(){
-        //     alert('getprice')
-        //     let data = {
-        //         origin: '501',
-        //         destination: '500',
-        //         weight: 100,
-        //         courier: 'jne'
-        //     }
-        //     try{
-        //         axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*'
-        //         const config = {
-        //             headers: {
-        //                 "Access-Control-Allow-Origin": "*"
-        //                 // 'Authorization': 'API Key 86fd1b1d861933d64c01dbf67235569e'
-        //             }   
-        //         }
-        //         const response = await axios.post(
-        //             `https://api.rajaongkir.com/starter/cost`,
-        //             data,
-        //             config,
-        //             {crossorigin: true}
-        //         )
-        //         alert('tes: ' + response.data.results.cost[0].cost.value)
-        //     } catch(err){
-        //         alert(err)
-        //         console.log(err)
-        //     }
-        // },
+        async getPrice(){
+            alert('getprice: ' + this.selectedCities.id)
+            try{
+                const response = await axios.post(`http://localhost:3000/users/dropship/get/shipment-price?dest=${this.selectedCities.id}&weight=${this.ItemWeight}&courier=${this.courier}`)
+                this.price = response.data.rajaongkir.results[0].costs[0].cost[0].value
+            } catch(err){
+                alert(err)
+                console.log(err)
+            }
+        },
         async handleSubmit(){
             this.errors = [];
             
@@ -233,7 +212,6 @@ export default {
         
             // if (!this.selectedCities) {
             //     this.errors.push("Select City required");
-                
             // }
             
             if (!this.errors.length) {
