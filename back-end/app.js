@@ -52,11 +52,15 @@ app.use(session({
   }
 }))
 
-function checkSession(req, res, next){
-  if(!req.session.username  && req.originalUrl != '/users/register' && req.originalUrl != '/users/login'){
-    return res.redirect(301, '/')       //PERLU PERBAIKAN REDIRECT
+function checkSessionAdmin(req, res, next){
+  if(!req.session.username){
+    return res.send('log in first')
   } else {
-    return next()
+    if(req.session.roleId != 1){
+      return res.send('unauthorized')
+    } else {
+      return next()
+    }
   }
 }
 
@@ -74,7 +78,7 @@ app.use('/', indexRouter);
 app.use('/users', usersRouter); //checkSession
 app.use('/products', productsRouter); //checkSession
 app.use('/categories', categoriesRouter); //checkSession
-app.use('/admin', adminRouter) //checkSession
+app.use('/admin', checkSessionAdmin, adminRouter) //checkSession
 app.use('/province', provinceRouter) //checkSession
 app.use('/city', cityRouter) //checkSession
 app.use('/customers', customerRouter) //checkSession
