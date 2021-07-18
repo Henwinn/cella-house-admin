@@ -177,12 +177,10 @@ export default {
             }
         },
         async getPrice(){
-            alert('getprice: ' + this.selectedCities.id)
             try{
                 const response = await axios.post(`http://localhost:3000/users/dropship/get/shipment-price?dest=${this.selectedCities.id}&weight=${this.ItemWeight}&courier=${this.courier}`)
                 this.price = response.data.rajaongkir.results[0].costs[0].cost[0].value
             } catch(err){
-                alert(err)
                 console.log(err)
             }
         },
