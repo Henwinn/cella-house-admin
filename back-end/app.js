@@ -52,12 +52,11 @@ app.use(session({
   }
 }))
 
-function checkSession(req, res, next){
+function checkAuth(req, res, next){
   if(req.protocol + '://' + req.get('host') + req.originalUrl == `http://localhost:3000/users/login`){
     next()
   } else {
-    console.log('else block ' + process.env.API_KEY)
-    if(process.env.API_KEY != '86fd1b1d861933d64c01dbf67235568e'){
+    if(!req.get.key && req.headers.key != process.env.API_KEY){
       return res.status(401).send('unauthorized')
     } else {
       if(!req.session.username){
@@ -79,14 +78,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', checkSession, indexRouter);
-app.use('/users', checkSession, usersRouter); //checkSession
-app.use('/products', checkSession, productsRouter); //checkSession
-app.use('/categories', checkSession, categoriesRouter); //checkSession
-app.use('/admin', checkSession, adminRouter) //checkSession
-app.use('/province', checkSession, provinceRouter) //checkSession
-app.use('/city', checkSession, cityRouter) //checkSession
-app.use('/customers', checkSession, customerRouter) //checkSession
+app.use('/', checkAuth, indexRouter);
+app.use('/users', checkAuth, usersRouter);
+app.use('/products', checkAuth, productsRouter);
+app.use('/categories', checkAuth, categoriesRouter);
+app.use('/admin', checkAuth, adminRouter)
+app.use('/province', checkAuth, provinceRouter)
+app.use('/city', checkAuth, cityRouter)
+app.use('/customers', checkAuth, customerRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
