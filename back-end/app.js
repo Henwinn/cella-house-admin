@@ -57,10 +57,11 @@ function checkAuth(req, res, next){
     next()
   } else {
     if(!req.get.key && req.headers.key != process.env.API_KEY){
-      return res.status(401).send('unauthorized')
+      return res.status(403).send('unauthorized')
     } else {
       if(!req.session.username){
-        return res.status(400).send('log in first')
+        console.log('log in first')
+        return res.status(401).send('log in first')
       } else {
         next()
       }
