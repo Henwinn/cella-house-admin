@@ -19,10 +19,7 @@
       </a>
       
     </div>
-    <p></p>
-    <p class="card-description">
-      {{user.description}}
-    </p>
+
     <center>
         <router-link :to="{ path: 'editProfile', query: { id: user.id } }">
             <button tag="a"  class="btn" >Edit</button >
