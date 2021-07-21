@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-// const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
 const sequelize = require('../models')
 const {Op} = require('sequelize')
 const multer = require('multer')
@@ -96,8 +96,8 @@ router.post('/login', (req,res)=>{
     if(!user){
       return res.send('fail')
     } else {
-      // bcrypt.compare(req.body.password, user.password, (err,result)=>{
-        // if(result){
+      bcrypt.compare(req.body.password, user.password, (err,result)=>{
+        if(result){
           req.session.storeId = user.id
           req.session.username = user.username
           req.session.fullName = user.fullName
@@ -108,11 +108,11 @@ router.post('/login', (req,res)=>{
           req.session.phone = user.phone
           req.session.roleId = user.roleId
           // return res.redirect('http://localhost:8081/#/dashboard')
-          return res.send('success')
-        // } else {
-        //   return res.send('fail')
-        // }
-      // })
+          return res.json(req.session.roleId)
+        } else {
+          return res.send('fail')
+        }
+      })
     }
   })  
 })
@@ -535,6 +535,21 @@ router.post('/dropship/cancel/:dropshipId', async (req, res) => {
   .then(() => {
     return res.send('success')
   })
+})
+
+router.post('/dropship/get/shipment-price', async (req, res, next) => {
+  let data = {
+    origin: 501,
+    destination: req.query.dest,
+    weight: req.query.weight,
+    courier: req.query.courier
+  }
+  const response = await axios.post('https://api.rajaongkir.com/starter/cost', data, {
+    headers: {
+      key: '86fd1b1d861933d64c01dbf67235569e'
+    }
+  })
+  res.send(response.data)
 })
 
 router.get('/export/dropship', (req, res, next) => {

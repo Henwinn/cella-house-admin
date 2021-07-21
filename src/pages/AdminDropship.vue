@@ -106,12 +106,11 @@ export default {
     methods: {
       async getDropships() {
         try {
-          const response = await axios.get(`http://localhost:3000/admin/dropship/all`);
+          const response = await axios.get(`http://localhost:3000/admin/dropship/all?page=${this.currPage}&search=${this.search}`);
           this.dropships = response.data.rows;
           this.total = response.data.count
         } catch (err) {
-          console.log(err);
-          alert('err: ' + err)
+          console.log(err)
         }
       },
       async updateStatus(val) {

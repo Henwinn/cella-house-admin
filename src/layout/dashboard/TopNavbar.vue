@@ -156,7 +156,10 @@
       },
       async logout(){
         await axios.post('http://localhost:3000/users/logout')
-        this.$router.push('login')
+        window.isLoggedIn = false
+        window.isAdmin = false
+        window.isUser = false
+        this.$router.push('/')
       }
     }
   };

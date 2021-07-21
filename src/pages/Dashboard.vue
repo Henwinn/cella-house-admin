@@ -48,8 +48,6 @@
                           </router-link>
 
                             
-                        
-                       
                         <button class="btn" type="submit" @click="deleteProduct(product.id)">Delete</button>
                         <button class="btn" type="submit" @click="withdrawProduct(product.id)">Withdraw</button>
                           <router-link :to="{ path: 'dropship', query: { id: product.id }}">
@@ -60,6 +58,7 @@
                     </tr>
                 </tbody>
              </table>
+             
           </div>
         </card>
       </div>

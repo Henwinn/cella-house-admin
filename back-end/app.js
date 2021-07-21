@@ -52,11 +52,20 @@ app.use(session({
   }
 }))
 
-function checkSession(req, res, next){
-  if(!req.session.username  && req.originalUrl != '/users/register' && req.originalUrl != '/users/login'){
-    return res.redirect(301, '/')       //PERLU PERBAIKAN REDIRECT
+function checkAuth(req, res, next){
+  if(req.protocol + '://' + req.get('host') + req.originalUrl == `http://localhost:3000/users/login`){
+    next()
   } else {
-    return next()
+    if(!req.get.key && req.headers.key != process.env.API_KEY){
+      return res.status(403).send('unauthorized')
+    } else {
+      if(!req.session.username){
+        console.log('log in first')
+        return res.status(401).send('log in first')
+      } else {
+        next()
+      }
+    }
   }
 }
 
@@ -70,14 +79,14 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter); //checkSession
-app.use('/products', productsRouter); //checkSession
-app.use('/categories', categoriesRouter); //checkSession
-app.use('/admin', adminRouter) //checkSession
-app.use('/province', provinceRouter) //checkSession
-app.use('/city', cityRouter) //checkSession
-app.use('/customers', customerRouter) //checkSession
+app.use('/', checkAuth, indexRouter);
+app.use('/users', checkAuth, usersRouter);
+app.use('/products', checkAuth, productsRouter);
+app.use('/categories', checkAuth, categoriesRouter);
+app.use('/admin', checkAuth, adminRouter)
+app.use('/province', checkAuth, provinceRouter)
+app.use('/city', checkAuth, cityRouter)
+app.use('/customers', checkAuth, customerRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

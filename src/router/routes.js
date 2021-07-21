@@ -34,17 +34,29 @@ const routes = [
       {
         path: "dashboard",
         name: "dashboard",
-        component: Dashboard
+        component: Dashboard,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       {
         path: "profile",
         name: "profile",
-        component: Profile
+        component: Profile,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       {
         path: "notifications",
         name: "notifications",
-        component: Notifications
+        component: Notifications,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       // {
       //   path: "dropships",
@@ -54,37 +66,65 @@ const routes = [
       {
         path: "typography",
         name: "typography",
-        component: Typography
+        component: Typography,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       {
         path: "history",
         name: "history",
-        component: History
+        component: History,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       {
         path: "dropship",
         name: "dropship",
-        component: Dropship
+        component: Dropship,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       {
         path: "formAddItem",
         name: "formDashboard",
-        component: AddFormDashboard
+        component: AddFormDashboard,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       {
         path: "formUpdateItem",
         name: "formDashboard",
-        component: UpdateFormDashboard
+        component: UpdateFormDashboard,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       {
         path: "editProfile",
         name: "editProfile",
-        component: EditProfileForm
+        component: EditProfileForm,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       },
       {
         path: "tracking",
         name: "tracking",
-        component: Tracking
+        component: Tracking,
+        meta: {
+          requiresAuth: true,
+          isUser: true
+        }
       }
     ],
     
@@ -92,6 +132,7 @@ const routes = [
   },
   {
     path: "/login",
+    name: 'login',
     component: Login
   },
   {
@@ -109,58 +150,102 @@ const routes = [
     children: [
       {
         path: "dashboard",
-        name: "dashboard",
-        component: AdminDashboard
+        name: "adminDashboard",
+        component: AdminDashboard,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "dropship",
         name: "dropship",
-        component: AdminDropship
+        component: AdminDropship,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "profile",
         name: "profile",
-        component: AdminProfile
+        component: AdminProfile,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "formAddMerchant",
         name: "formAddMerchant",
-        component: AdminAddFormMerchant
+        component: AdminAddFormMerchant,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "formUpdateMerchant",
         name: "formUpdateMerchant",
-        component: AdminUpdateFormMerchant
+        component: AdminUpdateFormMerchant,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "profileMerchant",
         name: "profileMerchant",
-        component: ProfileMerchant
+        component: ProfileMerchant,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "formAddItem",
         name: "formDashboard",
-        component: AddFormDashboard
+        component: AddFormDashboard,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "formUpdateItem",
         name: "formDashboard",
-        component: UpdateFormDashboard
+        component: UpdateFormDashboard,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "editProfileAdmin",
         name: "editProfileAdmin",
-        component: EditProfileAdminForm
+        component: EditProfileAdminForm,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "listApproval",
         name: "listApproval",
-        component: ListApproval
+        component: ListApproval,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       },
       {
         path: "tracking",
         name: "tracking",
-        component: Tracking
+        component: Tracking,
+        meta: {
+          requiresAuth: true,
+          isAdmin: true
+        }
       }    
     ]
   },
