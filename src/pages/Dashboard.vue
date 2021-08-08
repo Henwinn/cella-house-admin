@@ -13,7 +13,7 @@
              class="mb-3 mb-sm-0">
              Add
              </base-button>
-             <base-button tag="a" @click="exportData()"
+             <base-button tag="a" href="#/dashboard" @click="exportData()"
              class="mb-3 mb-sm-0">
              Export Data
              </base-button>

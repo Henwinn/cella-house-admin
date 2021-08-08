@@ -9,7 +9,7 @@
               
             </div>
 
-            <base-button tag="a" @click="exportData()"
+            <base-button tag="a" href="#/history" @click="exportData()"
              class="mb-3 mb-sm-0">
              Export Data
              </base-button>

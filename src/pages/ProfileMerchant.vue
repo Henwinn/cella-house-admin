@@ -102,6 +102,7 @@
 </template>
 <script>
 import Card from '../components/Cards/Card.vue';
+import _ from "lodash";
 import axios from "axios";
 
   export default {
@@ -120,18 +121,18 @@ import axios from "axios";
         products: [],
         search: '',
         total: '',
-        pageSize: '',
+        pageSize: 5,
         currPage: 0
       }
     },
     created(){
       this.getMerchantProfileById();
       this.getProducts();
-      this.doSearch = _.debounce(this.doSearch, 400);
+      this.getProducts = _.debounce(this.getProducts, 400);
     },
     watch: {
       search(value){
-          this.doSearch(value); 
+          this.getProducts(value); 
         }
     },
     methods: {
@@ -147,19 +148,13 @@ import axios from "axios";
       },
       async getProducts() {
         try {
-          const response = await axios.get(`http://localhost:3000/products/user?id=${this.$route.query.id}&page=${this.currPage}`); //get table nya berdasarkan user nya
+          const response = await axios.get(`http://localhost:3000/admin/product?storeId=${this.$route.query.id}&page=${this.currPage}&search=${this.search}`); //get table nya berdasarkan user nya
           this.products = response.data.rows;
           this.total = response.data.count
-          this.pageSize = 5
         } catch (err) {
           console.log(err);
           alert('err: ' + err)
         }
-      },
-      doSearch(value) { //ini bagian dari untuk search
-        axios.get('http://localhost:3000/users?search=' + encodeURIComponent(value))
-        .then((response) => {this.products = response.data.rows})
-        .catch(e => console.log(e));
       },
       page(val){
         this.currPage = val - 1

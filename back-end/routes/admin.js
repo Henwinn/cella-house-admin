@@ -31,6 +31,66 @@ router.get('/product/approve', (req, res) => {
     })
 })
 
+router.get('/product', (req, res, next) => {
+  if(!req.query.search){
+      products.findAndCountAll({
+          where: {
+              storeId: req.query.storeId,
+              status: 'A'
+          },
+          include: {
+              model: sequelize.categories,
+              attributes: ['name']
+          },
+          attributes: {
+              excldue: ['storeName', 'variant', 'note']
+          },
+          limit: 5,
+          offset: (req.query.page ? req.query.page : 0) * 5
+      })
+      .then(product => {
+          res.send(product)
+      })
+      .catch(err => {
+          res.send(err)
+      })
+      } else {
+      products.findAndCountAll({
+          where: {
+          storeId: req.query.storeId,
+          status: 'A',
+          [Op.or]: [
+              {
+              name: {
+                  [Op.like]: `%${req.query.search}%`
+              }
+              },
+              {
+              variant: {
+                  [Op.like]: `%${req.query.search}%`
+              }
+              }
+          ]
+          },
+          include: {
+              model: sequelize.categories,
+              attributes: ['name']
+          },
+          attributes: {
+              excldue: ['storeName', 'variant', 'note']
+          },
+          limit: 5,
+          offset: (req.query.page ? req.query.page : 0) * 5
+      })
+      .then(product => {
+          res.send(product)
+      })
+      .catch(err => {
+          res.send(err)
+      })
+  }
+})
+
 //ADMIN APPROVE PRODUCTS
 router.post('/approve-product/:id', (req, res) => {
     products.update({
@@ -73,25 +133,25 @@ router.post('/reject-product/:id', (req, res, next) => {
 
 
 //GET DROPSHIP REQUEST NEEDED TO BE APPROVED
-router.get('/dropship/all', (req, res) => {
+router.get('/dropship/all', (req, res, next) => {
     if(!req.query.search){
         dropships.findAndCountAll({
             include: [
                 {
-                model: customers,
-                attributes: ['name', 'phone'],
+                  model: customers,
+                  attributes: ['name', 'phone'],
                 },
                 {
-                model: sequelize.cities,
-                attributes: ['province_name', 'city_name', 'postal_code']
+                  model: sequelize.cities,
+                  attributes: ['province_name', 'city_name', 'postal_code']
                 },
                 {
-                model: products,
-                attributes:['name']
+                  model: products,
+                  attributes:['name']
                 },
                 {
-                model: users,
-                attributes:['storeName']
+                  model: users,
+                  attributes:['storeName']
                 }
             ],
             limit: 5,
