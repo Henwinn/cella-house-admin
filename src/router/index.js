@@ -1,5 +1,6 @@
 import VueRouter from "vue-router";
 import routes from "./routes";
+import axios from "axios"
 
 // configure router
 const router = new VueRouter({
@@ -14,19 +15,19 @@ const router = new VueRouter({
   }
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   if(to.matched.some(record => record.meta.requiresAuth)){
-    if(!window.isLoggedIn){
+    let response = await axios.get('http://localhost:3000/validation/check/isloggedin')
+
+    if(response.data == false){
       next({name: 'login'})
     } else {
       if(to.matched.some(record => record.meta.isUser)){
-        if(!window.isUser){
-          console.log('admin block: ' + window.isUser + ' ' + window.isAdmin)
+        if(response.data == "1"){
           next({name: 'adminDashboard'})
         }
       } else if(to.matched.some(record => record.meta.isAdmin)){
-        if(!window.isAdmin){
-          console.log('user block: ' + window.isUser + window.isAdmin)
+        if(response.data == "2"){
           next({name: 'dashboard'})
         }
       }

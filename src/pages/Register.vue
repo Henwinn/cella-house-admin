@@ -302,7 +302,7 @@ export default {
                 } else {
                     let answer = window.confirm('Are you sure all the data are correct?')
                     if(answer){
-                        axios.post('http://localhost:3000/users/register', data)
+                        axios.post('http://localhost:3000/register', data)
                         .then(respond => {
                             if(respond.data == 'success'){
                                 alert('success')
@@ -324,7 +324,7 @@ export default {
         },
         async getUsername(){
             if(this.userName != ''){
-                const response = await axios.get(`http://localhost:3000/users/validation/username?search=${this.userName}`)
+                const response = await axios.get(`http://localhost:3000/validation/username?search=${this.userName}`)
                 if(response.data == 'not exist'){
                     this.hideUsername = false
                     this.error = false
@@ -339,7 +339,7 @@ export default {
         },
         async getStorename(){
             if(this.storeName != ''){
-                const response = await axios.get(`http://localhost:3000/users/validation/storeName?search=${this.storeName}`)
+                const response = await axios.get(`http://localhost:3000/validation/storeName?search=${this.storeName}`)
                 if(response.data == 'not exist'){
                     this.hideStorename = false
                     this.error = false
@@ -354,7 +354,7 @@ export default {
         },
         async getEmail(){
             if(this.storeEmail != ''){
-                const response = await axios.get(`http://localhost:3000/users/validation/email?search=${this.storeEmail}`)
+                const response = await axios.get(`http://localhost:3000/validation/email?search=${this.storeEmail}`)
                 if(response.data == 'not exist'){
                     this.hideStoreemail = false
                     this.error = false
@@ -369,7 +369,7 @@ export default {
         },
         async getPhone(){
             if(this.storePhoneNum != ''){
-                const response = await axios.get(`http://localhost:3000/users/validation/phone?search=${this.storePhoneNum}`)
+                const response = await axios.get(`http://localhost:3000/validation/phone?search=${this.storePhoneNum}`)
                 if(response.data == 'not exist'){
                     this.hidePhone = false
                     this.error = false

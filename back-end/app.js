@@ -25,6 +25,8 @@ redisClient.on("connect", err => {
 })
 
 var indexRouter = require('./routes/index');
+var validationRouter = require('./routes/validation');
+var registerRouter = require('./routes/register');
 var usersRouter = require('./routes/users');
 var productsRouter = require('./routes/products')
 var categoriesRouter = require('./routes/categories')
@@ -52,6 +54,19 @@ app.use(session({
   }
 }))
 
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/validation', validationRouter)
+app.use('/register', registerRouter);
+
 function checkAuth(req, res, next){
   if(req.protocol + '://' + req.get('host') + req.originalUrl == `http://localhost:3000/users/login`){
     next()
@@ -68,16 +83,6 @@ function checkAuth(req, res, next){
     }
   }
 }
-
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', checkAuth, indexRouter);
 app.use('/users', checkAuth, usersRouter);

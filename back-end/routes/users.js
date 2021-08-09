@@ -42,24 +42,6 @@ router.get('/tracking', (req, res, next) => {
   .catch(err => next(err))
 })
 
-router.get('/validation/:attribute', (req, res, next) => {
-  let attribute = req.params.attribute
-  users.findOne({
-    attributes: [`${attribute}`],
-    where: {
-      [attribute]: req.query.search
-    }
-  })
-  .then(user => {
-    if(user){
-      return res.send(`exist`)
-    } else {
-      return res.send(`not exist`)
-    }
-  })
-  .catch(err => next(err))
-})
-
 /* USER REGISTER */
 router.post('/register', (req,res, next)=>{
   bcrypt.hash(req.body.password, 12, (err, result)=>{
